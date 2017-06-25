@@ -3,6 +3,10 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -10,6 +14,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,9 +23,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+import javax.net.ssl.HttpsURLConnection;
+
 public class LoginActivity extends AppCompatActivity {
 
     private UserLoginTask mAuthTask = null;
+    public HttpsURLConnection https = null;
 
     // UI references.
     private EditText usernameET;
@@ -121,6 +134,12 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String username;
         private final String password;
+        private final String url = "https://spps.getalma.com/";
+        private boolean connected = true;
+        private int status;
+
+        private URLConnection urlConnection = null;
+        private OutputStream outputStream = null;
 
         UserLoginTask(String id, String pass) {
             username = id;
@@ -129,17 +148,28 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            ConnectivityManager cm =
+                    (ConnectivityManager)LoginActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            String payload = "{\"username\":\""+username+"\",\"password\":\""+password+"\"}";
+            if (!connected) { return false; }
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                urlConnection = new URL(url+"login").openConnection();
+                https = (HttpsURLConnection) urlConnection;
+                https.setDoOutput(true);
+                https.setRequestMethod("POST");
+                outputStream = https.getOutputStream();
+                outputStream.write(payload.getBytes());
+                https.connect();
+                status = https.getResponseCode();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
-            // TODO: register the new account here.
-            return true;
+            Log.d("tag", status+"");
+            return status == 200;
         }
 
         @Override
@@ -148,9 +178,10 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                finish();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
             } else {
-                passwordET.setError(getString(R.string.error_incorrect_password));
+                passwordET.setError(getString(R.string.error_incorrect));
                 passwordET.requestFocus();
             }
         }
