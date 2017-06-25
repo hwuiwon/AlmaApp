@@ -15,10 +15,6 @@ public class OverviewAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void setDatas(ArrayList<Overview> datas) {
-        this.datas = datas;
-    }
-
     public void addOverview(Overview overview) {
         datas.add(overview);
     }

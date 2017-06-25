@@ -2,16 +2,21 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_margin">
     <TextView
         android:id="@+id/overviewTV1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Class Name"/>
+        android:text="Class Name"
+        android:textSize="60px"
+        android:textColor="@color/white"/>
     <TextView
         android:id="@+id/overviewTV2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Grade"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:textSize="60px"
+        android:textColor="@color/white"/>
 </RelativeLayout>

@@ -21,9 +21,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // TODO : work on parsing and putting them in OverviewAdapter
+        // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
         overviewLV = (ListView)findViewById(R.id.overviewLV);
         OverviewAdapter adapter = new OverviewAdapter(this);
+        adapter.addOverview(new Overview("AP Statistics", "A+"));
+        adapter.addOverview(new Overview("AP Calculus BC", "A"));
+        adapter.addOverview(new Overview("AP Psychology", "B+"));
+        adapter.addOverview(new Overview("AP Language", "A+"));
         overviewLV.setAdapter(adapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

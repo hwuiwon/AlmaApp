@@ -13,15 +13,7 @@ public class Overview {
         return className;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
     public String getAlphabetGrade() {
         return alphabetGrade;
-    }
-
-    public void setAlphabetGrade(String alphabetGrade) {
-        this.alphabetGrade = alphabetGrade;
     }
 }
