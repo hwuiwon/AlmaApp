@@ -3,6 +3,7 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -22,6 +23,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -33,9 +35,8 @@ import javax.net.ssl.HttpsURLConnection;
 public class LoginActivity extends AppCompatActivity {
 
     private UserLoginTask mAuthTask = null;
-    public HttpsURLConnection https = null;
 
-    // UI references.
+    // UI references
     private EditText usernameET;
     private EditText passwordET;
     private View progressView;
@@ -128,8 +129,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        // Disable going back to the MainActivity
+        moveTaskToBack(true);
+    }
+
     // Represents an asynchronous login task used to authenticate the user
-    @SuppressWarnings("unused")
     private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String username;
@@ -137,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
         private final String url = "https://spps.getalma.com/";
         private boolean connected = true;
         private int status;
+        private int attemptCount = 5;
 
         private URLConnection urlConnection = null;
         private OutputStream outputStream = null;
@@ -157,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
                 urlConnection = new URL(url+"login").openConnection();
-                https = (HttpsURLConnection) urlConnection;
+                HttpsURLConnection https = (HttpsURLConnection) urlConnection;
                 https.setDoOutput(true);
                 https.setRequestMethod("POST");
                 outputStream = https.getOutputStream();
@@ -168,7 +175,6 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            Log.d("tag", status+"");
             return status == 200;
         }
 
@@ -180,6 +186,8 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+            } else if (status == 405) {
+                Toast.makeText(LoginActivity.this, "Alma is currently undergoing maintenance", Toast.LENGTH_LONG).show();
             } else {
                 passwordET.setError(getString(R.string.error_incorrect));
                 passwordET.requestFocus();

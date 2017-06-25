@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_overview"
+            android:title="Overview" />
+        <item
+            android:id="@+id/nav_assignments"
+            android:title="Assignments" />
+        <item
+            android:id="@+id/nav_grades"
+            android:title="Grades" />
+        <item
+            android:id="@+id/nav_classmates"
+            android:title="Classmates" />
+    </group>
+
+</menu>

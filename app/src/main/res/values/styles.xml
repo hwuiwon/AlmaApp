@@ -23,4 +23,20 @@
         <item name="android:colorButtonNormal">@color/white</item>
     </style>
 
+    <style name="AppTheme.Alma.Header" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorPrimary">@color/almaPrimary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppTheme.Alma.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorPrimary">@color/almaPrimary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppTheme.Alma.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorPrimary">@color/white</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/almaPrimary</item>
+    </style>
+
 </resources>
