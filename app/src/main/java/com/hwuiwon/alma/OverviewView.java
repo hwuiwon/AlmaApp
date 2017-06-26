@@ -8,6 +8,7 @@ import android.widget.TextView;
 public class OverviewView extends RelativeLayout {
     TextView textView1;
     TextView textView2;
+    TextView textView3;
 
     public OverviewView(Context context, Overview overview) {
         super(context);
@@ -17,12 +18,15 @@ public class OverviewView extends RelativeLayout {
 
         textView1 = findViewById(R.id.overviewTV1);
         textView2 = findViewById(R.id.overviewTV2);
-        textView1.setText(overview.getClassName());
-        textView2.setText(overview.getAlphabetGrade());
+        textView3 = findViewById(R.id.overviewTV3);
+        textView1.setText(overview.getPeriod());
+        textView2.setText(overview.getClassName());
+        textView3.setText(overview.getAlphabetGrade());
     }
 
     public void setData(Overview overview) {
-        textView1.setText(overview.getClassName());
-        textView2.setText(overview.getAlphabetGrade());
+        textView1.setText(overview.getPeriod());
+        textView2.setText(overview.getClassName());
+        textView3.setText(overview.getAlphabetGrade());
     }
 }

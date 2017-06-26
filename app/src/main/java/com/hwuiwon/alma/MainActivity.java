@@ -15,23 +15,33 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ListView overviewLV;
+    String barTitle = "Overview";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
         overviewLV = (ListView)findViewById(R.id.overviewLV);
         OverviewAdapter adapter = new OverviewAdapter(this);
-        adapter.addOverview(new Overview("AP Statistics", "A+"));
-        adapter.addOverview(new Overview("AP Calculus BC", "A"));
-        adapter.addOverview(new Overview("AP Psychology", "B+"));
-        adapter.addOverview(new Overview("AP Language", "A+"));
+
+        // Sample Overviews
+        adapter.addOverview(new Overview("P1", "AP Calculus BC", "A-"));
+        adapter.addOverview(new Overview("P2", "AP Economics", "A"));
+        adapter.addOverview(new Overview("P3", "AP Physics 1", "A+"));
+        adapter.addOverview(new Overview("P4", "English 11", "A"));
+        adapter.addOverview(new Overview("P5", "AP Computer Science", "A+"));
+        adapter.addOverview(new Overview("P6", "HS PE", "A"));
+        adapter.addOverview(new Overview("P7", "Study Hall 1", "-"));
+        adapter.addOverview(new Overview("P8", "Study Hall 2", "-"));
         overviewLV.setAdapter(adapter);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -82,13 +92,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_overview) {
-            // Handle the overview Action
+            barTitle = "Overview";
+            getSupportActionBar().setTitle(barTitle);
         } else if (id == R.id.nav_assignments) {
-
+            barTitle = "Assignments";
+            getSupportActionBar().setTitle(barTitle);
         } else if (id == R.id.nav_grades) {
-
+            barTitle = "Grades";
+            getSupportActionBar().setTitle(barTitle);
         } else if (id == R.id.nav_classmates) {
-
+            barTitle = "Classmates";
+            getSupportActionBar().setTitle(barTitle);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
