@@ -7,14 +7,14 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.hwuiwon.alma.MainActivity"
     tools:showIn="@layout/app_bar_main"
-    android:background="@color/white">
+    android:background="@color/almaPrimary">
 
     <ListView
         android:id="@+id/overviewLV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@color/white"
-        android:dividerHeight="0.5dp">
+        android:layout_height="wrap_content"
+        android:divider="@color/base"
+        android:dividerHeight="1dp">
     </ListView>
 
 </android.support.constraint.ConstraintLayout>

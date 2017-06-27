@@ -11,11 +11,11 @@
         android:icon="@mipmap/almalogo_rect"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/almalogo_rect"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme.Alma">
+        android:supportsRtl="true">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Alma.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +25,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.Alma"></activity>
+            android:theme="@style/AppTheme.Alma.Main"></activity>
     </application>
 
 </manifest>

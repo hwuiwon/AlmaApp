@@ -4,10 +4,13 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="almaPrimary">#EB6842</color>
-    <color name="almaPrimary_dark">#D35D3A</color>
+    <!-- Primary #EB6842 _dark #D35D3A -->
+
+    <color name="almaPrimary">#E07637</color>
+    <color name="almaPrimary_dark">#CD6131</color>
     <color name="alma_accent">#FFFFFF</color>
 
+    <color name="color_testing">#F1F1F4</color>
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
     <color name="oil">#333333</color>
