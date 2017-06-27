@@ -3,9 +3,9 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +15,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,12 +35,13 @@ import javax.net.ssl.HttpsURLConnection;
 public class LoginActivity extends AppCompatActivity {
 
     private UserLoginTask mAuthTask = null;
+    private SharedPreferences.Editor loginPrefsEditor;
 
-    // UI references
     private EditText usernameET;
     private EditText passwordET;
     private View progressView;
     private View loginFormView;
+    private CheckBox usernameCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,18 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameET = (EditText) findViewById(R.id.username);
         passwordET = (EditText) findViewById(R.id.password);
+        usernameCB = (CheckBox) findViewById(R.id.usernameCB);
         loginFormView = findViewById(R.id.login_form);
         progressView = findViewById(R.id.login_progress);
+
+        SharedPreferences loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPrefsEditor = loginPrefs.edit();
+
+        Boolean saveLogin = loginPrefs.getBoolean("saveLogin", false);
+        if (saveLogin) {
+            usernameET.setText(loginPrefs.getString("username", ""));
+            usernameCB.setChecked(true);
+        }
 
         passwordET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -67,6 +78,14 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (usernameCB.isChecked()) {
+                    loginPrefsEditor.putBoolean("saveLogin", true);
+                    loginPrefsEditor.putString("username", usernameET.getText().toString());
+                    loginPrefsEditor.apply();
+                } else {
+                    loginPrefsEditor.clear();
+                    loginPrefsEditor.commit();
+                }
                 attemptLogin();
             }
         });
@@ -143,7 +162,6 @@ public class LoginActivity extends AppCompatActivity {
         private final String url = "https://spps.getalma.com/";
         private boolean connected = true;
         private int status;
-        private int attemptCount = 5;
 
         private URLConnection urlConnection = null;
         private OutputStream outputStream = null;
@@ -171,6 +189,7 @@ public class LoginActivity extends AppCompatActivity {
                 outputStream.write(payload.getBytes());
                 https.connect();
                 status = https.getResponseCode();
+                https.disconnect();
             } catch (IOException e) {
                 e.printStackTrace();
             }

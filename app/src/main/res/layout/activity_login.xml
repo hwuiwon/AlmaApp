@@ -69,6 +69,12 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
 
+            <CheckBox
+                android:id="@+id/usernameCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Username"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
