@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity
 
         username = getIntent().getStringExtra("id");
         password = getIntent().getStringExtra("pass");
-        Log.d("tag", "Username: " + username);
-        Log.d("tag", "Password: " + password);
 
         // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
         overviewLV = (ListView)findViewById(R.id.overviewLV);
@@ -92,11 +90,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
