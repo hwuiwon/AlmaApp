@@ -105,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid username & password
         if (TextUtils.isEmpty(username)) {
             usernameET.setError(getString(R.string.error_field_required));
             focusView = usernameET;
@@ -119,14 +118,12 @@ public class LoginActivity extends AppCompatActivity {
         if (cancel) {
             focusView.requestFocus();
         } else {
-            // Show a progress spinner and perform the user login attempt
             showProgress(true);
             mAuthTask = new UserLoginTask(username, password);
             mAuthTask.execute((Void) null);
         }
     }
 
-    // Shows the progress UI and hides the login form.
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
@@ -149,13 +146,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        // Disable going back to the MainActivity
-        moveTaskToBack(true);
-    }
-
-    // Represents an asynchronous login task used to authenticate the user
     private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String username;
