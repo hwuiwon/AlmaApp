@@ -7,32 +7,63 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.hwuiwon.alma.MoreOverviewActivity">
-
-    <FrameLayout
-        android:id="@+id/content"
+    
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="@dimen/activity_margin">
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/message"
+            android:id="@+id/classNameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class Name"
+            android:textColor="@color/jet"
+            android:textSize="70px"
+            android:textStyle="bold"
+            android:paddingTop="@dimen/activity_margin"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/gradeTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A+"
+            android:textColor="@color/jet"
+            android:textSize="70px"
+            android:textStyle="bold"
+            android:padding="@dimen/activity_margin"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/currentMenuTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Grades"
+            android:textSize="40px"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingBottom="@dimen/activity_margin"
+            android:layout_below="@+id/classNameTV"
+            android:textColor="@color/oil"/>
+
+        <ListView
+            android:id="@+id/moreOverviewLV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_home"
-            android:textColor="@color/black"/>
+            android:layout_below="@+id/currentMenuTV">
+        </ListView>
 
-    </FrameLayout>
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.Alma.Navigation"
+            android:layout_alignParentBottom="true"
+            app:menu="@menu/navigation"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/menu_text_color_inverse"
+            app:itemBackground="@drawable/menu_background_color_inverse" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:theme="@style/AppTheme.Alma.Navigation"
-        app:menu="@menu/navigation"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/menu_text_color_inverse"
-        app:itemBackground="@drawable/menu_background_color_inverse" />
+    </RelativeLayout>
 
 </LinearLayout>

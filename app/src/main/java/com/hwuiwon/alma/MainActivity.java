@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity
                 Overview overview = overviews[i];
                 String className = overviews[i].getClassName();
                 intent.putExtra("overview", overview);
-                intent.putExtra("className", className);
                 startActivity(intent);
             }
         });

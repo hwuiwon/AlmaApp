@@ -11,7 +11,7 @@
         android:text="P1"
         android:textSize="50px"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/jet"
         android:paddingRight="@dimen/overview_margin" />
     <TextView
         android:id="@+id/overviewTV2"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="Class Name"
         android:textSize="50px"
-        android:textColor="@color/black"
+        android:textColor="@color/jet"
         android:layout_toEndOf="@+id/overviewTV1" />
     <TextView
         android:id="@+id/overviewTV3"
@@ -29,5 +29,5 @@
         android:layout_alignParentRight="true"
         android:textSize="50px"
         android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:textColor="@color/jet"/>
 </RelativeLayout>

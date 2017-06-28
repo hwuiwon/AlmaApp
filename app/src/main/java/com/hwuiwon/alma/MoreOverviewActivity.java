@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 public class MoreOverviewActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private TextView classNameTV;
+    private TextView gradeTV;
+    private TextView currentMenuTV;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -18,10 +20,10 @@ public class MoreOverviewActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.nav_grades:
-                    mTextMessage.setText(R.string.title_home);
+                    currentMenuTV.setText("Grades");
                     return true;
                 case R.id.nav_assignments:
-                    mTextMessage.setText(R.string.title_assignments);
+                    currentMenuTV.setText("Assignments");
                     return true;
             }
             return false;
@@ -34,7 +36,13 @@ public class MoreOverviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_more_overview);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
+        Overview overview = getIntent().getParcelableExtra("overview");
+
+        currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
+        classNameTV = (TextView) findViewById(R.id.classNameTV);
+        classNameTV.setText(overview.getClassName());
+        gradeTV = (TextView) findViewById(R.id.gradeTV);
+        gradeTV.setText(overview.getAlphabetGrade());
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
