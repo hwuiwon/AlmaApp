@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity
         adapter.addOverview(new Overview("P8", "Study Hall 2", "-"));
         overviewLV.setAdapter(adapter);
 
-
-
-
+        // TODO : Create Onclick for listview
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
