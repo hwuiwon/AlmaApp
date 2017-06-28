@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +20,9 @@ public class MainActivity extends AppCompatActivity
 
     ListView overviewLV;
     String barTitle = "Overview";
-    // Sample Overviews
+    private String username;
+    private String password;
+
     private Overview[] overviews = {new Overview("P1", "AP Calculus BC", "A-"),
                                     new Overview("P2", "AP Economics", "A"),
                                     new Overview("P3", "AP Physics 1", "A+"),
@@ -35,6 +38,11 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        username = getIntent().getStringExtra("id");
+        password = getIntent().getStringExtra("pass");
+        Log.d("tag", "Username: " + username);
+        Log.d("tag", "Password: " + password);
 
         // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
         overviewLV = (ListView)findViewById(R.id.overviewLV);

@@ -1,69 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.hwuiwon.alma.MoreOverviewActivity">
-    
-    <RelativeLayout
+
+    <TextView
+        android:id="@+id/classNameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Class Name"
+        android:textColor="@color/jet"
+        android:textSize="70px"
+        android:textStyle="bold"
+        android:paddingTop="@dimen/activity_margin"
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/gradeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A+"
+        android:textColor="@color/jet"
+        android:textSize="70px"
+        android:textStyle="bold"
+        android:padding="@dimen/activity_margin"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/currentMenuTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grades"
+        android:textSize="40px"
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingBottom="@dimen/activity_margin"
+        android:layout_below="@+id/classNameTV"
+        android:textColor="@color/oil"/>
+
+    <ListView
+        android:id="@+id/moreOverviewLV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/currentMenuTV">
+    </ListView>
 
-        <TextView
-            android:id="@+id/classNameTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Class Name"
-            android:textColor="@color/jet"
-            android:textSize="70px"
-            android:textStyle="bold"
-            android:paddingTop="@dimen/activity_margin"
-            android:paddingLeft="@dimen/activity_margin"
-            android:paddingBottom="8dp"/>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.Alma.Navigation"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/navigation"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/menu_text_color_inverse"
+        app:itemBackground="@drawable/menu_background_color_inverse" />
 
-        <TextView
-            android:id="@+id/gradeTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A+"
-            android:textColor="@color/jet"
-            android:textSize="70px"
-            android:textStyle="bold"
-            android:padding="@dimen/activity_margin"
-            android:layout_alignParentRight="true"/>
-
-        <TextView
-            android:id="@+id/currentMenuTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Grades"
-            android:textSize="40px"
-            android:paddingLeft="@dimen/activity_margin"
-            android:paddingBottom="@dimen/activity_margin"
-            android:layout_below="@+id/classNameTV"
-            android:textColor="@color/oil"/>
-
-        <ListView
-            android:id="@+id/moreOverviewLV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/currentMenuTV">
-        </ListView>
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.Alma.Navigation"
-            android:layout_alignParentBottom="true"
-            app:menu="@menu/navigation"
-            app:itemIconTint="@color/white"
-            app:itemTextColor="@color/menu_text_color_inverse"
-            app:itemBackground="@drawable/menu_background_color_inverse" />
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

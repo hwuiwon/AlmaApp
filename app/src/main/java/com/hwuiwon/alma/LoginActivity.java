@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         if (saveLogin) {
             usernameET.setText(loginPrefs.getString("username", ""));
             usernameCB.setChecked(true);
+            passwordET.requestFocus();
         }
 
         passwordET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -204,6 +205,8 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("id", String.valueOf(usernameET.getText()));
+                intent.putExtra("pass", String.valueOf(passwordET.getText()));
                 startActivity(intent);
             } else if (status == 405) {
                 Toast.makeText(LoginActivity.this, "Alma is currently undergoing maintenance", Toast.LENGTH_LONG).show();

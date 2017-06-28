@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 public class MoreOverviewActivity extends AppCompatActivity {
 
-    private TextView classNameTV;
-    private TextView gradeTV;
     private TextView currentMenuTV;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -28,7 +26,6 @@ public class MoreOverviewActivity extends AppCompatActivity {
             }
             return false;
         }
-
     };
 
     @Override
@@ -39,9 +36,9 @@ public class MoreOverviewActivity extends AppCompatActivity {
         Overview overview = getIntent().getParcelableExtra("overview");
 
         currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
-        classNameTV = (TextView) findViewById(R.id.classNameTV);
+        TextView classNameTV = (TextView) findViewById(R.id.classNameTV);
         classNameTV.setText(overview.getClassName());
-        gradeTV = (TextView) findViewById(R.id.gradeTV);
+        TextView gradeTV = (TextView) findViewById(R.id.gradeTV);
         gradeTV.setText(overview.getAlphabetGrade());
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
