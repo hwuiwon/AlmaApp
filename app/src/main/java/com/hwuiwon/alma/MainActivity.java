@@ -1,5 +1,6 @@
 package com.hwuiwon.alma;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
@@ -16,6 +19,15 @@ public class MainActivity extends AppCompatActivity
 
     ListView overviewLV;
     String barTitle = "Overview";
+    // Sample Overviews
+    private Overview[] overviews = {new Overview("P1", "AP Calculus BC", "A-"),
+                                    new Overview("P2", "AP Economics", "A"),
+                                    new Overview("P3", "AP Physics 1", "A+"),
+                                    new Overview("P4", "English 11", "A"),
+                                    new Overview("P5", "AP Computer Science", "A+"),
+                                    new Overview("P6", "HS PE", "A"),
+                                    new Overview("P7", "Study Hall 1", "-"),
+                                    new Overview("P8", "Study Hall 2", "-")};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +38,24 @@ public class MainActivity extends AppCompatActivity
 
         // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
         overviewLV = (ListView)findViewById(R.id.overviewLV);
-        OverviewAdapter adapter = new OverviewAdapter(this);
+        final OverviewAdapter adapter = new OverviewAdapter(this);
 
-        // Sample Overviews
-        adapter.addOverview(new Overview("P1", "AP Calculus BC", "A-"));
-        adapter.addOverview(new Overview("P2", "AP Economics", "A"));
-        adapter.addOverview(new Overview("P3", "AP Physics 1", "A+"));
-        adapter.addOverview(new Overview("P4", "English 11", "A"));
-        adapter.addOverview(new Overview("P5", "AP Computer Science", "A+"));
-        adapter.addOverview(new Overview("P6", "HS PE", "A"));
-        adapter.addOverview(new Overview("P7", "Study Hall 1", "-"));
-        adapter.addOverview(new Overview("P8", "Study Hall 2", "-"));
+        for (Overview ov : overviews) {
+            adapter.addOverview(ov);
+        }
+
         overviewLV.setAdapter(adapter);
-
-        // TODO : Create Onclick for listview
+        overviewLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(), MoreOverviewActivity.class);
+                Overview overview = overviews[i];
+                String className = overviews[i].getClassName();
+                intent.putExtra("overview", overview);
+                intent.putExtra("className", className);
+                startActivity(intent);
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

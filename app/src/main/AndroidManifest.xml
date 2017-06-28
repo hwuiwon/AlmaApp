@@ -25,6 +25,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.Alma.Main" />
+        <activity
+            android:name=".MoreOverviewActivity"
+            android:label="@string/title_activity_more_overview"
             android:theme="@style/AppTheme.Alma.Main"></activity>
     </application>
 
