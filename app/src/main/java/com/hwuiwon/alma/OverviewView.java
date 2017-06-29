@@ -19,6 +19,7 @@ public class OverviewView extends RelativeLayout {
         textView1 = findViewById(R.id.overviewTV1);
         textView2 = findViewById(R.id.overviewTV2);
         textView3 = findViewById(R.id.overviewTV3);
+
         textView1.setText(overview.getPeriod());
         textView2.setText(overview.getClassName());
         textView3.setText(overview.getAlphabetGrade());

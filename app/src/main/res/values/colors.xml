@@ -8,6 +8,7 @@
 
     <color name="almaPrimary">#E07637</color>
     <color name="almaPrimary_dark">#CD6131</color>
+    <color name="almaPrimary_light">#F2C7AE</color>
     <color name="alma_accent">#FFFFFF</color>
 
     <color name="color_testing">#F1F1F4</color>
@@ -21,4 +22,6 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="red">#FF0000</color>
 </resources>

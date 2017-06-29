@@ -18,8 +18,8 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ListView overviewLV;
-    String barTitle = "Overview";
+    private ListView overviewLV;
+    private String barTitle = "Overview";
     private String username;
     private String password;
 

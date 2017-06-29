@@ -5,47 +5,55 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hwuiwon.alma.MoreOverviewActivity">
+    tools:context="com.hwuiwon.alma.MoreOverviewActivity"
+    android:background="@color/almaPrimary">
 
     <TextView
         android:id="@+id/classNameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Class Name"
-        android:textColor="@color/jet"
+        android:textColor="@color/white"
         android:textSize="70px"
         android:textStyle="bold"
         android:paddingTop="@dimen/activity_margin"
         android:paddingLeft="@dimen/activity_margin"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="8dp"
+        android:background="@color/almaPrimary"/>
 
     <TextView
         android:id="@+id/gradeTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="A+"
-        android:textColor="@color/jet"
+        android:textColor="@color/white"
         android:textSize="70px"
         android:textStyle="bold"
         android:padding="@dimen/activity_margin"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:background="@color/almaPrimary"/>
 
     <TextView
         android:id="@+id/currentMenuTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Grades"
+        android:textColor="@color/white"
         android:textSize="40px"
         android:paddingLeft="@dimen/activity_margin"
         android:paddingBottom="@dimen/activity_margin"
         android:layout_below="@+id/classNameTV"
-        android:textColor="@color/oil"/>
+        android:background="@color/almaPrimary"/>
 
     <ListView
         android:id="@+id/moreOverviewLV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/currentMenuTV">
+        android:layout_below="@+id/currentMenuTV"
+        android:layout_above="@+id/navigation"
+        android:background="@color/color_testing"
+        android:divider="@color/almaPrimary"
+        android:dividerHeight="1dp">
     </ListView>
 
     <android.support.design.widget.BottomNavigationView

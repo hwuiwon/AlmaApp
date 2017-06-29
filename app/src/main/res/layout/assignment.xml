@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_margin">
+
+    <TextView
+        android:id="@+id/assignmentTV1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/amString1"
+        android:textSize="45px"
+        android:textColor="@color/red"
+        android:paddingBottom="@dimen/assignment_margin"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/assignmentTV2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/amString2"
+        android:textSize="50px"
+        android:textColor="@color/jet"
+        android:paddingRight="@dimen/overview_margin"
+        android:paddingBottom="@dimen/assignment_margin2"
+        android:layout_below="@id/assignmentTV1"/>
+
+    <TextView
+        android:id="@+id/assignmentTV3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/amString3"
+        android:textSize="50px"
+        android:textColor="@color/jet"
+        android:layout_alignBaseline="@+id/assignmentTV2"
+        android:layout_toEndOf="@+id/assignmentTV2" />
+
+    <TextView
+        android:id="@+id/assignmentTV4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/amString4"
+        android:textSize="40px"
+        android:textColor="@color/jet"
+        android:layout_below="@id/assignmentTV2"/>
+
+</RelativeLayout>

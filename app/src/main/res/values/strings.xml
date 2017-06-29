@@ -2,7 +2,6 @@
     <string name="app_name">Alma</string>
     <string name="developer">Developed by Huey Kim</string>
 
-    <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
@@ -17,4 +16,17 @@
     <string name="title_activity_more_overview">MoreOverviewActivity</string>
     <string name="title_home">Grades</string>
     <string name="title_assignments">Assignments</string>
+
+    <string name="ovString1">P1</string>
+    <string name="ovString2">Class Name</string>
+    <string name="ovString3">Grade</string>
+
+    <string name="amString1">Final Exam</string>
+    <string name="amString2">5/30/17</string>
+    <string name="amString3">Final Draft of DOAS Essay Due</string>
+    <string name="amString4">
+        1 hour to work on it QUIETLY in class.
+        Submit to turnitin.com
+        Remaining time to be used preparing for upcoming exams.
+    </string>
 </resources>

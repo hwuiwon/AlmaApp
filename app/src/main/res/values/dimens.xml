@@ -9,4 +9,6 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="overview_margin">35dp</dimen>
+    <dimen name="assignment_margin">6dp</dimen>
+    <dimen name="assignment_margin2">10dp</dimen>
 </resources>
