@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_margin">
+
+    <TextView
+        android:id="@+id/gradeTV1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Final Draft of DOAS Essay Due"
+        android:textSize="50px"
+        android:textColor="@color/jet"
+        android:paddingBottom="@dimen/assignment_margin"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/gradeTV2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gradeTV1"
+        android:text="A"
+        android:textSize="50px"
+        android:textColor="@color/red"
+        android:textStyle="bold"
+        android:paddingRight="@dimen/assignment_margin"
+        android:paddingBottom="@dimen/assignment_margin"/>
+
+    <TextView
+        android:id="@+id/gradeTV3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/gradeTV2"
+        android:layout_alignBaseline="@+id/gradeTV2"
+        android:text="(95%)"
+        android:textSize="50px"
+        android:textColor="@color/red"
+        android:paddingBottom="@dimen/assignment_margin"/>
+
+    <TextView
+        android:id="@+id/gradeTV4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gradeTV3"
+        android:text="Updated at 6/3/17"
+        android:textSize="40px"
+        android:textColor="@color/jet"/>
+
+    <TextView
+        android:id="@+id/gradeTV5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="10%"
+        android:textSize="50px"
+        android:textColor="@color/jet"
+        android:textStyle="italic"/>
+
+</RelativeLayout>

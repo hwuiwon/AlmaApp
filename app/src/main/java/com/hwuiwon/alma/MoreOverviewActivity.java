@@ -27,6 +27,14 @@ public class MoreOverviewActivity extends AppCompatActivity {
                             "on your outline in class.")
     };
 
+    private Grade[] grades = {
+            new Grade("Final Draft of DOAS Essay Due", "A", "95%", "6/3/17", "10%"),
+            new Grade("Participation Days 31-40", "A", "94%", "5/29/17", "3.1%"),
+            new Grade("Notebook/Folder Check #4", "A+", "98%", "5/25/17", "3.1%"),
+            new Grade("Topic + Thesis + Outline", "A+", "100%", "5/19/17", "1.9%"),
+            new Grade("Death of a Salesman Test", "A", "95.5%", "5/19/17", "7.5%")
+    };
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -35,9 +43,11 @@ public class MoreOverviewActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.nav_grades:
                     currentMenuTV.setText("Grades");
+                    moreOverviewLV.setAdapter(makeGradeAdapter());
                     return true;
                 case R.id.nav_assignments:
                     currentMenuTV.setText("Assignments");
+                    moreOverviewLV.setAdapter(makeAssignmentAdapter());
                     return true;
             }
             return false;
@@ -62,7 +72,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // Set List view to default
-        moreOverviewLV.setAdapter(makeAssignmentAdapter());
+        moreOverviewLV.setAdapter(makeGradeAdapter());
     }
 
     public AssignmentAdapter makeAssignmentAdapter() {
@@ -74,6 +84,14 @@ public class MoreOverviewActivity extends AppCompatActivity {
         return adapter;
     }
 
+    public GradeAdapter makeGradeAdapter() {
+        final GradeAdapter adapter = new GradeAdapter(this);
+        for (Grade grade : grades) {
+            adapter.addGrade(grade);
+        }
+
+        return adapter;
+    }
 
     @Override
     public void onBackPressed() {
