@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Overviews;
 
 import android.content.Context;
 import android.view.View;
@@ -7,16 +7,16 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
-public class AssignmentAdapter extends BaseAdapter {
+public class OverviewAdapter extends BaseAdapter {
     Context context;
-    ArrayList<Assignment> datas = new ArrayList<>();
+    ArrayList<Overview> datas = new ArrayList<>();
 
-    public AssignmentAdapter(Context context) {
+    public OverviewAdapter(Context context) {
         this.context = context;
     }
 
-    public void addAssignment(Assignment assignment) {
-        datas.add(assignment);
+    public void addOverview(Overview overview) {
+        datas.add(overview);
     }
 
     @Override
@@ -36,13 +36,13 @@ public class AssignmentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        AssignmentView assignmentView = null;
+        OverviewView overviewView = null;
         if (view == null) {
-            assignmentView = new AssignmentView(context, datas.get(i));
+            overviewView = new OverviewView(context, datas.get(i));
         } else {
-            assignmentView = (AssignmentView) view;
-            assignmentView.setData(datas.get(i));
+            overviewView = (OverviewView) view;
+            overviewView.setData(datas.get(i));
         }
-        return assignmentView;
+        return overviewView;
     }
 }

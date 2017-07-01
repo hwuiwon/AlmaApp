@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Overviews;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,12 +6,21 @@ import android.os.Parcelable;
 public class Overview implements Parcelable {
     private String period;
     private String className;
+    private String originalClassName;
     private String alphabetGrade;
+    private String roomNum;
+    private String[] notNeeded = {"S1", "S2", "Ⓐ", "Ⓑ", "&", "§1", "§2", "^\\s+"};
 
-    public Overview(String period, String className, String alphabetGrade) {
+    public Overview(String period, String className, String alphabetGrade, String roomNum) {
+        originalClassName = className;
+        for (String words : notNeeded) {
+            className = className.replaceAll(words, "");
+        }
+
         this.period = period;
         this.className = className;
         this.alphabetGrade = alphabetGrade;
+        this.roomNum = roomNum;
     }
 
     protected Overview(Parcel in) {
@@ -42,6 +51,10 @@ public class Overview implements Parcelable {
 
     public String getAlphabetGrade() {
         return alphabetGrade;
+    }
+
+    public String getRoomNum() {
+        return roomNum;
     }
 
     @Override

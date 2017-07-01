@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Grades;
 
 import android.content.Context;
 import android.view.View;
@@ -7,16 +7,16 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
-public class OverviewAdapter extends BaseAdapter {
+public class GradeAdapter extends BaseAdapter {
     Context context;
-    ArrayList<Overview> datas = new ArrayList<>();
+    ArrayList<Grade> datas = new ArrayList<>();
 
-    public OverviewAdapter(Context context) {
+    public GradeAdapter(Context context) {
         this.context = context;
     }
 
-    public void addOverview(Overview overview) {
-        datas.add(overview);
+    public void addGrade(Grade grade) {
+        datas.add(grade);
     }
 
     @Override
@@ -36,13 +36,13 @@ public class OverviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        OverviewView overviewView = null;
+        GradeView gradeView = null;
         if (view == null) {
-            overviewView = new OverviewView(context, datas.get(i));
+            gradeView = new GradeView(context, datas.get(i));
         } else {
-            overviewView = (OverviewView) view;
-            overviewView.setData(datas.get(i));
+            gradeView = (GradeView) view;
+            gradeView.setData(datas.get(i));
         }
-        return overviewView;
+        return gradeView;
     }
 }

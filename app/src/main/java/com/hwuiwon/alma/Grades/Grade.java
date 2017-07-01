@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Grades;
 
 public class Grade {
     private String assignmentName;

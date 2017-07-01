@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/amString1"
-        android:textSize="45px"
+        android:textSize="18dp"
         android:textColor="@color/red"
         android:paddingBottom="@dimen/assignment_margin"
         android:textStyle="bold"/>
@@ -20,10 +20,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/amString2"
-        android:textSize="50px"
+        android:textSize="19dp"
         android:textColor="@color/jet"
         android:paddingRight="@dimen/overview_margin"
-        android:paddingBottom="@dimen/assignment_margin2"
         android:layout_below="@id/assignmentTV1"/>
 
     <TextView
@@ -31,17 +30,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/amString3"
-        android:textSize="50px"
+        android:textSize="19dp"
         android:textColor="@color/jet"
         android:layout_alignBaseline="@+id/assignmentTV2"
-        android:layout_toEndOf="@+id/assignmentTV2" />
+        android:layout_toEndOf="@+id/assignmentTV2"
+        android:paddingBottom="@dimen/assignment_margin2"/>
 
     <TextView
         android:id="@+id/assignmentTV4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/amString4"
-        android:textSize="40px"
+        android:textSize="19dp"
         android:textColor="@color/jet"
         android:layout_below="@id/assignmentTV2"/>
 

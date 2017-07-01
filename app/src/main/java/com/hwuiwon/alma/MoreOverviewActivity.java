@@ -8,6 +8,12 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hwuiwon.alma.Assignments.Assignment;
+import com.hwuiwon.alma.Assignments.AssignmentAdapter;
+import com.hwuiwon.alma.Grades.Grade;
+import com.hwuiwon.alma.Grades.GradeAdapter;
+import com.hwuiwon.alma.Overviews.Overview;
+
 public class MoreOverviewActivity extends AppCompatActivity {
 
     private TextView currentMenuTV;
@@ -28,11 +34,11 @@ public class MoreOverviewActivity extends AppCompatActivity {
     };
 
     private Grade[] grades = {
-            new Grade("Final Draft of DOAS Essay Due", "A", "95%", "6/3/17", "10%"),
-            new Grade("Participation Days 31-40", "A", "94%", "5/29/17", "3.1%"),
-            new Grade("Notebook/Folder Check #4", "A+", "98%", "5/25/17", "3.1%"),
-            new Grade("Topic + Thesis + Outline", "A+", "100%", "5/19/17", "1.9%"),
-            new Grade("Death of a Salesman Test", "A", "95.5%", "5/19/17", "7.5%")
+            new Grade("Final Draft of DOAS Essay Due", "10%", "A", "(95%)", "6/3/17"),
+            new Grade("Participation Days 31-40", "3.1%", "A", "(94%)", "5/29/17"),
+            new Grade("Notebook/Folder Check #4", "3.1%", "A+", "(98%)", "5/25/17"),
+            new Grade("Topic + Thesis + Outline", "1.9%", "A+", "(100%)", "5/19/17"),
+            new Grade("Death of a Salesman Test", "7.5%", "A", "(95.5%)", "5/19/17")
     };
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

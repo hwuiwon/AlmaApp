@@ -18,8 +18,9 @@
     <string name="title_assignments">Assignments</string>
 
     <string name="ovString1">P1</string>
-    <string name="ovString2">Class Name</string>
-    <string name="ovString3">Grade</string>
+    <string name="ovString2">AP Physics 1</string>
+    <string name="ovString3">A+</string>
+    <string name="ovString4">Room 9</string>
 
     <string name="amString1">Final Exam</string>
     <string name="amString2">5/30/17</string>

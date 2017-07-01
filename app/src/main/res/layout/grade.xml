@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Final Draft of DOAS Essay Due"
-        android:textSize="50px"
+        android:textSize="19dp"
         android:textColor="@color/jet"
         android:paddingBottom="@dimen/assignment_margin"
         android:textStyle="bold"/>
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/gradeTV1"
         android:text="A"
-        android:textSize="50px"
+        android:textSize="19dp"
         android:textColor="@color/red"
         android:textStyle="bold"
         android:paddingRight="@dimen/assignment_margin"
@@ -34,7 +34,7 @@
         android:layout_toRightOf="@+id/gradeTV2"
         android:layout_alignBaseline="@+id/gradeTV2"
         android:text="(95%)"
-        android:textSize="50px"
+        android:textSize="19dp"
         android:textColor="@color/red"
         android:paddingBottom="@dimen/assignment_margin"/>
 
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/gradeTV3"
         android:text="Updated at 6/3/17"
-        android:textSize="40px"
+        android:textSize="15dp"
         android:textColor="@color/jet"/>
 
     <TextView
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:text="10%"
-        android:textSize="50px"
+        android:textSize="19dp"
         android:textColor="@color/jet"
         android:textStyle="italic"/>
 

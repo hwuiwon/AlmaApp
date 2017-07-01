@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Assignments;
 
 public class Assignment {
     private String dueDate;

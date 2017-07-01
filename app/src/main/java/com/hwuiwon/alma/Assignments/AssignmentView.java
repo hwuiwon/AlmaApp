@@ -1,9 +1,11 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Assignments;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.hwuiwon.alma.R;
 
 public class AssignmentView extends RelativeLayout {
     TextView textView1;

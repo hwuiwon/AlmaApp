@@ -8,12 +8,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.hwuiwon.alma.Overviews.Overview;
+import com.hwuiwon.alma.Overviews.OverviewAdapter;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -22,15 +28,16 @@ public class MainActivity extends AppCompatActivity
     private String barTitle = "Overview";
     private String username;
     private String password;
+    private HashMap<String, String> classIDs = null;
 
-    private Overview[] overviews = {new Overview("P1", "AP Calculus BC", "A-"),
-                                    new Overview("P2", "AP Economics", "A"),
-                                    new Overview("P3", "AP Physics 1", "A+"),
-                                    new Overview("P4", "English 11", "A"),
-                                    new Overview("P5", "AP Computer Science", "A+"),
-                                    new Overview("P6", "HS PE", "A"),
-                                    new Overview("P7", "Study Hall 1", "-"),
-                                    new Overview("P8", "Study Hall 2", "-")};
+    private Overview[] overviews = {new Overview("P1", "Ⓐ S1 & S2 AP PHYSICS 1", "A+", "ROOM 10"),
+                                    new Overview("P2", "Ⓐ S1 & S2 AP ECONOMICS", "A", "ROOM 7"),
+                                    new Overview("P3", "Ⓐ S1 & S2 ENGLISH 11 §1", "A", "ROOM 5"),
+                                    new Overview("P4", "Ⓐ S1 & S2 AP COMPUTER SCIENCE", "A+", "ROOM 11"),
+                                    new Overview("P5", "STUDY HALL 1", "-", "Room 11"),
+                                    new Overview("P6", "STUDY HALL 2", "-", "ASSEMBLY"),
+                                    new Overview("P7", "Ⓑ S2 HS PE §2", "A", "ASSEMBLY"),
+                                    new Overview("P8", "Ⓑ S1 & S2 AP CALCULUS BC §2", "A-", "ROOM 6")};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,12 @@ public class MainActivity extends AppCompatActivity
 
         for (Overview ov : overviews) {
             adapter.addOverview(ov);
+        }
+
+        try {
+            classIDs = new ClassIdTask().execute(username, password).get();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         overviewLV.setAdapter(adapter);
