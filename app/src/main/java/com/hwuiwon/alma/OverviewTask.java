@@ -1,6 +1,7 @@
 package com.hwuiwon.alma;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.hwuiwon.alma.Overviews.Overview;
 
@@ -30,9 +31,12 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
 
             for (Element e : elements) {
                 if (!e.select("td.period").text().equals(null)) {
+                    // Log.d("OverviewList1", e.select("td.period").text() + " " + e.select("td.class").text() +
+                    //         " " + e.select("td.location").text() + " " + e.select("td.grade").text());
                     overviews[tmp] = new Overview(e.select("td.period").text(), e.select("td.class").text(),
                                                   e.select("td.location").text(), e.select("td.grade").text());
                 } else {
+                    // Log.d("OverviewList2", e.select("td.class").text() + " " + e.select("td.grade").text());
                     overviews[tmp] = new Overview("", e.select("td.class").text(),
                                                   "", e.select("td.grade").text());
                 }

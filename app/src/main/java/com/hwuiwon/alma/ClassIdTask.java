@@ -35,9 +35,8 @@ class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
 
             Elements options = document.getElementsByAttributeValue("name", "classId").get(0).children();
             for (Element option : options) {
+                // Log.d("ClassIDs", option.text() + " " + option.val());
                 temp.put(option.text(), option.val());
-                Log.d("tag", option.text());
-                Log.d("tag", option.val());
             }
 
         } catch (IOException e) {
