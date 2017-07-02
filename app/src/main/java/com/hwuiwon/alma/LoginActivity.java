@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -150,7 +152,6 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String username;
         private final String password;
-        private final String url = "https://spps.getalma.com/";
         private boolean connected = true;
         private int status;
 
@@ -172,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
             if (!connected) { return false; }
 
             try {
-                urlConnection = new URL(url+"login").openConnection();
+                urlConnection = new URL("https://spps.getalma.com/login").openConnection();
                 HttpsURLConnection https = (HttpsURLConnection) urlConnection;
                 https.setDoOutput(true);
                 https.setRequestMethod("POST");

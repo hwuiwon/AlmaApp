@@ -1,6 +1,7 @@
 package com.hwuiwon.alma;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -29,12 +30,14 @@ class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
 
             Map<String, String> loginCookies = response.cookies();
 
-            Document document = Jsoup.connect(url + "grades")
+            Document document = Jsoup.connect(url + "home/grades")
                     .timeout(0).cookies(loginCookies).post();
 
             Elements options = document.getElementsByAttributeValue("name", "classId").get(0).children();
             for (Element option : options) {
                 temp.put(option.text(), option.val());
+                Log.d("tag", option.text());
+                Log.d("tag", option.val());
             }
 
         } catch (IOException e) {

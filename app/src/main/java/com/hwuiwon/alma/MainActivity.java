@@ -17,9 +17,7 @@ import android.widget.ListView;
 import com.hwuiwon.alma.Overviews.Overview;
 import com.hwuiwon.alma.Overviews.OverviewAdapter;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,14 +28,17 @@ public class MainActivity extends AppCompatActivity
     private String password;
     private HashMap<String, String> classIDs = null;
 
-    private Overview[] overviews = {new Overview("P1", "Ⓐ S1 & S2 AP PHYSICS 1", "A+", "ROOM 10"),
-                                    new Overview("P2", "Ⓐ S1 & S2 AP ECONOMICS", "A", "ROOM 7"),
-                                    new Overview("P3", "Ⓐ S1 & S2 ENGLISH 11 §1", "A", "ROOM 5"),
-                                    new Overview("P4", "Ⓐ S1 & S2 AP COMPUTER SCIENCE", "A+", "ROOM 11"),
-                                    new Overview("P5", "STUDY HALL 1", "-", "Room 11"),
-                                    new Overview("P6", "STUDY HALL 2", "-", "ASSEMBLY"),
-                                    new Overview("P7", "Ⓑ S2 HS PE §2", "A", "ASSEMBLY"),
-                                    new Overview("P8", "Ⓑ S1 & S2 AP CALCULUS BC §2", "A-", "ROOM 6")};
+    private Overview[] overviews = null;
+
+//    private Overview[] overviews = { new Overview("P1", "Ⓐ S1 & S2 AP PHYSICS 1", "A+", "ROOM 10"),
+//                                     new Overview("P2", "Ⓐ S1 & S2 AP ECONOMICS", "A", "ROOM 7"),
+//                                     new Overview("P3", "Ⓐ S1 & S2 ENGLISH 11 §1", "A", "ROOM 5"),
+//                                     new Overview("P4", "Ⓐ S1 & S2 AP COMPUTER SCIENCE", "A+", "ROOM 11"),
+//                                     new Overview("P5", "STUDY HALL 1", "-", "Room 11"),
+//                                     new Overview("P6", "STUDY HALL 2", "-", "ASSEMBLY"),
+//                                     new Overview("P7", "Ⓑ S2 HS PE §2", "A", "ASSEMBLY"),
+//                                     new Overview("P8", "Ⓑ S1 & S2 AP CALCULUS BC §2", "A-", "ROOM 6")};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,12 @@ public class MainActivity extends AppCompatActivity
         // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
         overviewLV = (ListView)findViewById(R.id.overviewLV);
         final OverviewAdapter adapter = new OverviewAdapter(this);
+
+        try {
+            overviews = new OverviewTask().execute(username, password).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         for (Overview ov : overviews) {
             adapter.addOverview(ov);
