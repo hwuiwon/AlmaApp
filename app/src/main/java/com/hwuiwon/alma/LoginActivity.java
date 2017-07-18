@@ -154,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
         private final String password;
         private boolean connected = true;
         private int status;
+        private String cookie = "";
 
         private URLConnection urlConnection = null;
         private OutputStream outputStream = null;
@@ -181,6 +182,7 @@ public class LoginActivity extends AppCompatActivity {
                 outputStream.write(payload.getBytes());
                 https.connect();
                 status = https.getResponseCode();
+                cookie = https.getHeaderField("Set-Cookie").split(";")[0];
                 https.disconnect();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -198,6 +200,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("id", String.valueOf(usernameET.getText()));
                 intent.putExtra("pass", String.valueOf(passwordET.getText()));
+                intent.putExtra("cookie", cookie);
                 startActivity(intent);
             } else if (status == 405) {
                 Toast.makeText(LoginActivity.this, "Alma is currently undergoing maintenance", Toast.LENGTH_LONG).show();

@@ -66,6 +66,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_more_overview);
 
         Overview overview = getIntent().getParcelableExtra("overview");
+        String cookie = getIntent().getStringExtra("cookie");
 
         currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
         classNameTV = (TextView) findViewById(R.id.classNameTV);

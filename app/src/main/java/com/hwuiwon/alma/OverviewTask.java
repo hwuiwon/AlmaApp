@@ -20,6 +20,7 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
         Overview[] overviews = null;
         String username = strings[0];
         String password = strings[1];
+        String cookie = strings[2];
         String url = "https://spps.getalma.com/";
         int tmp = 0;
 

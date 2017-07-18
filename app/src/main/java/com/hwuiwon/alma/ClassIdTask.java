@@ -21,17 +21,20 @@ class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
         HashMap<String, String> temp = new HashMap<>();
         String username = strings[0];
         String password = strings[1];
+        String cookie = strings[2];
         String url = "https://spps.getalma.com/";
 
         try {
+            /*
             Connection.Response response = Jsoup.connect(url + "login")
                     .data("username", username).data("password", password)
                     .method(Connection.Method.POST).execute();
 
             Map<String, String> loginCookies = response.cookies();
+            */
 
             Document document = Jsoup.connect(url + "home/grades")
-                    .timeout(0).cookies(loginCookies).post();
+                    .timeout(0).header("Cookie", cookie).post();
 
             Elements options = document.getElementsByAttributeValue("name", "classId").get(0).children();
             for (Element option : options) {

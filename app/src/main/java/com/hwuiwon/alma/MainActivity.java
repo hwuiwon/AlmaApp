@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity
     private String barTitle = "Overview";
     private String username;
     private String password;
+    private String cookie;
     private HashMap<String, String> classIDs = null;
 
     private Overview[] overviews = null;
@@ -49,13 +50,14 @@ public class MainActivity extends AppCompatActivity
 
         username = getIntent().getStringExtra("id");
         password = getIntent().getStringExtra("pass");
+        cookie = getIntent().getStringExtra("cookie");
 
         // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
         overviewLV = (ListView)findViewById(R.id.overviewLV);
         final OverviewAdapter adapter = new OverviewAdapter(this);
 
         try {
-            overviews = new OverviewTask().execute(username, password).get();
+            overviews = new OverviewTask().execute(username, password, cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         try {
-            classIDs = new ClassIdTask().execute(username, password).get();
+            classIDs = new ClassIdTask().execute(username, password, cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(getApplicationContext(), MoreOverviewActivity.class);
                 Overview overview = overviews[i];
                 intent.putExtra("overview", overview);
+                intent.putExtra("cookie", cookie);
                 startActivity(intent);
             }
         });
@@ -119,19 +122,23 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.nav_overview) {
-            barTitle = "Overview";
-            getSupportActionBar().setTitle(barTitle);
-        } else if (id == R.id.nav_assignments) {
-            barTitle = "Assignments";
-            getSupportActionBar().setTitle(barTitle);
-        } else if (id == R.id.nav_grades) {
-            barTitle = "Grades";
-            getSupportActionBar().setTitle(barTitle);
-        } else if (id == R.id.nav_classmates) {
-            barTitle = "Classmates";
-            getSupportActionBar().setTitle(barTitle);
+        switch(id){
+            case R.id.nav_assignments:
+                barTitle = "Assignments";
+                break;
+            case R.id.nav_grades:
+                barTitle = "Grades";
+                break;
+            case R.id.nav_classmates:
+                barTitle = "Classmates";
+                break;
+            case R.id.nav_overview:
+            default:
+                barTitle = "Overview";
+                break;
         }
+
+        getSupportActionBar().setTitle(barTitle);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

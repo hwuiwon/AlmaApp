@@ -23,18 +23,21 @@ public class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
         String username = strings[0];
         String password = strings[1];
         String classID = strings[2];
+        String cookie = strings[3];
         String url = "https://spps.getalma.com/";
         int tmp = 0;
 
         try {
+            /*
             Connection.Response response = Jsoup.connect(url + "login")
                     .data("username", username).data("password", password)
                     .method(Connection.Method.POST).execute();
 
             Map<String, String> loginCookies = response.cookies();
+            */
 
             Document document = Jsoup.connect(url + "home/assignments?classId=" + classID)
-                    .timeout(0).cookies(loginCookies).post();
+                    .timeout(0).header("Cookie", cookie).post();
 
             Elements elements = document.select("tbody > tr > td");
 
