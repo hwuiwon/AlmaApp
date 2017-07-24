@@ -2,6 +2,7 @@ package com.hwuiwon.alma;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringDef;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -13,6 +14,8 @@ import com.hwuiwon.alma.Assignments.AssignmentAdapter;
 import com.hwuiwon.alma.Grades.Grade;
 import com.hwuiwon.alma.Grades.GradeAdapter;
 import com.hwuiwon.alma.Overviews.Overview;
+
+import java.util.concurrent.ExecutionException;
 
 public class MoreOverviewActivity extends AppCompatActivity {
 
@@ -82,19 +85,24 @@ public class MoreOverviewActivity extends AppCompatActivity {
         moreOverviewLV.setAdapter(makeGradeAdapter());
     }
 
-    public AssignmentAdapter makeAssignmentAdapter() {
-        final AssignmentAdapter adapter = new AssignmentAdapter(this);
-        for (Assignment assignment : assignments) {
-            adapter.addAssignment(assignment);
+    public GradeAdapter makeGradeAdapter() {
+        final GradeAdapter adapter = new GradeAdapter(this);
+        try {
+            grades = new GradeTask().execute(username, password, classID).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (Grade grade : grades) {
+            adapter.addGrade(grade);
         }
 
         return adapter;
     }
 
-    public GradeAdapter makeGradeAdapter() {
-        final GradeAdapter adapter = new GradeAdapter(this);
-        for (Grade grade : grades) {
-            adapter.addGrade(grade);
+    public AssignmentAdapter makeAssignmentAdapter() {
+        final AssignmentAdapter adapter = new AssignmentAdapter(this);
+        for (Assignment assignment : assignments) {
+            adapter.addAssignment(assignment);
         }
 
         return adapter;

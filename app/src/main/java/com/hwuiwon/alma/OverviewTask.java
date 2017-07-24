@@ -12,7 +12,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-class OverviewTask extends AsyncTask<String, Void, Overview[]> {
+public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
 
     @Override
     protected Overview[] doInBackground(String... strings) {
@@ -25,7 +25,6 @@ class OverviewTask extends AsyncTask<String, Void, Overview[]> {
         try {
             Document document = Jsoup.connect(url)
                     .header("Cookie", cookie).post();
-            Log.d("tag", document.outerHtml());
             Elements elements = document.select("tbody > tr > td:not(:has(*))");
 
             overviews = new Overview[elements.size()];

@@ -62,6 +62,10 @@ public class Overview implements Parcelable {
         return roomNum;
     }
 
+    public String getOriginalClassName() {
+        return originalClassName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
