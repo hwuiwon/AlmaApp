@@ -3,11 +3,8 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -25,14 +22,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 
-import javax.net.ssl.HttpsURLConnection;
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -152,11 +145,7 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String username;
         private final String password;
-        private boolean connected = true;
         private int status;
-
-        private URLConnection urlConnection = null;
-        private OutputStream outputStream = null;
 
         UserLoginTask(String id, String pass) {
             username = id;
@@ -165,23 +154,12 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            ConnectivityManager cm =
-                    (ConnectivityManager)LoginActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-            String payload = "{\"username\":\""+username+"\",\"password\":\""+password+"\"}";
-            if (!connected) { return false; }
 
             try {
-                urlConnection = new URL("https://spps.getalma.com/login").openConnection();
-                HttpsURLConnection https = (HttpsURLConnection) urlConnection;
-                https.setDoOutput(true);
-                https.setRequestMethod("POST");
-                outputStream = https.getOutputStream();
-                outputStream.write(payload.getBytes());
-                https.connect();
-                status = https.getResponseCode();
-                https.disconnect();
+                Connection.Response response = Jsoup.connect("https://spps.getalma.com/login")
+                        .data("username", username).data("password", password)
+                        .method(Connection.Method.POST).execute();
+                status = response.statusCode();
             } catch (IOException e) {
                 e.printStackTrace();
             }

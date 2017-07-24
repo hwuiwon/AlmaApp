@@ -30,7 +30,7 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
             Elements elements = document.select("tbody > tr > td:not(:has(*))");
 
             for (Element e : elements) {
-                if (!e.select("td.period").text().trim().equals(null)) {
+                if (!e.select("td.period").text().trim().isEmpty()) {
                     // Log.d("OverviewList1", e.select("td.period").text() + " " + e.select("td.class").text() +
                     //         " " + e.select("td.location").text() + " " + e.select("td.grade").text());
                     overviews[tmp] = new Overview(e.select("td.period").text(), e.select("td.class").text(),

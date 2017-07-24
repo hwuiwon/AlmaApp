@@ -2,6 +2,7 @@ package com.hwuiwon.alma;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringDef;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -14,12 +15,18 @@ import com.hwuiwon.alma.Grades.Grade;
 import com.hwuiwon.alma.Grades.GradeAdapter;
 import com.hwuiwon.alma.Overviews.Overview;
 
+import java.util.concurrent.ExecutionException;
+
 public class MoreOverviewActivity extends AppCompatActivity {
 
     private TextView currentMenuTV;
     private TextView gradeTV;
     private TextView classNameTV;
     private ListView moreOverviewLV;
+
+    private String username = null;
+    private String password = null;
+    private String classID = null;
 
     private Assignment[] assignments = {
             new Assignment("5/30/17", "Final Draft of DOAS Essay Due", "Final Exam",
@@ -33,13 +40,15 @@ public class MoreOverviewActivity extends AppCompatActivity {
                             "on your outline in class.")
     };
 
-    private Grade[] grades = {
-            new Grade("Final Draft of DOAS Essay Due", "10%", "A", "(95%)", "6/3/17"),
-            new Grade("Participation Days 31-40", "3.1%", "A", "(94%)", "5/29/17"),
-            new Grade("Notebook/Folder Check #4", "3.1%", "A+", "(98%)", "5/25/17"),
-            new Grade("Topic + Thesis + Outline", "1.9%", "A+", "(100%)", "5/19/17"),
-            new Grade("Death of a Salesman Test", "7.5%", "A", "(95.5%)", "5/19/17")
-    };
+    private Grade[] grades = null;
+
+//    private Grade[] grades = {
+//            new Grade("Final Draft of DOAS Essay Due", "10%", "A", "(95%)", "6/3/17"),
+//            new Grade("Participation Days 31-40", "3.1%", "A", "(94%)", "5/29/17"),
+//            new Grade("Notebook/Folder Check #4", "3.1%", "A+", "(98%)", "5/25/17"),
+//            new Grade("Topic + Thesis + Outline", "1.9%", "A+", "(100%)", "5/19/17"),
+//            new Grade("Death of a Salesman Test", "7.5%", "A", "(95.5%)", "5/19/17")
+//    };
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -66,6 +75,9 @@ public class MoreOverviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_more_overview);
 
         Overview overview = getIntent().getParcelableExtra("overview");
+        classID = getIntent().getStringExtra("classID");
+        username = getIntent().getStringExtra("ID");
+        password = getIntent().getStringExtra("PASS");
 
         currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
         classNameTV = (TextView) findViewById(R.id.classNameTV);
@@ -77,23 +89,30 @@ public class MoreOverviewActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+
+
         // Set List view to default
         moreOverviewLV.setAdapter(makeGradeAdapter());
+    }
+
+    public GradeAdapter makeGradeAdapter() {
+        final GradeAdapter adapter = new GradeAdapter(this);
+        try {
+            grades = new GradeTask().execute(username, password, classID).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (Grade grade : grades) {
+            adapter.addGrade(grade);
+        }
+
+        return adapter;
     }
 
     public AssignmentAdapter makeAssignmentAdapter() {
         final AssignmentAdapter adapter = new AssignmentAdapter(this);
         for (Assignment assignment : assignments) {
             adapter.addAssignment(assignment);
-        }
-
-        return adapter;
-    }
-
-    public GradeAdapter makeGradeAdapter() {
-        final GradeAdapter adapter = new GradeAdapter(this);
-        for (Grade grade : grades) {
-            adapter.addGrade(grade);
         }
 
         return adapter;
