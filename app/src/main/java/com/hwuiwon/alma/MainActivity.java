@@ -2,6 +2,7 @@ package com.hwuiwon.alma;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,8 +25,6 @@ public class MainActivity extends AppCompatActivity
 
     private ListView overviewLV;
     private String barTitle = "Overview";
-    private String username;
-    private String password;
     private String cookie;
     private HashMap<String, String> classIDs = null;
 
@@ -48,8 +47,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        username = getIntent().getStringExtra("id");
-        password = getIntent().getStringExtra("pass");
         cookie = getIntent().getStringExtra("cookie");
 
         // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
@@ -117,9 +114,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         switch(id){

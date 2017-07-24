@@ -12,30 +12,26 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
+class OverviewTask extends AsyncTask<String, Void, Overview[]> {
 
     @Override
     protected Overview[] doInBackground(String... strings) {
 
         Overview[] overviews = null;
-        String username = strings[0];
-        String password = strings[1];
-        String cookie = strings[2];
+        String cookie = strings[0];
         String url = "https://spps.getalma.com/";
         int tmp = 0;
 
         try {
-            Document document = Jsoup.connect(url + "login")
-                    .data("username", username).data("password", password).post();
-
+            Document document = Jsoup.connect(url)
+                    .header("Cookie", cookie).post();
+            Log.d("tag", document.outerHtml());
             Elements elements = document.select("tbody > tr > td:not(:has(*))");
 
             overviews = new Overview[elements.size()];
 
             for (Element e : elements) {
                 if (!e.select("td.period").text().trim().isEmpty()) {
-                    // Log.d("OverviewList1", e.select("td.period").text() + " " + e.select("td.class").text() +
-                    //         " " + e.select("td.location").text() + " " + e.select("td.grade").text());
                     overviews[tmp] = new Overview(
                             e.select("td.time").text().trim(),
                             e.select("td.period").text().trim(),
@@ -45,7 +41,6 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
                             e.select("td.teacher").text().trim()
                     );
                 } else {
-                    // Log.d("OverviewList2", e.select("td.class").text() + " " + e.select("td.grade").text());
                     overviews[tmp] = new Overview(
                             "",
                             "",
