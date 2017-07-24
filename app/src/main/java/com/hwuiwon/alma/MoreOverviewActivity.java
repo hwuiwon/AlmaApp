@@ -24,21 +24,21 @@ public class MoreOverviewActivity extends AppCompatActivity {
     private Assignment[] assignments = {
             new Assignment("5/30/17", "Final Draft of DOAS Essay Due", "Final Exam",
                             "1 hour to work on it QUIETLY in class. \nSubmit to turnitin.com\n" +
-                            "Remaining time to be used preparing for upcoming exams."),
-            new Assignment("5/25/17", "Participation Days 31-40", "Participation", ""),
-            new Assignment("5/23/17", "Notebook/Folder Check #4", "Participation", ""),
+                            "Remaining time to be used preparing for upcoming exams.","",null),
+            new Assignment("5/25/17", "Participation Days 31-40", "Participation", "","",null),
+            new Assignment("5/23/17", "Notebook/Folder Check #4", "Participation", "","",null),
             new Assignment("5/19/17", "Topic + Thesis + Outline", "Homework",
                             "Have a look at the attached document and choose a topic. Create a " +
                             "\"working thesis\" and sketch out an outline. We will keep working " +
-                            "on your outline in class.")
+                            "on your outline in class.","",null)
     };
 
     private Grade[] grades = {
-            new Grade("Final Draft of DOAS Essay Due", "10%", "A", "(95%)", "6/3/17"),
-            new Grade("Participation Days 31-40", "3.1%", "A", "(94%)", "5/29/17"),
-            new Grade("Notebook/Folder Check #4", "3.1%", "A+", "(98%)", "5/25/17"),
-            new Grade("Topic + Thesis + Outline", "1.9%", "A+", "(100%)", "5/19/17"),
-            new Grade("Death of a Salesman Test", "7.5%", "A", "(95.5%)", "5/19/17")
+            new Grade("Final Draft of DOAS Essay Due", "10%", "A", "(95%)", "6/3/17",""),
+            new Grade("Participation Days 31-40", "3.1%", "A", "(94%)", "5/29/17",""),
+            new Grade("Notebook/Folder Check #4", "3.1%", "A+", "(98%)", "5/25/17",""),
+            new Grade("Topic + Thesis + Outline", "1.9%", "A+", "(100%)", "5/19/17",""),
+            new Grade("Death of a Salesman Test", "7.5%", "A", "(95.5%)", "5/19/17","")
     };
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

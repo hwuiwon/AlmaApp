@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         final OverviewAdapter adapter = new OverviewAdapter(this);
 
         try {
-            overviews = new OverviewTask().execute(username, password, cookie).get();
+            overviews = new OverviewTask().execute(cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         try {
-            classIDs = new ClassIdTask().execute(username, password, cookie).get();
+            classIDs = new ClassIdTask().execute(cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,14 +4,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Overview implements Parcelable {
+    private String time;
     private String period;
     private String className;
     private String originalClassName;
     private String alphabetGrade;
     private String roomNum;
+    private String teacher;
     private String[] notNeeded = {"S1", "S2", "Ⓐ", "Ⓑ", "&", "§1", "§2", "^\\s+"};
 
-    public Overview(String period, String className, String alphabetGrade, String roomNum) {
+    public Overview(String time, String period, String className, String alphabetGrade, String roomNum, String teacher) {
+
+        this.time = time;
         originalClassName = className;
         for (String words : notNeeded) {
             className = className.replaceAll(words, "");
@@ -21,6 +25,7 @@ public class Overview implements Parcelable {
         this.className = className;
         this.alphabetGrade = alphabetGrade;
         this.roomNum = roomNum;
+        this.teacher = teacher;
     }
 
     protected Overview(Parcel in) {

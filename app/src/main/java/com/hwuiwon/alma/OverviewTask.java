@@ -30,16 +30,30 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
 
             Elements elements = document.select("tbody > tr > td:not(:has(*))");
 
+            overviews = new Overview[elements.size()];
+
             for (Element e : elements) {
-                if (!e.select("td.period").text().trim().equals(null)) {
+                if (!e.select("td.period").text().trim().isEmpty()) {
                     // Log.d("OverviewList1", e.select("td.period").text() + " " + e.select("td.class").text() +
                     //         " " + e.select("td.location").text() + " " + e.select("td.grade").text());
-                    overviews[tmp] = new Overview(e.select("td.period").text(), e.select("td.class").text(),
-                                                  e.select("td.location").text(), e.select("td.grade").text());
+                    overviews[tmp] = new Overview(
+                            e.select("td.time").text().trim(),
+                            e.select("td.period").text().trim(),
+                            e.select("td.class").text().trim(),
+                            e.select("td.grade").text(),
+                            e.select("td.location").text().trim(),
+                            e.select("td.teacher").text().trim()
+                    );
                 } else {
                     // Log.d("OverviewList2", e.select("td.class").text() + " " + e.select("td.grade").text());
-                    overviews[tmp] = new Overview("", e.select("td.class").text(),
-                                                  "", e.select("td.grade").text());
+                    overviews[tmp] = new Overview(
+                            "",
+                            "",
+                            e.select("td.class").text().trim(),
+                            e.select("td.grade").text().trim(),
+                            "",
+                            e.select("td.teacher").text().trim()
+                    );
                 }
                 tmp++;
             }

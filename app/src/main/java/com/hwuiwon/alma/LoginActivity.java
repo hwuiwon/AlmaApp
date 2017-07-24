@@ -25,6 +25,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
@@ -170,20 +173,14 @@ public class LoginActivity extends AppCompatActivity {
                     (ConnectivityManager)LoginActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-            String payload = "{\"username\":\""+username+"\",\"password\":\""+password+"\"}";
             if (!connected) { return false; }
 
             try {
-                urlConnection = new URL("https://spps.getalma.com/login").openConnection();
-                HttpsURLConnection https = (HttpsURLConnection) urlConnection;
-                https.setDoOutput(true);
-                https.setRequestMethod("POST");
-                outputStream = https.getOutputStream();
-                outputStream.write(payload.getBytes());
-                https.connect();
-                status = https.getResponseCode();
-                cookie = https.getHeaderField("Set-Cookie").split(";")[0];
-                https.disconnect();
+                Connection.Response response = Jsoup.connect("https://spps.getalma.com/login")
+                        .data("username", username).data("password", password)
+                        .method(Connection.Method.POST).execute();
+                status = response.statusCode();
+                cookie = response.cookies().keySet().toArray()[0]+"="+response.cookies().values().toArray()[0];
             } catch (IOException e) {
                 e.printStackTrace();
             }
