@@ -20,6 +20,7 @@ import com.hwuiwon.alma.Overviews.Overview;
 import com.hwuiwon.alma.Overviews.OverviewAdapter;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,14 +33,14 @@ public class MainActivity extends AppCompatActivity
 
 //    private Overview[] overviews = null;
 
-    private Overview[] overviews = { new Overview("P1", "Ⓐ S1 & S2 AP PHYSICS 1", "A+", "ROOM 10"),
-                                     new Overview("P2", "Ⓐ S1 & S2 AP ECONOMICS", "A", "ROOM 7"),
-                                     new Overview("P3", "Ⓐ S1 & S2 ENGLISH 11 §1", "A", "ROOM 5"),
-                                     new Overview("P4", "Ⓐ S1 & S2 AP COMPUTER SCIENCE", "A+", "ROOM 11"),
+    private Overview[] overviews = { new Overview("P1", "Ⓐ S1 & S2 AP Physics 1", "A+", "ROOM 10"),
+                                     new Overview("P2", "Ⓐ S1 & S2 AP Economics", "A", "ROOM 7"),
+                                     new Overview("P3", "Ⓐ S1 & S2 English 11 §1", "A", "ROOM 5"),
+                                     new Overview("P4", "Ⓐ S1 & S2 AP Computer Science", "A+", "ROOM 11"),
                                      new Overview("P5", "STUDY HALL 1", "-", "Room 11"),
                                      new Overview("P6", "STUDY HALL 2", "-", "ASSEMBLY"),
                                      new Overview("P7", "Ⓑ S2 HS PE §2", "A", "ASSEMBLY"),
-                                     new Overview("P8", "Ⓑ S1 & S2 AP CALCULUS BC §2", "A-", "ROOM 6")};
+                                     new Overview("P8", "Ⓑ S1 & S2 AP Calculus BC §2", "A-", "ROOM 6")};
 
 
     @Override
