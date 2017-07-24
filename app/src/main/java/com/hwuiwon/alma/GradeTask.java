@@ -9,14 +9,12 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class GradeTask extends AsyncTask<String, Void, Grade[]> {
 
     @Override
     protected Grade[] doInBackground(String... strings) {
         Grade[] grades = null;
-        HashMap<String, String> temp = new HashMap<>();
         String classID = strings[0];
         String cookie = strings[1];
         String url = "https://spps.getalma.com/";
@@ -33,8 +31,8 @@ public class GradeTask extends AsyncTask<String, Void, Grade[]> {
                         elements.get(i).child(2).text().trim(),
                         elements.get(i).child(3).ownText().trim(),
                         elements.get(i).child(3).select("small").text().trim(),
-                        elements.get(i).child(5).text().trim(),
-                        elements.get(i).child(4).text().trim()
+                        elements.get(i).child(5).text().trim()/*,
+                        elements.get(i).child(4).text().trim()*/
                 );
             }
         } catch (IOException e) {

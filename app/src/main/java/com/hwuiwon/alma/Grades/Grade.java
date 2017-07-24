@@ -6,16 +6,15 @@ public class Grade {
     private String alphabetGrade;
     private String percentageGrade;
     private String updatedDate;
-    private String feedback;
+//    private String feedback;
 
-    public Grade(String assignmentName, String weighted, String alphabetGrade, String percentageGrade, String updatedDate, String feedback) {
+    public Grade(String assignmentName, String weighted, String alphabetGrade, String percentageGrade, String updatedDate/*, String feedback*/) {
         this.assignmentName = assignmentName;
         this.weighted = weighted;
         this.alphabetGrade = alphabetGrade;
         this.percentageGrade = percentageGrade;
-        //TODO - should dates be string or GregorianCalendar object?
         this.updatedDate = updatedDate;
-        this.feedback = feedback;
+//        this.feedback = feedback;
     }
 
     public String getAssignmentName() {
@@ -38,7 +37,9 @@ public class Grade {
         return updatedDate;
     }
 
+/*
     public String getFeedback() {
         return feedback;
     }
+*/
 }

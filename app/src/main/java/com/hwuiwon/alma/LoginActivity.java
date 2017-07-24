@@ -176,8 +176,6 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra("id", String.valueOf(usernameET.getText()));
-                intent.putExtra("pass", String.valueOf(passwordET.getText()));
                 intent.putExtra("cookie", cookie);
                 startActivity(intent);
             } else if (status == 405) {
