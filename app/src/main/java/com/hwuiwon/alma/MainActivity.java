@@ -1,6 +1,10 @@
 package com.hwuiwon.alma;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     private HashMap<String, String> classIDs = null;
 
     private Overview[] overviews = null;
+    private View progressView;
 
 //    private Overview[] overviews = { new Overview("P1", "Ⓐ S1 & S2 AP PHYSICS 1", "A+", "ROOM 10"),
 //                                     new Overview("P2", "Ⓐ S1 & S2 AP ECONOMICS", "A", "ROOM 7"),
@@ -48,6 +53,9 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         cookie = getIntent().getStringExtra("cookie");
+
+//        progressView = findViewById(R.id.main_progress);
+//        showProgress(true);
 
         // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
         overviewLV = (ListView)findViewById(R.id.overviewLV);
@@ -85,11 +93,13 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        //noinspection deprecation
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+//        showProgress(false);
     }
 
     @Override
@@ -136,10 +146,33 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
+        //noinspection ConstantConditions
         getSupportActionBar().setTitle(barTitle);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+//    private void showProgress(final boolean show) {
+//        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+//
+//        overviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
+//        overviewLV.animate().setDuration(shortAnimTime).alpha(
+//                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                overviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
+//            }
+//        });
+//        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//        progressView.animate().setDuration(shortAnimTime).alpha(
+//                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//            }
+//        });
+//    }
 }

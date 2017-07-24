@@ -1,10 +1,12 @@
 package com.hwuiwon.alma;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +29,8 @@ public class MoreOverviewActivity extends AppCompatActivity {
 
     private Assignment[] assignments;
     private Grade[] grades;
+
+    private View progressView;
 
 //    private Assignment[] assignments = {
 //            new Assignment("5/30/17", "Final Draft of DOAS Essay Due", "Final Exam",
@@ -51,6 +55,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
+        @SuppressLint("SetTextI18n")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -80,6 +85,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
         classNameTV = (TextView) findViewById(R.id.classNameTV);
         gradeTV = (TextView) findViewById(R.id.gradeTV);
         moreOverviewLV = (ListView) findViewById(R.id.moreOverviewLV);
+//        progressView = (View) findViewById(R.id.mo_progress);
 
         classNameTV.setText(overview.getClassName());
         gradeTV.setText(overview.getAlphabetGrade());
@@ -91,6 +97,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
     }
 
     public GradeAdapter makeGradeAdapter() {
+//        showProgress(true);
         final GradeAdapter adapter = new GradeAdapter(this);
         try {
             grades = new GradeTask().execute(classID, cookie).get();
@@ -100,11 +107,12 @@ public class MoreOverviewActivity extends AppCompatActivity {
         for (Grade grade : grades) {
             adapter.addGrade(grade);
         }
-
+//        showProgress(false);
         return adapter;
     }
 
     public AssignmentAdapter makeAssignmentAdapter() {
+//        showProgress(true);
         final AssignmentAdapter adapter = new AssignmentAdapter(this);
         try {
             assignments = new AssignmentTask().execute(classID, cookie).get();
@@ -114,7 +122,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
         for (Assignment assignment : assignments) {
             adapter.addAssignment(assignment);
         }
-
+//        showProgress(false);
         return adapter;
     }
 
@@ -122,4 +130,26 @@ public class MoreOverviewActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
+
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+//    private void showProgress(final boolean show) {
+//        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+//
+//        overviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
+//        overviewLV.animate().setDuration(shortAnimTime).alpha(
+//                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                overviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
+//            }
+//        });
+//        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//        progressView.animate().setDuration(shortAnimTime).alpha(
+//                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+//            }
+//        });
+//    }
 }
