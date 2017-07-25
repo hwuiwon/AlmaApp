@@ -9,10 +9,10 @@ public class Overview implements Parcelable {
     private String originalClassName;
     private String alphabetGrade;
     private String roomNum;
-    private String[] notNeeded = {"S1", "S2", "Ⓐ", "Ⓑ", "&", "§1", "§2", "^\\s+"};
 
     public Overview(String period, String className, String alphabetGrade, String roomNum) {
         originalClassName = className;
+        String[] notNeeded = {"S1", "S2", "Ⓐ", "Ⓑ", "&", "§1", "§2", "^\\s+"};
         for (String words : notNeeded) {
             className = className.replaceAll(words, "");
         }
@@ -23,7 +23,7 @@ public class Overview implements Parcelable {
         this.roomNum = roomNum;
     }
 
-    protected Overview(Parcel in) {
+    private Overview(Parcel in) {
         period = in.readString();
         className = in.readString();
         alphabetGrade = in.readString();
@@ -41,7 +41,7 @@ public class Overview implements Parcelable {
         }
     };
 
-    public String getPeriod() {
+    String getPeriod() {
         return period;
     }
 
@@ -53,7 +53,7 @@ public class Overview implements Parcelable {
         return alphabetGrade;
     }
 
-    public String getRoomNum() {
+    String getRoomNum() {
         return roomNum;
     }
 

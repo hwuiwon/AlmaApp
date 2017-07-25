@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
 public class AssignmentAdapter extends BaseAdapter {
-    Context context;
-    ArrayList<Assignment> datas = new ArrayList<>();
+    private Context context;
+    private ArrayList<Assignment> datas = new ArrayList<>();
 
     public AssignmentAdapter(Context context) {
         this.context = context;
@@ -36,7 +36,7 @@ public class AssignmentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        AssignmentView assignmentView = null;
+        AssignmentView assignmentView;
         if (view == null) {
             assignmentView = new AssignmentView(context, datas.get(i));
         } else {

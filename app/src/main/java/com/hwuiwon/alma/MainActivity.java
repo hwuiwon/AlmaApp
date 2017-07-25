@@ -9,7 +9,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +19,10 @@ import com.hwuiwon.alma.Overviews.Overview;
 import com.hwuiwon.alma.Overviews.OverviewAdapter;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListView overviewLV;
     private String barTitle = "Overview";
     private String cookie;
     private HashMap<String, String> classIDs = null;
@@ -41,23 +38,18 @@ public class MainActivity extends AppCompatActivity
 
         cookie = getIntent().getStringExtra("cookie");
 
-        overviewLV = (ListView)findViewById(R.id.overviewLV);
+        ListView overviewLV = (ListView) findViewById(R.id.overviewLV);
         final OverviewAdapter adapter = new OverviewAdapter(this);
 
         try {
             overviews = new OverviewTask().execute(cookie).get();
+            classIDs = new ClassIdTask().execute(cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         for (Overview ov : overviews) {
             adapter.addOverview(ov);
-        }
-
-        try {
-            classIDs = new ClassIdTask().execute(cookie).get();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         overviewLV.setAdapter(adapter);
@@ -76,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -106,8 +98,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
+    @SuppressWarnings("ConstantConditions")
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 

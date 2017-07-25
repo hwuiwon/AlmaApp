@@ -1,5 +1,6 @@
 package com.hwuiwon.alma.Overviews;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 
 import com.hwuiwon.alma.R;
 
+@SuppressLint("ViewConstructor")
 public class OverviewView extends RelativeLayout {
     TextView textView1;
     TextView textView2;

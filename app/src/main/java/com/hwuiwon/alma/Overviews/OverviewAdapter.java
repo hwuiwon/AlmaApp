@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
 public class OverviewAdapter extends BaseAdapter {
-    Context context;
-    ArrayList<Overview> datas = new ArrayList<>();
+    private Context context;
+    private ArrayList<Overview> datas = new ArrayList<>();
 
     public OverviewAdapter(Context context) {
         this.context = context;
@@ -36,7 +36,7 @@ public class OverviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        OverviewView overviewView = null;
+        OverviewView overviewView;
         if (view == null) {
             overviewView = new OverviewView(context, datas.get(i));
         } else {

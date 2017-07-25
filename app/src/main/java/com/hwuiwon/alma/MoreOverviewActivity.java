@@ -17,8 +17,6 @@ import com.hwuiwon.alma.Overviews.Overview;
 public class MoreOverviewActivity extends AppCompatActivity {
 
     private TextView currentMenuTV;
-    private TextView gradeTV;
-    private TextView classNameTV;
     private ListView moreOverviewLV;
 
     private String cookie;
@@ -34,11 +32,11 @@ public class MoreOverviewActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.nav_grades:
-                    currentMenuTV.setText("Grades");
+                    currentMenuTV.setText(getString(R.string.title_home));
                     moreOverviewLV.setAdapter(makeGradeAdapter());
                     return true;
                 case R.id.nav_assignments:
-                    currentMenuTV.setText("Assignments");
+                    currentMenuTV.setText(getString(R.string.title_assignments));
                     moreOverviewLV.setAdapter(makeAssignmentAdapter());
                     return true;
             }
@@ -56,8 +54,8 @@ public class MoreOverviewActivity extends AppCompatActivity {
         classID = getIntent().getStringExtra("classID");
 
         currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
-        classNameTV = (TextView) findViewById(R.id.classNameTV);
-        gradeTV = (TextView) findViewById(R.id.gradeTV);
+        TextView classNameTV = (TextView) findViewById(R.id.classNameTV);
+        TextView gradeTV = (TextView) findViewById(R.id.gradeTV);
         moreOverviewLV = (ListView) findViewById(R.id.moreOverviewLV);
 
         classNameTV.setText(overview.getClassName());
