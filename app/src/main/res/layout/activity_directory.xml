@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/search"
-        android:textSize="20dp"
+        android:padding="@dimen/activity_margin2"
         android:background="@color/white" />
 
 </LinearLayout>
