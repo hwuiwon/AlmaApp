@@ -2,6 +2,7 @@
 
 - Login error
 - remember ID/PW
+- Assignment detail link clickable
 - Assignments attachment downloads
 - Assignments + Grades
 - Attendance + Calendar
