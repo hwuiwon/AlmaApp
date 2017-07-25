@@ -53,7 +53,7 @@ class OverviewTask extends AsyncTask<String, Void, Overview[]> {
             date = Jsoup.parse(responseString).select(".date-picker > a").get(0).attr("data-date");
 
             String responseString2 = responseString;
-            while(responseString.equals(responseString2)) {
+            while (responseString.equals(responseString2)) {
                 response = Jsoup.connect(url + "home/get-student-schedule?studentId=" + studentID + "&date=" + date)
                                 .header("Cookie", cookie).ignoreContentType(true)
                                 .method(Connection.Method.GET).execute();

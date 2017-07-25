@@ -28,22 +28,16 @@ class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
             Elements e = document.select("tbody > tr");
 
             int size = e.size();
-            assignments = new Assignment[size/2];
+            assignments = new Assignment[size / 2];
             for (int i=0; i<size/2; i++){
                 assignments[i] = new Assignment(
-                        e.get(i*2).child(0).ownText().trim(),
-                        e.get(i*2).child(1).text().trim(),
-                        e.get(i*2).child(2).text().trim(),
-                        e.get(i*2+1).select("p").get(0).html().replaceAll("<br\\s*>\\s*","\n").trim()
+                        e.get(i * 2).child(0).ownText().trim(),
+                        e.get(i * 2).child(1).text().trim(),
+                        e.get(i * 2).child(2).text().trim(),
+                        e.get(i * 2 + 1).select("p").get(0).html().replaceAll("<br\\s*>\\s*","\n").trim()
                 );
             }
 
-            for (Assignment a : assignments){
-                Log.d("Debug", "Due Date : "+a.getDueDate()+"\n"+
-                        "Assignment Title : "+a.getAssignmentName()+"\n"+
-                        "Assignment Type : "+a.getType()+"\n"+
-                        "Assignment Detail : "+a.getAssignmentDetail());
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
