@@ -34,8 +34,8 @@
         android:textSize="19dp"
         android:textColor="@color/jet"
         android:textStyle="bold"
-        android:layout_alignBaseline="@+id/assignmentTV2"
-        android:layout_toEndOf="@+id/assignmentTV2"
+        android:layout_alignBaseline="@id/assignmentTV2"
+        android:layout_toEndOf="@id/assignmentTV2"
         android:paddingBottom="@dimen/assignment_margin2"/>
 
     <TextView
@@ -44,7 +44,8 @@
         android:layout_height="wrap_content"
         android:text="@string/amString4"
         android:textSize="19dp"
+        android:linksClickable="true"
         android:textColor="@color/jet"
-        android:layout_below="@id/assignmentTV2"/>
+        android:layout_below="@id/assignmentTV3"/>
 
 </RelativeLayout>
