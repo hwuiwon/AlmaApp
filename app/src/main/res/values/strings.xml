@@ -14,6 +14,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_more_overview">MoreOverviewActivity</string>
+    <string name="title_activity_directory">DirectoryActivity</string>
     <string name="title_home">Grades</string>
     <string name="title_assignments">Assignments</string>
     <string name="directoryHint">Who are you searching?</string>
