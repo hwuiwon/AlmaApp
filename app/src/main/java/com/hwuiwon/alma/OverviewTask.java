@@ -75,6 +75,7 @@ class OverviewTask extends AsyncTask<String, Void, Overview[]> {
         Pattern p = Pattern.compile("\\\\u(\\w{4})");
         Matcher m = p.matcher(str);
         int i = 0;
+
         while (m.find()) {
             int ch = Integer.valueOf(m.group(1), 16);
             str = str.substring(0, m.start() - 5 * i)

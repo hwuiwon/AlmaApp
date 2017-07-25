@@ -37,7 +37,6 @@ class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
                         e.get(i * 2 + 1).select("p").get(0).html().replaceAll("<br\\s*>\\s*","\n").trim()
                 );
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
