@@ -42,7 +42,7 @@
         android:id="@+id/gradeTV4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/gradeTV3"
+        android:layout_below="@+id/gradeTV2"
         android:text="Updated at 6/3/17"
         android:textSize="15dp"
         android:textColor="@color/jet"/>
