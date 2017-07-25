@@ -16,6 +16,8 @@
     <string name="title_activity_more_overview">MoreOverviewActivity</string>
     <string name="title_home">Grades</string>
     <string name="title_assignments">Assignments</string>
+    <string name="directoryHint">Who are you searching?</string>
+    <string name="search">Search</string>
 
     <string name="ovString1">P1</string>
     <string name="ovString2">AP Physics 1</string>

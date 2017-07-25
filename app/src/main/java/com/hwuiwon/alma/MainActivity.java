@@ -104,17 +104,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch(id){
-            case R.id.nav_assignments:
-                barTitle = "Assignments";
-                break;
-            case R.id.nav_grades:
-                barTitle = "Grades";
-                break;
-            case R.id.nav_classmates:
-                barTitle = "Classmates";
-                break;
             case R.id.nav_overview:
                 barTitle = "Overview";
+                break;
+            case R.id.nav_directory:
+                barTitle = "Directory";
+                Intent i = new Intent(getApplicationContext(), DirectoryActivity.class);
+                i.putExtra("cookie", cookie);
+                startActivity(i);
                 break;
         }
 

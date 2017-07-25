@@ -6,14 +6,8 @@
             android:id="@+id/nav_overview"
             android:title="Overview" />
         <item
-            android:id="@+id/nav_assignments"
-            android:title="Assignments" />
-        <item
-            android:id="@+id/nav_grades"
-            android:title="Grades" />
-        <item
-            android:id="@+id/nav_classmates"
-            android:title="Classmates" />
+            android:id="@+id/nav_directory"
+            android:title="Directory" />
     </group>
 
 </menu>

@@ -53,17 +53,15 @@ public class MoreOverviewActivity extends AppCompatActivity {
         cookie = getIntent().getStringExtra("cookie");
         classID = getIntent().getStringExtra("classID");
 
-        currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
         TextView classNameTV = (TextView) findViewById(R.id.classNameTV);
         TextView gradeTV = (TextView) findViewById(R.id.gradeTV);
+        currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
         moreOverviewLV = (ListView) findViewById(R.id.moreOverviewLV);
 
         classNameTV.setText(overview.getClassName());
         gradeTV.setText(overview.getAlphabetGrade());
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
 
         // Set List view to default
         moreOverviewLV.setAdapter(makeGradeAdapter());
@@ -90,8 +88,6 @@ public class MoreOverviewActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         for (Assignment assignment : assignments) {
             adapter.addAssignment(assignment);
         }

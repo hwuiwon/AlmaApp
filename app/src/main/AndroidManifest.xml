@@ -29,7 +29,8 @@
         <activity
             android:name=".MoreOverviewActivity"
             android:label="@string/title_activity_more_overview"
-            android:theme="@style/AppTheme.Alma.Main"></activity>
+            android:theme="@style/AppTheme.Alma.Main" />
+        <activity android:name=".DirectoryActivity"></activity>
     </application>
 
 </manifest>
