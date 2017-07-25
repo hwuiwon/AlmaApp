@@ -12,7 +12,7 @@ public class DirectoryAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Directory> datas = new ArrayList<>();
 
-    public DirectoryAdapter(Context context, ArrayList<Directory> datas) {
+    public DirectoryAdapter(Context context) {
         this.context = context;
     }
 
