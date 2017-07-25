@@ -16,6 +16,7 @@
         android:hint="@string/directoryHint" />
 
     <Button
+        android:id="@+id/directoryBT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/search"
@@ -23,5 +24,21 @@
         android:padding="@dimen/activity_margin3"
         android:background="@color/white"
         android:layout_below="@+id/directoryET" />
+    
+    <Space
+        android:id="@+id/directorySP"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_below="@id/directoryBT"/>
+
+    <ListView
+        android:id="@+id/directoryLV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/base"
+        android:dividerHeight="1dp"
+        android:layout_below="@id/directorySP"
+        android:background="@color/white">
+    </ListView>
 
 </RelativeLayout>

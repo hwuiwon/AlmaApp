@@ -33,4 +33,7 @@
         Submit to turnitin.com
         Remaining time to be used preparing for upcoming exams.
     </string>
+
+    <string name="drString1">Gregoire Alcouffe</string>
+    <string name="drString2">galcouffe@stpaulseoul.com</string>
 </resources>
