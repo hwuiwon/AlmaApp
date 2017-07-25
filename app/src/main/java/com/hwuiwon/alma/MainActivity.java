@@ -27,21 +27,10 @@ public class MainActivity extends AppCompatActivity
 
     private ListView overviewLV;
     private String barTitle = "Overview";
-    private String username;
-    private String password;
+    private String cookie;
     private HashMap<String, String> classIDs = null;
 
-//    private Overview[] overviews = null;
-
-    private Overview[] overviews = { new Overview("P1", "Ⓐ S1 & S2 AP Physics 1", "A+", "ROOM 10"),
-                                     new Overview("P2", "Ⓐ S1 & S2 AP Economics", "A", "ROOM 7"),
-                                     new Overview("P3", "Ⓐ S1 & S2 English 11 §1", "A", "ROOM 5"),
-                                     new Overview("P4", "Ⓐ S1 & S2 AP Computer Science", "A+", "ROOM 11"),
-                                     new Overview("P5", "STUDY HALL 1", "-", "Room 11"),
-                                     new Overview("P6", "STUDY HALL 2", "-", "ASSEMBLY"),
-                                     new Overview("P7", "Ⓑ S2 HS PE §2", "A", "ASSEMBLY"),
-                                     new Overview("P8", "Ⓑ S1 & S2 AP Calculus BC §2", "A-", "ROOM 6")};
-
+    private Overview[] overviews = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +39,23 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        username = getIntent().getStringExtra("id");
-        password = getIntent().getStringExtra("pass");
+        cookie = getIntent().getStringExtra("cookie");
 
-        // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
         overviewLV = (ListView)findViewById(R.id.overviewLV);
         final OverviewAdapter adapter = new OverviewAdapter(this);
 
-//        try {
-//            overviews = new OverviewTask().execute(username, password).get();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            overviews = new OverviewTask().execute(cookie).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         for (Overview ov : overviews) {
             adapter.addOverview(ov);
         }
 
         try {
-            classIDs = new ClassIdTask().execute(username, password).get();
+            classIDs = new ClassIdTask().execute(cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -79,12 +66,9 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), MoreOverviewActivity.class);
                 Overview overview = overviews[i];
-                Log.d("ClassName", overview.getOriginalClassName());
-                Log.d("WhatClassID", classIDs.get(overview.getOriginalClassName()));
                 intent.putExtra("classID", classIDs.get(overview.getOriginalClassName()));
                 intent.putExtra("overview", overview);
-                intent.putExtra("ID", username);
-                intent.putExtra("PASS", password);
+                intent.putExtra("cookie", cookie);
                 startActivity(intent);
             }
         });

@@ -145,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String username;
         private final String password;
+        private String cookie = "";
         private int status;
 
         UserLoginTask(String id, String pass) {
@@ -160,6 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                         .data("username", username).data("password", password)
                         .method(Connection.Method.POST).execute();
                 status = response.statusCode();
+                cookie = response.cookies().keySet().toArray()[0] + "=" + response.cookies().values().toArray()[0];
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -174,8 +176,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (success) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra("id", String.valueOf(usernameET.getText()));
-                intent.putExtra("pass", String.valueOf(passwordET.getText()));
+                intent.putExtra("cookie", cookie);
                 startActivity(intent);
             } else if (status == 405) {
                 Toast.makeText(LoginActivity.this, "Alma is currently undergoing maintenance", Toast.LENGTH_LONG).show();
