@@ -2,6 +2,7 @@ package com.hwuiwon.alma;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -30,7 +31,12 @@ public class DirectoryActivity extends AppCompatActivity {
         directoryET = (EditText) findViewById(R.id.directoryET);
         directoryLV = (ListView) findViewById(R.id.directoryLV);
 
-        directoryLV.setAdapter(makeDirectoryAdapter());
+        directoryBT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                directoryLV.setAdapter(makeDirectoryAdapter());
+            }
+        });
     }
 
     public DirectoryAdapter makeDirectoryAdapter() {

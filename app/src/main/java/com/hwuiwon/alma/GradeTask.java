@@ -20,7 +20,7 @@ class GradeTask extends AsyncTask<String, Void, Grade[]> {
         String url = "https://spps.getalma.com/";
 
         try {
-            Document document = Jsoup.connect(url+"home/grades?classId="+classID)
+            Document document = Jsoup.connect(url + "home/grades?classId=" + classID)
                     .timeout(0).header("Cookie", cookie).post();
 
             Elements elements = document.select("tbody > tr");
