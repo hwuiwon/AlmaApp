@@ -1,10 +1,15 @@
 package com.hwuiwon.alma;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,6 +48,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
             return false;
         }
     };
+    private View progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
         TextView gradeTV = (TextView) findViewById(R.id.gradeTV);
         currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
         moreOverviewLV = (ListView) findViewById(R.id.moreOverviewLV);
+        progressView = findViewById(R.id.more_progress);
 
         classNameTV.setText(overview.getClassName());
         gradeTV.setText(overview.getAlphabetGrade());
@@ -70,7 +77,9 @@ public class MoreOverviewActivity extends AppCompatActivity {
     public GradeAdapter makeGradeAdapter() {
         final GradeAdapter adapter = new GradeAdapter(this);
         try {
+//            showProgress(true);
             grades = new GradeTask().execute(classID, cookie).get();
+//            showProgress(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,7 +93,9 @@ public class MoreOverviewActivity extends AppCompatActivity {
     public AssignmentAdapter makeAssignmentAdapter() {
         final AssignmentAdapter adapter = new AssignmentAdapter(this);
         try {
+//            showProgress(true);
             assignments = new AssignmentTask().execute(classID, cookie).get();
+//            showProgress(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -98,5 +109,27 @@ public class MoreOverviewActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        moreOverviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
+        moreOverviewLV.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                moreOverviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 }
