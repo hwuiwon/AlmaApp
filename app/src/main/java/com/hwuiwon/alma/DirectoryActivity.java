@@ -1,5 +1,9 @@
 package com.hwuiwon.alma;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +22,7 @@ public class DirectoryActivity extends AppCompatActivity {
 
     private String cookie;
     private Directory[] directories;
+    private View progressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,8 @@ public class DirectoryActivity extends AppCompatActivity {
         directoryBT = (Button) findViewById(R.id.directoryBT);
         directoryET = (EditText) findViewById(R.id.directoryET);
         directoryLV = (ListView) findViewById(R.id.directoryLV);
+
+        progressView = findViewById(R.id.directory_progress);
 
         directoryBT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +48,9 @@ public class DirectoryActivity extends AppCompatActivity {
         final DirectoryAdapter adapter = new DirectoryAdapter(this);
         try {
             String keyword = String.valueOf(directoryET.getText());
+//            showProgress(true);
             directories = new DirectoryTask().execute(keyword, cookie).get();
+//            showProgress(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,5 +60,27 @@ public class DirectoryActivity extends AppCompatActivity {
         }
 
         return adapter;
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+        directoryLV.setVisibility(show ? View.GONE : View.VISIBLE);
+        directoryLV.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                directoryLV.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
+        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        progressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 }

@@ -8,6 +8,14 @@
     android:orientation="vertical"
     android:padding="@dimen/activity_margin">
 
+    <ProgressBar
+        android:id="@+id/directory_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"/>
+
     <EditText
         android:id="@+id/directoryET"
         android:layout_width="match_parent"
