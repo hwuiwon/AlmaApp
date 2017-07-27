@@ -190,6 +190,8 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 passwordET.setError(getString(R.string.error_incorrect));
                 passwordET.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(passwordET,0);
             }
         }
 
