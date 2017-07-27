@@ -17,23 +17,23 @@ public class Grade {
 //        this.feedback = feedback;
     }
 
-    public String getAssignmentName() {
+    String getAssignmentName() {
         return assignmentName;
     }
 
-    public String getWeighted() {
+    String getWeighted() {
         return weighted;
     }
 
-    public String getAlphabetGrade() {
+    String getAlphabetGrade() {
         return alphabetGrade;
     }
 
-    public String getPercentageGrade() {
+    String getPercentageGrade() {
         return percentageGrade;
     }
 
-    public String getUpdatedDate() {
+    String getUpdatedDate() {
         return updatedDate;
     }
 

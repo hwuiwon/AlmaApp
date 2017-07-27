@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
 public class GradeAdapter extends BaseAdapter {
-    Context context;
-    ArrayList<Grade> datas = new ArrayList<>();
+    private Context context;
+    private ArrayList<Grade> datas = new ArrayList<>();
 
     public GradeAdapter(Context context) {
         this.context = context;
@@ -36,7 +36,7 @@ public class GradeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        GradeView gradeView = null;
+        GradeView gradeView;
         if (view == null) {
             gradeView = new GradeView(context, datas.get(i));
         } else {

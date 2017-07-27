@@ -1,10 +1,6 @@
 package com.hwuiwon.alma;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -27,23 +23,11 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListView overviewLV;
     private String barTitle = "Overview";
     private String cookie;
     private HashMap<String, String> classIDs = null;
 
     private Overview[] overviews = null;
-    private View progressView;
-
-//    private Overview[] overviews = { new Overview("P1", "Ⓐ S1 & S2 AP PHYSICS 1", "A+", "ROOM 10"),
-//                                     new Overview("P2", "Ⓐ S1 & S2 AP ECONOMICS", "A", "ROOM 7"),
-//                                     new Overview("P3", "Ⓐ S1 & S2 ENGLISH 11 §1", "A", "ROOM 5"),
-//                                     new Overview("P4", "Ⓐ S1 & S2 AP COMPUTER SCIENCE", "A+", "ROOM 11"),
-//                                     new Overview("P5", "STUDY HALL 1", "-", "Room 11"),
-//                                     new Overview("P6", "STUDY HALL 2", "-", "ASSEMBLY"),
-//                                     new Overview("P7", "Ⓑ S2 HS PE §2", "A", "ASSEMBLY"),
-//                                     new Overview("P8", "Ⓑ S1 & S2 AP CALCULUS BC §2", "A-", "ROOM 6")};
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,15 +38,12 @@ public class MainActivity extends AppCompatActivity
 
         cookie = getIntent().getStringExtra("cookie");
 
-//        progressView = findViewById(R.id.main_progress);
-//        showProgress(true);
-
-        // TODO : work on parsing and putting them in OverviewAdapter (JSOUP)
-        overviewLV = (ListView)findViewById(R.id.overviewLV);
+        ListView overviewLV = (ListView) findViewById(R.id.overviewLV);
         final OverviewAdapter adapter = new OverviewAdapter(this);
 
         try {
             overviews = new OverviewTask().execute(cookie).get();
+            classIDs = new ClassIdTask().execute(cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,20 +52,14 @@ public class MainActivity extends AppCompatActivity
             adapter.addOverview(ov);
         }
 
-        try {
-            classIDs = new ClassIdTask().execute(cookie).get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         overviewLV.setAdapter(adapter);
         overviewLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), MoreOverviewActivity.class);
                 Overview overview = overviews[i];
-                intent.putExtra("overview", overview);
                 intent.putExtra("classID", classIDs.get(overview.getOriginalClassName()));
+                intent.putExtra("overview", overview);
                 intent.putExtra("cookie", cookie);
                 startActivity(intent);
             }
@@ -93,13 +68,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        //noinspection deprecation
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//        showProgress(false);
     }
 
     @Override
@@ -125,54 +98,26 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
+    @SuppressWarnings("ConstantConditions")
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         switch(id){
-            case R.id.nav_assignments:
-                barTitle = "Assignments";
-                break;
-            case R.id.nav_grades:
-                barTitle = "Grades";
-                break;
-            case R.id.nav_classmates:
-                barTitle = "Classmates";
-                break;
             case R.id.nav_overview:
-            default:
                 barTitle = "Overview";
+                break;
+            case R.id.nav_directory:
+                barTitle = "Directory";
+                Intent i = new Intent(getApplicationContext(), DirectoryActivity.class);
+                i.putExtra("cookie", cookie);
+                startActivity(i);
                 break;
         }
 
-        //noinspection ConstantConditions
         getSupportActionBar().setTitle(barTitle);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-//    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-//    private void showProgress(final boolean show) {
-//        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-//
-//        overviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
-//        overviewLV.animate().setDuration(shortAnimTime).alpha(
-//                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                overviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
-//            }
-//        });
-//        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-//        progressView.animate().setDuration(shortAnimTime).alpha(
-//                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-//            }
-//        });
-//    }
 }

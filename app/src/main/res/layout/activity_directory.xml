@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hwuiwon.alma.DirectoryActivity"
+    android:background="@color/almaPrimary"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_margin">
+
+    <EditText
+        android:id="@+id/directoryET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textNoSuggestions"
+        android:hint="@string/directoryHint" />
+
+    <Button
+        android:id="@+id/directoryBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/search"
+        android:textColor="@color/jet"
+        android:padding="@dimen/activity_margin3"
+        android:background="@color/white"
+        android:layout_below="@+id/directoryET" />
+    
+    <Space
+        android:id="@+id/directorySP"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_below="@id/directoryBT"/>
+
+    <ListView
+        android:id="@+id/directoryLV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/base"
+        android:dividerHeight="1dp"
+        android:layout_below="@id/directorySP"
+        android:background="@color/white">
+    </ListView>
+
+</RelativeLayout>

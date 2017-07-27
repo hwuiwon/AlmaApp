@@ -1,12 +1,10 @@
 package com.hwuiwon.alma;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,55 +14,29 @@ import com.hwuiwon.alma.Grades.Grade;
 import com.hwuiwon.alma.Grades.GradeAdapter;
 import com.hwuiwon.alma.Overviews.Overview;
 
-import java.util.concurrent.ExecutionException;
-
 public class MoreOverviewActivity extends AppCompatActivity {
 
     private TextView currentMenuTV;
-    private TextView gradeTV;
-    private TextView classNameTV;
     private ListView moreOverviewLV;
+
     private String cookie;
-    private String classID;
+    private String classID = null;
 
     private Assignment[] assignments;
-    private Grade[] grades;
-
-    private View progressView;
-
-//    private Assignment[] assignments = {
-//            new Assignment("5/30/17", "Final Draft of DOAS Essay Due", "Final Exam",
-//                            "1 hour to work on it QUIETLY in class. \nSubmit to turnitin.com\n" +
-//                            "Remaining time to be used preparing for upcoming exams."),
-//            new Assignment("5/25/17", "Participation Days 31-40", "Participation", ""),
-//            new Assignment("5/23/17", "Notebook/Folder Check #4", "Participation", ""),
-//            new Assignment("5/19/17", "Topic + Thesis + Outline", "Homework",
-//                            "Have a look at the attached document and choose a topic. Create a " +
-//                            "\"working thesis\" and sketch out an outline. We will keep working " +
-//                            "on your outline in class.")
-//    };
-//
-//    private Grade[] grades = {
-//            new Grade("Final Draft of DOAS Essay Due", "10%", "A", "(95%)", "6/3/17"),
-//            new Grade("Participation Days 31-40", "3.1%", "A", "(94%)", "5/29/17"),
-//            new Grade("Notebook/Folder Check #4", "3.1%", "A+", "(98%)", "5/25/17"),
-//            new Grade("Topic + Thesis + Outline", "1.9%", "A+", "(100%)", "5/19/17"),
-//            new Grade("Death of a Salesman Test", "7.5%", "A", "(95.5%)", "5/19/17")
-//    };
+    private Grade[] grades = null;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @SuppressLint("SetTextI18n")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.nav_grades:
-                    currentMenuTV.setText("Grades");
+                    currentMenuTV.setText(getString(R.string.title_home));
                     moreOverviewLV.setAdapter(makeGradeAdapter());
                     return true;
                 case R.id.nav_assignments:
-                    currentMenuTV.setText("Assignments");
+                    currentMenuTV.setText(getString(R.string.title_assignments));
                     moreOverviewLV.setAdapter(makeAssignmentAdapter());
                     return true;
             }
@@ -81,11 +53,10 @@ public class MoreOverviewActivity extends AppCompatActivity {
         cookie = getIntent().getStringExtra("cookie");
         classID = getIntent().getStringExtra("classID");
 
+        TextView classNameTV = (TextView) findViewById(R.id.classNameTV);
+        TextView gradeTV = (TextView) findViewById(R.id.gradeTV);
         currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
-        classNameTV = (TextView) findViewById(R.id.classNameTV);
-        gradeTV = (TextView) findViewById(R.id.gradeTV);
         moreOverviewLV = (ListView) findViewById(R.id.moreOverviewLV);
-//        progressView = (View) findViewById(R.id.mo_progress);
 
         classNameTV.setText(overview.getClassName());
         gradeTV.setText(overview.getAlphabetGrade());
@@ -97,7 +68,6 @@ public class MoreOverviewActivity extends AppCompatActivity {
     }
 
     public GradeAdapter makeGradeAdapter() {
-//        showProgress(true);
         final GradeAdapter adapter = new GradeAdapter(this);
         try {
             grades = new GradeTask().execute(classID, cookie).get();
@@ -107,12 +77,11 @@ public class MoreOverviewActivity extends AppCompatActivity {
         for (Grade grade : grades) {
             adapter.addGrade(grade);
         }
-//        showProgress(false);
+
         return adapter;
     }
 
     public AssignmentAdapter makeAssignmentAdapter() {
-//        showProgress(true);
         final AssignmentAdapter adapter = new AssignmentAdapter(this);
         try {
             assignments = new AssignmentTask().execute(classID, cookie).get();
@@ -122,7 +91,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
         for (Assignment assignment : assignments) {
             adapter.addAssignment(assignment);
         }
-//        showProgress(false);
+
         return adapter;
     }
 
@@ -130,26 +99,4 @@ public class MoreOverviewActivity extends AppCompatActivity {
     public void onBackPressed() {
         finish();
     }
-
-//    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-//    private void showProgress(final boolean show) {
-//        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-//
-//        overviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
-//        overviewLV.animate().setDuration(shortAnimTime).alpha(
-//                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                overviewLV.setVisibility(show ? View.GONE : View.VISIBLE);
-//            }
-//        });
-//        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-//        progressView.animate().setDuration(shortAnimTime).alpha(
-//                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-//            }
-//        });
-//    }
 }

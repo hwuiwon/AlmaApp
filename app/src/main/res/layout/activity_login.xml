@@ -77,6 +77,12 @@
                 android:layout_height="wrap_content"
                 android:text="Save Username"/>
 
+            <CheckBox
+                android:id="@+id/autoLoginCB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Auto Login"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

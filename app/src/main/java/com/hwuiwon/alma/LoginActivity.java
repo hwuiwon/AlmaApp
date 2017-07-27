@@ -3,6 +3,7 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +17,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,13 +33,14 @@ import java.io.IOException;
 public class LoginActivity extends AppCompatActivity {
 
     private UserLoginTask mAuthTask = null;
-    private SharedPreferences.Editor loginPrefsEditor;
+    private SharedPreferences loginPrefs;
 
     private EditText usernameET;
     private EditText passwordET;
     private View progressView;
     private View loginFormView;
     private CheckBox usernameCB;
+    private CheckBox autoLoginCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,23 +50,37 @@ public class LoginActivity extends AppCompatActivity {
         usernameET = (EditText) findViewById(R.id.username);
         passwordET = (EditText) findViewById(R.id.password);
         usernameCB = (CheckBox) findViewById(R.id.usernameCB);
+        autoLoginCB = (CheckBox) findViewById(R.id.autoLoginCB);
         loginFormView = findViewById(R.id.login_form);
         progressView = findViewById(R.id.login_progress);
 
-        SharedPreferences loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        loginPrefsEditor = loginPrefs.edit();
+        loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
 
-        Boolean saveLogin = loginPrefs.getBoolean("saveLogin", false);
-        if (saveLogin) {
+        Boolean saveUsername = loginPrefs.getBoolean("saveUsername", false);
+        Boolean autoLogin = loginPrefs.getBoolean("autoLogin", false);
+        if (saveUsername) {
             usernameET.setText(loginPrefs.getString("username", ""));
             usernameCB.setChecked(true);
-            passwordET.requestFocus();
         }
+        if (autoLogin) {
+            passwordET.setText(loginPrefs.getString("password", ""));
+            autoLoginCB.setChecked(true);
+            attemptLogin();
+        }
+
+        autoLoginCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                usernameCB.setChecked(b);
+            }
+        });
 
         passwordET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if (id == R.id.login || id == EditorInfo.IME_ACTION_DONE) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(textView.getApplicationWindowToken(),0);
                     attemptLogin();
                     return true;
                 }
@@ -74,14 +92,8 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (usernameCB.isChecked()) {
-                    loginPrefsEditor.putBoolean("saveLogin", true);
-                    loginPrefsEditor.putString("username", usernameET.getText().toString());
-                    loginPrefsEditor.apply();
-                } else {
-                    loginPrefsEditor.clear();
-                    loginPrefsEditor.commit();
-                }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getApplicationWindowToken(),0);
                 attemptLogin();
             }
         });
@@ -145,8 +157,8 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String username;
         private final String password;
-        private int status;
         private String cookie = "";
+        private int status;
 
         UserLoginTask(String id, String pass) {
             username = id;
@@ -161,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                         .data("username", username).data("password", password)
                         .method(Connection.Method.POST).execute();
                 status = response.statusCode();
-                cookie = response.cookies().keySet().toArray()[0]+"="+response.cookies().values().toArray()[0];
+                cookie = response.cookies().keySet().toArray()[0] + "=" + response.cookies().values().toArray()[0];
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -174,7 +186,13 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = null;
             showProgress(false);
 
+            SharedPreferences.Editor loginPrefsEditor = loginPrefs.edit();
+            loginPrefsEditor.putBoolean("saveUsername", usernameCB.isChecked());
+            loginPrefsEditor.putString("username", usernameET.getText().toString());
+            loginPrefsEditor.putString("password", passwordET.getText().toString());
+
             if (success) {
+                loginPrefsEditor.putBoolean("autoLogin", autoLoginCB.isChecked());
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("cookie", cookie);
                 startActivity(intent);
@@ -182,8 +200,14 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Alma is currently undergoing maintenance", Toast.LENGTH_LONG).show();
             } else {
                 passwordET.setError(getString(R.string.error_incorrect));
+                passwordET.setText("");
                 passwordET.requestFocus();
+                loginPrefsEditor.putBoolean("autoLogin", false);
+                loginPrefsEditor.apply();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(passwordET,0);
             }
+            loginPrefsEditor.apply();
         }
 
         @Override

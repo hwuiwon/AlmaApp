@@ -1,4 +1,4 @@
-package com.hwuiwon.alma.Overviews;
+package com.hwuiwon.alma.Directories;
 
 import android.content.Context;
 import android.view.View;
@@ -7,16 +7,17 @@ import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 
-public class OverviewAdapter extends BaseAdapter {
-    private Context context;
-    private ArrayList<Overview> datas = new ArrayList<>();
+public class DirectoryAdapter extends BaseAdapter {
 
-    public OverviewAdapter(Context context) {
+    private Context context;
+    private ArrayList<Directory> datas = new ArrayList<>();
+
+    public DirectoryAdapter(Context context) {
         this.context = context;
     }
 
-    public void addOverview(Overview overview) {
-        datas.add(overview);
+    public void addDirectory(Directory directory) {
+        datas.add(directory);
     }
 
     @Override
@@ -36,13 +37,14 @@ public class OverviewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        OverviewView overviewView;
+        DirectoryView directoryView;
+
         if (view == null) {
-            overviewView = new OverviewView(context, datas.get(i));
+            directoryView = new DirectoryView(context, datas.get(i));
         } else {
-            overviewView = (OverviewView) view;
-            overviewView.setData(datas.get(i));
+            directoryView = (DirectoryView) view;
+            directoryView.setData(datas.get(i));
         }
-        return overviewView;
+        return directoryView;
     }
 }
