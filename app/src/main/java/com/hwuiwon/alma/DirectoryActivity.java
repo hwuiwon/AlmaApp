@@ -17,7 +17,6 @@ public class DirectoryActivity extends AppCompatActivity {
     private ListView directoryLV;
 
     private String cookie;
-    private String keyword = "";
 
     private Directory[] directories;
 
@@ -42,10 +41,14 @@ public class DirectoryActivity extends AppCompatActivity {
     public DirectoryAdapter makeDirectoryAdapter() {
         final DirectoryAdapter adapter = new DirectoryAdapter(this);
         try {
-            keyword = String.valueOf(directoryET.getText());
+            String keyword = String.valueOf(directoryET.getText());
             directories = new DirectoryTask().execute(keyword, cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+        for (Directory directory : directories) {
+            adapter.addDirectory(directory);
         }
 
         return adapter;
