@@ -17,7 +17,6 @@ public class DirectoryActivity extends AppCompatActivity {
     private ListView directoryLV;
 
     private String cookie;
-
     private Directory[] directories;
 
     @Override

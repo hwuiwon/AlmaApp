@@ -15,6 +15,7 @@ public class DirectoryTask extends AsyncTask<String, Void, Directory[]> {
 
     @Override
     protected Directory[] doInBackground(String... strings) {
+
         Directory[] directories = null;
         String keyword = strings[0];
         String cookie = strings[1];

@@ -11,6 +11,7 @@ import com.hwuiwon.alma.R;
 
 @SuppressLint("ViewConstructor")
 public class DirectoryView extends RelativeLayout {
+
     ImageView imageView1;
     TextView textView1;
     TextView textView2;
