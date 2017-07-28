@@ -32,7 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
                 android:layout_marginBottom="24dp"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@string/alma_logo_content_description"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -75,13 +76,13 @@
                 android:id="@+id/usernameCB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save Username"/>
+                android:text="@string/save_username"/>
 
             <CheckBox
                 android:id="@+id/autoLoginCB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Auto Login"/>
+                android:text="@string/auto_login"/>
 
         </LinearLayout>
     </ScrollView>

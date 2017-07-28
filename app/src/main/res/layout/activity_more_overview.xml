@@ -18,46 +18,50 @@
 
     <TextView
         android:id="@+id/classNameTV"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Class Name"
-        android:textColor="@color/white"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        android:paddingTop="@dimen/activity_margin"
-        android:paddingLeft="@dimen/activity_margin"
+        android:background="@color/almaPrimary"
         android:paddingBottom="8dp"
+        android:paddingEnd="@dimen/activity_margin"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingTop="@dimen/activity_margin"
+        android:text="@string/moview_class_name"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/currentMenuTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/moview_grades"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:paddingStart="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:paddingBottom="@dimen/activity_margin"
+        android:layout_below="@id/classNameTV"
         android:background="@color/almaPrimary"/>
 
     <TextView
         android:id="@+id/gradeTV"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:text="A+"
-        android:textColor="@color/white"
-        android:textSize="26dp"
-        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/transparent"
+        android:elevation="24dp"
         android:padding="@dimen/activity_margin"
-        android:layout_alignParentRight="true"
-        android:background="@color/almaPrimary"/>
-
-    <TextView
-        android:id="@+id/currentMenuTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Grades"
+        android:text="@string/moview_alphabet_grade"
+        android:textAlignment="textEnd"
         android:textColor="@color/white"
-        android:textSize="15dp"
-        android:paddingLeft="@dimen/activity_margin"
-        android:paddingBottom="@dimen/activity_margin"
-        android:layout_below="@+id/classNameTV"
-        android:background="@color/almaPrimary"/>
+        android:textSize="26sp"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/moreOverviewLV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/currentMenuTV"
+        android:layout_below="@id/currentMenuTV"
         android:layout_above="@+id/navigation"
         android:background="@color/color_testing"
         android:divider="@color/almaPrimary"
@@ -65,7 +69,7 @@
     </ListView>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.Alma.Navigation"

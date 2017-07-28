@@ -8,6 +8,9 @@
     <string name="error_incorrect">Username or password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="title_activity_main">Overview</string>
+    <string name="save_username">Save Username</string>
+    <string name="auto_login">Auto Login</string>
+    <string name="alma_logo_content_description">Alma logo image</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -36,4 +39,13 @@
 
     <string name="drString1">Gregoire Alcouffe</string>
     <string name="drString2">galcouffe@stpaulseoul.com</string>
+    <string name="directory_image_content_description">Profile picture of a person</string>
+    <string name="moview_class_name">Class Name</string>
+    <string name="moview_grades">Grades</string>
+    <string name="moview_alphabet_grade">A+</string>
+    <string name="grade_assignment_title">Final Draft of DOAS Essay Due</string>
+    <string name="grade_assignment_grade">A</string>
+    <string name="grade_assignment_grade_percentage">(95%)</string>
+    <string name="grade_updated_date">Updated at 6/3/17</string>
+    <string name="grade_weight">10%</string>
 </resources>

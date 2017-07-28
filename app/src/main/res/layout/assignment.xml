@@ -10,41 +10,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/amString1"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textColor="@color/red"
-        android:paddingBottom="@dimen/assignment_margin"
+        android:layout_marginBottom="@dimen/assignment_margin"
         android:textStyle="bold"/>
 
-    <TextView
-        android:id="@+id/assignmentTV2"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/assignmentContainer"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/amString2"
-        android:textSize="19dp"
-        android:textColor="@color/jet"
-        android:paddingRight="@dimen/overview_margin"
-        android:textStyle="bold"
-        android:layout_below="@id/assignmentTV1"
-        android:paddingBottom="@dimen/assignment_margin2"/>
+        android:layout_marginBottom="@dimen/assignment_margin2"
+        android:layout_below="@id/assignmentTV1">
 
-    <TextView
-        android:id="@+id/assignmentTV3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/amString3"
-        android:textSize="19dp"
-        android:textColor="@color/jet"
-        android:textStyle="bold"
-        android:layout_alignBaseline="@+id/assignmentTV2"
-        android:layout_toEndOf="@+id/assignmentTV2" />
+        <TextView
+            android:id="@+id/assignmentTV2"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/assignment_margin2"
+            android:text="@string/amString2"
+            android:textColor="@color/jet"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/assignmentTV3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/assignmentTV2"
+            android:layout_toEndOf="@id/assignmentTV2"
+            android:text="@string/amString3"
+            android:textColor="@color/jet"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/assignmentTV4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/amString4"
-        android:textSize="19dp"
+        android:textSize="19sp"
         android:textColor="@color/jet"
-        android:layout_below="@id/assignmentTV3"/>
+        android:layout_below="@id/assignmentContainer"/>
 
 </RelativeLayout>

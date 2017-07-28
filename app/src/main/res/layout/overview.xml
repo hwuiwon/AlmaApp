@@ -12,37 +12,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ovString1"
-        android:textSize="19dp"
+        android:textSize="19sp"
         android:textStyle="bold"
         android:textColor="@color/jet"
-        android:paddingRight="@dimen/overview_margin"
-        android:paddingTop="@dimen/assignment_margin2"/>
-    <TextView
-        android:id="@+id/overviewTV2"
+        android:layout_marginEnd="@dimen/overview_margin"
+        android:layout_marginTop="@dimen/assignment_margin2"/>
+
+    <RelativeLayout
+        android:layout_toEndOf="@id/overviewTV1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ovString2"
-        android:textSize="19dp"
-        android:textColor="@color/jet"
-        android:layout_toEndOf="@+id/overviewTV1"
-        android:paddingBottom="@dimen/assignment_margin3"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/overviewTV2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/assignment_margin3"
+            android:text="@string/ovString2"
+            android:textColor="@color/jet"
+            android:textSize="19sp" />
+        <TextView
+            android:id="@+id/overviewTV4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ovString4"
+            android:textSize="15sp"
+            android:textColor="@color/almaPrimary"
+            android:layout_below="@id/overviewTV2" />
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/overviewTV3"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:text="@string/ovString3"
-        android:layout_alignParentRight="true"
-        android:textSize="19dp"
+        android:layout_alignParentEnd="true"
+        android:textSize="19sp"
         android:textStyle="bold"
         android:textColor="@color/jet"
-        android:paddingTop="@dimen/assignment_margin2"/>
-    <TextView
-        android:id="@+id/overviewTV4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ovString4"
-        android:textSize="15dp"
-        android:textColor="@color/almaPrimary"
-        android:layout_below="@+id/overviewTV2"
-        android:layout_toEndOf="@+id/overviewTV1" />
+        android:layout_marginTop="@dimen/assignment_margin2"/>
 </RelativeLayout>

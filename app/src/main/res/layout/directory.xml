@@ -9,18 +9,19 @@
         android:id="@+id/directoryIV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/sample"/>
+        android:src="@drawable/sample"
+        android:contentDescription="@string/directory_image_content_description" />
 
     <TextView
         android:id="@+id/directoryTV1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/drString1"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:textColor="@color/jet"
         android:textStyle="bold"
-        android:layout_toEndOf="@+id/directoryIV"
-        android:paddingLeft="@dimen/activity_margin"
+        android:layout_toEndOf="@id/directoryIV"
+        android:layout_marginStart="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin2"/>
 
     <TextView
@@ -28,11 +29,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/drString2"
-        android:textSize="19dp"
+        android:textSize="19sp"
         android:textColor="@color/jet"
-        android:paddingLeft="@dimen/activity_margin"
+        android:layout_marginStart="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin4"
-        android:layout_below="@+id/directoryTV1"
-        android:layout_toEndOf="@+id/directoryIV" />
+        android:layout_below="@id/directoryTV1"
+        android:layout_toEndOf="@id/directoryIV" />
 
 </RelativeLayout>
