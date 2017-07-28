@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     tools:context="com.hwuiwon.alma.DirectoryActivity"
     android:background="@color/almaPrimary"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_margin">
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/directoryET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textNoSuggestions"
-        android:hint="@string/directoryHint" />
+        android:hint="@string/directoryHint"
+        android:layout_margin="@dimen/activity_margin2"/>
 
     <Button
         android:id="@+id/directoryBT"
@@ -23,8 +23,9 @@
         android:textColor="@color/jet"
         android:padding="@dimen/activity_margin3"
         android:background="@color/white"
-        android:layout_below="@+id/directoryET" />
-    
+        android:layout_below="@+id/directoryET"
+        android:layout_margin="@dimen/activity_margin2"/>
+
     <Space
         android:id="@+id/directorySP"
         android:layout_width="match_parent"
