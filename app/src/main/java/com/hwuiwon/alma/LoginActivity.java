@@ -32,7 +32,7 @@ import java.io.IOException;
 public class LoginActivity extends AppCompatActivity {
 
     private UserLoginTask mAuthTask = null;
-    private SharedPreferences.Editor loginPrefsEditor;
+    private SharedPreferences loginPrefs;
 
     private EditText usernameET;
     private EditText passwordET;
@@ -51,8 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         loginFormView = findViewById(R.id.login_form);
         progressView = findViewById(R.id.login_progress);
 
-        SharedPreferences loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        loginPrefsEditor = loginPrefs.edit();
+        loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
 
         Boolean saveUsername = loginPrefs.getBoolean("saveUsername", false);
         if (saveUsername) {
@@ -171,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
+            SharedPreferences.Editor loginPrefsEditor = loginPrefs.edit();
 
             if (usernameCB.isChecked()) {
                 loginPrefsEditor.putBoolean("saveUsername", true);

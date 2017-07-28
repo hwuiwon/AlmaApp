@@ -15,7 +15,6 @@ import com.hwuiwon.alma.Directories.DirectoryAdapter;
 
 public class DirectoryActivity extends AppCompatActivity {
 
-    private Button directoryBT;
     private EditText directoryET;
     private ListView directoryLV;
 
@@ -28,7 +27,7 @@ public class DirectoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_directory);
 
         cookie = getIntent().getStringExtra("cookie");
-        directoryBT = (Button) findViewById(R.id.directoryBT);
+        Button directoryBT = (Button) findViewById(R.id.directoryBT);
         directoryET = (EditText) findViewById(R.id.directoryET);
         directoryLV = (ListView) findViewById(R.id.directoryLV);
 

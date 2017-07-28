@@ -1,7 +1,6 @@
 package com.hwuiwon.alma;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.hwuiwon.alma.Assignments.Assignment;
 

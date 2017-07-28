@@ -1,6 +1,5 @@
 package com.hwuiwon.alma;
 
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.hwuiwon.alma.Directories.Directory;
@@ -11,7 +10,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-public class DirectoryTask extends AsyncTask<String, Void, Directory[]> {
+class DirectoryTask extends AsyncTask<String, Void, Directory[]> {
 
     @Override
     protected Directory[] doInBackground(String... strings) {

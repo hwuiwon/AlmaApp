@@ -16,5 +16,4 @@ public class Directory {
     public String getEmail() {
         return email;
     }
-
 }
