@@ -21,6 +21,13 @@ public class DirectoryTask extends AsyncTask<String, Void, Directory[]> {
         String cookie = strings[1];
         String url = "https://spps.getalma.com/";
 
+        char[] chars = keyword.toCharArray();
+
+        keyword="";
+        for(char c:chars){
+            keyword+="%"+Integer.toHexString((int)c);
+        }
+
         try {
             Document document = Jsoup.connect(url + "directory/search?u=0&q=" + keyword)
                     .timeout(0).header("Cookie", cookie).post();
@@ -30,9 +37,9 @@ public class DirectoryTask extends AsyncTask<String, Void, Directory[]> {
 
             for (int i=0; i<directories.length; i++) {
                 directories[i] = new Directory(e.get(i).select(".fn").text().trim(),
-                        e.get(i).select("a").text().trim(),
+                        e.get(i).select("a").text().trim()/*,
                         BitmapFactory.decodeStream(
-                                new java.net.URL(url+e.get(i).select(".profile-pic").attr("src")).openStream()));
+                                new java.net.URL(url+e.get(i).select(".profile-pic").attr("src")).openStream())*/);
             }
 
         } catch (IOException e) {
