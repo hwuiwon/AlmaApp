@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
 
         Boolean saveUsername = loginPrefs.getBoolean("saveUsername", false);
-        Boolean autoLogin = loginPrefs.getBoolean("autoLogin", false);
+        final Boolean autoLogin = loginPrefs.getBoolean("autoLogin", false);
         if (saveUsername) {
             usernameET.setText(loginPrefs.getString("username", ""));
             usernameCB.setChecked(true);
@@ -68,10 +68,21 @@ public class LoginActivity extends AppCompatActivity {
             attemptLogin();
         }
 
+        usernameCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(!b) {
+                    autoLoginCB.setChecked(false);
+                }
+            }
+        });
+
         autoLoginCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                usernameCB.setChecked(b);
+                if(b) {
+                    usernameCB.setChecked(true);
+                }
             }
         });
 
