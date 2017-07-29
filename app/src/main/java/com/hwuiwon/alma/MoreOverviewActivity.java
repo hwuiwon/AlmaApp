@@ -78,7 +78,9 @@ public class MoreOverviewActivity extends AppCompatActivity {
         final GradeAdapter adapter = new GradeAdapter(this);
         try {
 //            showProgress(true);
-            grades = new GradeTask().execute(classID, cookie).get();
+            if(grades==null) {
+                grades = new GradeTask().execute(classID, cookie).get();
+            }
 //            showProgress(false);
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,7 +96,9 @@ public class MoreOverviewActivity extends AppCompatActivity {
         final AssignmentAdapter adapter = new AssignmentAdapter(this);
         try {
 //            showProgress(true);
-            assignments = new AssignmentTask().execute(classID, cookie).get();
+            if(assignments==null) {
+                assignments = new AssignmentTask().execute(classID, cookie).get();
+            }
 //            showProgress(false);
         } catch (Exception e) {
             e.printStackTrace();
