@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
 
@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.HashMap;
 
-class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
+public class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
 
     @Override
     protected HashMap<String, String> doInBackground(String... strings) {

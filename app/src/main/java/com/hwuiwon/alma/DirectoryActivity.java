@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.hwuiwon.alma.Directories.Directory;
 import com.hwuiwon.alma.Directories.DirectoryAdapter;
+import com.hwuiwon.alma.Tasks.DirectoryTask;
 
 public class DirectoryActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
 
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class OverviewTask extends AsyncTask<String, Void, Overview[]> {
+public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
 
     private int tmp = 0;
     private Overview[] overviews = null;

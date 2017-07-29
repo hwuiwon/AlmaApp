@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
 
@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
+public class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
 
     @Override
     protected Assignment[] doInBackground(String... strings) {

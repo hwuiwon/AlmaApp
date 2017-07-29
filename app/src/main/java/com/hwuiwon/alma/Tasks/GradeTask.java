@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
 
@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-class GradeTask extends AsyncTask<String, Void, Grade[]> {
+public class GradeTask extends AsyncTask<String, Void, Grade[]> {
 
     @Override
     protected Grade[] doInBackground(String... strings) {

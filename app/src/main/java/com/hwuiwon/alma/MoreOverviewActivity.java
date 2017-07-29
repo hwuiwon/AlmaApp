@@ -13,6 +13,8 @@ import com.hwuiwon.alma.Assignments.AssignmentAdapter;
 import com.hwuiwon.alma.Grades.Grade;
 import com.hwuiwon.alma.Grades.GradeAdapter;
 import com.hwuiwon.alma.Overviews.Overview;
+import com.hwuiwon.alma.Tasks.AssignmentTask;
+import com.hwuiwon.alma.Tasks.GradeTask;
 
 public class MoreOverviewActivity extends AppCompatActivity {
 
