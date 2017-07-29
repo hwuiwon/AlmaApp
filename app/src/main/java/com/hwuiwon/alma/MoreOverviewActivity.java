@@ -71,11 +71,15 @@ public class MoreOverviewActivity extends AppCompatActivity {
 
     public GradeAdapter makeGradeAdapter() {
         final GradeAdapter adapter = new GradeAdapter(this);
-        try {
-            grades = new GradeTask().execute(classID, cookie).get();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        if (grades == null) {
+            try {
+                grades = new GradeTask().execute(classID, cookie).get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         for (Grade grade : grades) {
             adapter.addGrade(grade);
         }
@@ -85,11 +89,15 @@ public class MoreOverviewActivity extends AppCompatActivity {
 
     public AssignmentAdapter makeAssignmentAdapter() {
         final AssignmentAdapter adapter = new AssignmentAdapter(this);
-        try {
-            assignments = new AssignmentTask().execute(classID, cookie).get();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        if (assignments == null) {
+            try {
+                assignments = new AssignmentTask().execute(classID, cookie).get();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         for (Assignment assignment : assignments) {
             adapter.addAssignment(assignment);
         }
