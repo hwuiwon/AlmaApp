@@ -12,7 +12,6 @@ import com.hwuiwon.alma.R;
 @SuppressLint("ViewConstructor")
 public class DirectoryView extends RelativeLayout {
 
-    ImageView imageView1;
     TextView textView1;
     TextView textView2;
 
@@ -22,11 +21,9 @@ public class DirectoryView extends RelativeLayout {
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.directory, this, true);
 
-        imageView1 = findViewById(R.id.directoryIV);
         textView1 = findViewById(R.id.directoryTV1);
         textView2 = findViewById(R.id.directoryTV2);
 
-        imageView1.setImageBitmap(directory.getProfilePic());
         textView1.setText(directory.getName());
         textView2.setText(directory.getEmail());
     }
