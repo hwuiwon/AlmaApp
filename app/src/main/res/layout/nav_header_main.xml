@@ -8,17 +8,21 @@
     android:theme="@style/AppTheme.Alma.Header">
 
     <TextView
+        android:id="@+id/headerTV1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:paddingBottom="@dimen/activity_margin4"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/app_name"
-        android:textSize="60px"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/headerTV2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/developer" />
+        android:text="@string/role"
+        android:textSize="17dp" />
 
 </LinearLayout>

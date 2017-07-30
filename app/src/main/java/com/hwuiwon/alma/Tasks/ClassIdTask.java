@@ -31,12 +31,12 @@ public class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>
             }
 
             Element scriptElement = document.select("script").last();
-            Pattern p = Pattern.compile("user:\\s\\{\\s+id:\\s\"(.+?)\",\\s+name:\\s\"(.+?)\"");
+            Pattern p = Pattern.compile("user:\\s\\{\\s+id:\\s\"(.+?)\",\\s+name:\\s\"(.+?)\",\\s+role:\\s\"(.+?)\"");
             Matcher m = p.matcher(scriptElement.html());
             m.find();
-
-            String studentName = m.group(2);
-            temp.put("studentName", studentName);
+            Log.d("GetName&Role", "Name: " + m.group(2) + ", Role: " + m.group(3));
+            temp.put("name", m.group(2));
+            temp.put("role", m.group(3));
         } catch (IOException e) {
             e.printStackTrace();
         }

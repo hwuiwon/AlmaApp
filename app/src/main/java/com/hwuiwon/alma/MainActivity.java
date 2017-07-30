@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.hwuiwon.alma.Overviews.Overview;
 import com.hwuiwon.alma.Overviews.OverviewAdapter;
@@ -49,6 +50,12 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        View headerView = getLayoutInflater().inflate(R.layout.nav_header_main, null);
+        TextView headerTV1 = headerView.findViewById(R.id.headerTV1);
+        TextView headerTV2 = headerView.findViewById(R.id.headerTV2);
+        headerTV1.setText(classIDs.get("name"));
+        headerTV2.setText(classIDs.get("role"));
 
         for (Overview ov : overviews) {
             adapter.addOverview(ov);
