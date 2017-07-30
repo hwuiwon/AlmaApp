@@ -27,7 +27,6 @@ public class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
             Document document = Jsoup.connect(url + "home/assignments?classId=" + classID)
                     .timeout(0).header("Cookie", cookie).get();
 
-            Log.d("tag", document.select("tbody").html());
             Elements e = document.select("tbody > tr");
 
             int size = e.size();
@@ -49,12 +48,6 @@ public class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
 
             }
 
-            for(Assignment a : assignments){
-                Log.d("Debug", "Due Date : "+a.getDueDate()+"\n"+
-                        "Assignment Title : "+a.getAssignmentName()+"\n"+
-                        "Assignment Type : "+a.getType()+"\n"+
-                        "Assignment Detail : "+a.getAssignmentDetail());
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
