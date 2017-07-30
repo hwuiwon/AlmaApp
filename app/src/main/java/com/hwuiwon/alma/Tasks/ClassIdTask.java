@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
+public class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
 
     @Override
     protected HashMap<String, String> doInBackground(String... strings) {
@@ -33,9 +33,10 @@ class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
             Element scriptElement = document.select("script").last();
             Pattern p = Pattern.compile("user:\\s\\{\\s+id:\\s\"(.+?)\",\\s+name:\\s\"(.+?)\",\\s+role:\\s\"(.+?)\"");
             Matcher m = p.matcher(scriptElement.html());
-            m.find();
-            temp.put("name", m.group(2));
-            temp.put("role", m.group(3));
+            if(m.find()) {
+                temp.put("name", m.group(2));
+                temp.put("role", m.group(3));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
