@@ -20,10 +20,9 @@ public class ProfileImageTask extends AsyncTask<String, Void, Bitmap> {
         Bitmap temp = null;
 
         try {
-            Document document = Jsoup.connect(url + "home").timeout(5000)
-                    .header("Cookie", cookie).get();
-
-            String imageUrl = document.select("ul > li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover.user").select(".profile-pic").attr("src");
+            Document document = Jsoup.connect(url + "home").timeout(0).header("Cookie", cookie).get();
+            String imageUrl = document.select("ul > " +
+                    "li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover.user > a > img").attr("data-src");
             Log.d("ImageUrl", imageUrl);
 
             temp = BitmapFactory.decodeStream(new java.net.URL(url + imageUrl).openStream());
