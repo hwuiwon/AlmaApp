@@ -1,5 +1,6 @@
 package com.hwuiwon.alma.Tasks;
 
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.hwuiwon.alma.Directories.Directory;
@@ -29,7 +30,9 @@ public class DirectoryTask extends AsyncTask<String, Void, Directory[]> {
 
             for (int i=0; i<directories.length; i++) {
                 directories[i] = new Directory(e.get(i).select(".fn").text().trim(),
-                                               e.get(i).select("a").text().trim());
+                        e.get(i).select("a").text().trim(),
+                        BitmapFactory.decodeStream(new java.net.URL(
+                                url+e.get(i).select(".profile-pic").attr("src")).openStream()));
             }
 
         } catch (IOException e) {
