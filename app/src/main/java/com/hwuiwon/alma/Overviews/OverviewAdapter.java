@@ -9,24 +9,24 @@ import java.util.ArrayList;
 
 public class OverviewAdapter extends BaseAdapter {
     private Context context;
-    private ArrayList<Overview> datas = new ArrayList<>();
+    private ArrayList<Overview> data = new ArrayList<>();
 
     public OverviewAdapter(Context context) {
         this.context = context;
     }
 
     public void addOverview(Overview overview) {
-        datas.add(overview);
+        data.add(overview);
     }
 
     @Override
     public int getCount() {
-        return datas.size();
+        return data.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return datas.get(i);
+        return data.get(i);
     }
 
     @Override
@@ -38,10 +38,10 @@ public class OverviewAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         OverviewView overviewView;
         if (view == null) {
-            overviewView = new OverviewView(context, datas.get(i));
+            overviewView = new OverviewView(context, data.get(i));
         } else {
             overviewView = (OverviewView) view;
-            overviewView.setData(datas.get(i));
+            overviewView.setData(data.get(i));
         }
         return overviewView;
     }
