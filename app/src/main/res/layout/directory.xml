@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_margin">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/directoryCIV"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/sample"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/jumbo" />
 
     <TextView
         android:id="@+id/directoryTV1"
@@ -15,7 +24,9 @@
         android:textStyle="bold"
         android:paddingStart="@dimen/activity_margin"
         android:paddingEnd="@dimen/activity_margin"
-        android:paddingTop="@dimen/activity_margin2"/>
+        android:paddingTop="@dimen/activity_margin2"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/directoryCIV" />
 
     <TextView
         android:id="@+id/directoryTV2"
@@ -26,6 +37,7 @@
         android:textColor="@color/jet"
         android:layout_marginStart="@dimen/activity_margin"
         android:paddingTop="@dimen/activity_margin4"
-        android:layout_below="@id/directoryTV1" />
+        android:layout_below="@id/directoryTV1"
+        android:layout_toEndOf="@id/directoryCIV" />
 
 </RelativeLayout>

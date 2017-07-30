@@ -10,6 +10,7 @@ Alma App parses GetAlma to see school related details without using website.
 - [x] Shows schedules (Class name, Classroom, etc)
 - [x] Shows assignments
 - [x] Shows grades
+- [x] Shows directory list & Can send email directly
 
 ## Requirements
 

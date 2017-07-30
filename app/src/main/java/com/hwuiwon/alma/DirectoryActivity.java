@@ -6,9 +6,13 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.content.Intent;
 import android.net.Uri;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +20,10 @@ import android.widget.ListView;
 
 import com.hwuiwon.alma.Directories.Directory;
 import com.hwuiwon.alma.Directories.DirectoryAdapter;
+import com.hwuiwon.alma.Tasks.DirectoryTask;
 
 public class DirectoryActivity extends AppCompatActivity {
 
-    private Button directoryBT;
     private EditText directoryET;
     private ListView directoryLV;
 
@@ -33,7 +37,7 @@ public class DirectoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_directory);
 
         cookie = getIntent().getStringExtra("cookie");
-        directoryBT = (Button) findViewById(R.id.directoryBT);
+        Button directoryBT = (Button) findViewById(R.id.directoryBT);
         directoryET = (EditText) findViewById(R.id.directoryET);
         directoryLV = (ListView) findViewById(R.id.directoryLV);
 
@@ -43,6 +47,8 @@ public class DirectoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 directoryLV.setAdapter(makeDirectoryAdapter());
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getApplicationWindowToken(),0);
             }
         });
 

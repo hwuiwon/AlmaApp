@@ -33,7 +33,7 @@ import java.io.IOException;
 public class LoginActivity extends AppCompatActivity {
 
     private UserLoginTask mAuthTask = null;
-    private SharedPreferences loginPrefs;
+    private SharedPreferences.Editor loginPrefsEditor;
 
     private EditText usernameET;
     private EditText passwordET;
@@ -54,13 +54,15 @@ public class LoginActivity extends AppCompatActivity {
         loginFormView = findViewById(R.id.login_form);
         progressView = findViewById(R.id.login_progress);
 
-        loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        SharedPreferences loginPrefs = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPrefsEditor = loginPrefs.edit();
 
         Boolean saveUsername = loginPrefs.getBoolean("saveUsername", false);
         final Boolean autoLogin = loginPrefs.getBoolean("autoLogin", false);
         if (saveUsername) {
             usernameET.setText(loginPrefs.getString("username", ""));
             usernameCB.setChecked(true);
+            passwordET.requestFocus();
         }
         if (autoLogin) {
             passwordET.setText(loginPrefs.getString("password", ""));

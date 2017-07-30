@@ -18,6 +18,8 @@ import com.hwuiwon.alma.Assignments.AssignmentAdapter;
 import com.hwuiwon.alma.Grades.Grade;
 import com.hwuiwon.alma.Grades.GradeAdapter;
 import com.hwuiwon.alma.Overviews.Overview;
+import com.hwuiwon.alma.Tasks.AssignmentTask;
+import com.hwuiwon.alma.Tasks.GradeTask;
 
 public class MoreOverviewActivity extends AppCompatActivity {
 
@@ -76,15 +78,16 @@ public class MoreOverviewActivity extends AppCompatActivity {
 
     public GradeAdapter makeGradeAdapter() {
         final GradeAdapter adapter = new GradeAdapter(this);
-        try {
-//            showProgress(true);
-            if(grades==null) {
+        if(grades==null) {
+            try {
+//                showProgress(true);
                 grades = new GradeTask().execute(classID, cookie).get();
+//                showProgress(false);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-//            showProgress(false);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
         for (Grade grade : grades) {
             adapter.addGrade(grade);
         }
@@ -94,15 +97,17 @@ public class MoreOverviewActivity extends AppCompatActivity {
 
     public AssignmentAdapter makeAssignmentAdapter() {
         final AssignmentAdapter adapter = new AssignmentAdapter(this);
-        try {
-//            showProgress(true);
-            if(assignments==null) {
+
+        if (assignments == null) {
+            try {
+//                showProgress(true);
                 assignments = new AssignmentTask().execute(classID, cookie).get();
+//                showProgress(false);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-//            showProgress(false);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
         for (Assignment assignment : assignments) {
             adapter.addAssignment(assignment);
         }

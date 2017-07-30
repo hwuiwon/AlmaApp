@@ -1,4 +1,4 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
 
@@ -9,6 +9,8 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
 
@@ -28,6 +30,12 @@ class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
                 temp.put(option.text(), option.val());
             }
 
+            Element scriptElement = document.select("script").last();
+            Pattern p = Pattern.compile("user:\\s\\{\\s+id:\\s\"(.+?)\",\\s+name:\\s\"(.+?)\",\\s+role:\\s\"(.+?)\"");
+            Matcher m = p.matcher(scriptElement.html());
+            m.find();
+            temp.put("name", m.group(2));
+            temp.put("role", m.group(3));
         } catch (IOException e) {
             e.printStackTrace();
         }

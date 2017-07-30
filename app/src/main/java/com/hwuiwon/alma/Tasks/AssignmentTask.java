@@ -1,7 +1,6 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.hwuiwon.alma.Assignments.Assignment;
 
@@ -14,7 +13,7 @@ import java.io.IOException;
 //import java.util.ArrayList;
 //import java.util.List;
 
-class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
+public class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
 
     @Override
     protected Assignment[] doInBackground(String... strings) {

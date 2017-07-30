@@ -1,7 +1,19 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ETC #
+#######
 *.iml
 .gradle
+.externalNativeBuild
 /local.properties
-.DS_Store
 /build
 /captures
 .externalNativeBuild

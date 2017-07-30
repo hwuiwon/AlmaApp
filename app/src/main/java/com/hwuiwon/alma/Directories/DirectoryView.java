@@ -9,11 +9,14 @@ import android.widget.TextView;
 
 import com.hwuiwon.alma.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 @SuppressLint("ViewConstructor")
 public class DirectoryView extends RelativeLayout {
 
     TextView textView1;
     TextView textView2;
+    CircleImageView circleImageView;
 
     public DirectoryView(Context context, Directory directory) {
         super(context);
@@ -23,9 +26,11 @@ public class DirectoryView extends RelativeLayout {
 
         textView1 = findViewById(R.id.directoryTV1);
         textView2 = findViewById(R.id.directoryTV2);
+        circleImageView = findViewById(R.id.directoryCIV);
 
         textView1.setText(directory.getName());
         textView2.setText(directory.getEmail());
+        circleImageView.setImageBitmap(directory.getProfilePic());
     }
 
     public void setData(Directory directory) {

@@ -1,6 +1,7 @@
-package com.hwuiwon.alma;
+package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.hwuiwon.alma.Overviews.Overview;
 
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class OverviewTask extends AsyncTask<String, Void, Overview[]> {
+public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
 
     private int tmp = 0;
     private Overview[] overviews = null;
@@ -28,7 +29,7 @@ class OverviewTask extends AsyncTask<String, Void, Overview[]> {
         String date;
 
         try {
-            Document document = Jsoup.connect(url+"home")
+            Document document = Jsoup.connect(url+"home").timeout(0)
                     .header("Cookie", cookie).get();
 
             Element scriptElement = document.select("script").last();
