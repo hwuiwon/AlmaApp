@@ -199,7 +199,6 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = null;
             showProgress(false);
 
-            SharedPreferences.Editor loginPrefsEditor = loginPrefs.edit();
             loginPrefsEditor.putBoolean("saveUsername", usernameCB.isChecked());
             loginPrefsEditor.putString("username", usernameET.getText().toString());
             loginPrefsEditor.putString("password", passwordET.getText().toString());
