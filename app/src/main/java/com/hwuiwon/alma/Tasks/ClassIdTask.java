@@ -23,7 +23,7 @@ public class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>
         String url = "https://spps.getalma.com/";
 
         try {
-            Document document = Jsoup.connect(url + "home/grades").timeout(0).header("Cookie", cookie).get();
+            Document document = Jsoup.connect(url + "home/grades").timeout(0).timeout(0).header("Cookie", cookie).get();
             Elements options = document.getElementsByAttributeValue("name", "classId").get(0).children();
 
             for (Element option : options) {
@@ -34,7 +34,6 @@ public class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>
             Pattern p = Pattern.compile("user:\\s\\{\\s+id:\\s\"(.+?)\",\\s+name:\\s\"(.+?)\",\\s+role:\\s\"(.+?)\"");
             Matcher m = p.matcher(scriptElement.html());
             m.find();
-            Log.d("GetName&Role", "Name: " + m.group(2) + ", Role: " + m.group(3));
             temp.put("name", m.group(2));
             temp.put("role", m.group(3));
         } catch (IOException e) {

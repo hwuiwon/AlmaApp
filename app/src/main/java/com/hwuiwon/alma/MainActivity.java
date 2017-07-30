@@ -1,6 +1,7 @@
 package com.hwuiwon.alma;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -20,17 +21,22 @@ import com.hwuiwon.alma.Overviews.Overview;
 import com.hwuiwon.alma.Overviews.OverviewAdapter;
 import com.hwuiwon.alma.Tasks.ClassIdTask;
 import com.hwuiwon.alma.Tasks.OverviewTask;
+import com.hwuiwon.alma.Tasks.ProfileImageTask;
 
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String barTitle = "Overview";
     private String cookie;
-    private HashMap<String, String> classIDs = null;
 
+    private HashMap<String, String> classIDs = null;
     private Overview[] overviews = null;
+
+    private Bitmap profilePic = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +53,7 @@ public class MainActivity extends AppCompatActivity
         try {
             overviews = new OverviewTask().execute(cookie).get();
             classIDs = new ClassIdTask().execute(cookie).get();
+            // profilePic = new ProfileImageTask().execute(cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -54,8 +61,10 @@ public class MainActivity extends AppCompatActivity
         View headerView = getLayoutInflater().inflate(R.layout.nav_header_main, null);
         TextView headerTV1 = headerView.findViewById(R.id.headerTV1);
         TextView headerTV2 = headerView.findViewById(R.id.headerTV2);
+        CircleImageView profile_image = headerView.findViewById(R.id.profile_image);
         headerTV1.setText(classIDs.get("name"));
         headerTV2.setText(classIDs.get("role"));
+        profile_image.setImageBitmap(profilePic);
 
         for (Overview ov : overviews) {
             adapter.addOverview(ov);
@@ -117,7 +126,6 @@ public class MainActivity extends AppCompatActivity
                 barTitle = "Overview";
                 break;
             case R.id.nav_directory:
-                barTitle = "Directory";
                 Intent i = new Intent(getApplicationContext(), DirectoryActivity.class);
                 i.putExtra("cookie", cookie);
                 startActivity(i);

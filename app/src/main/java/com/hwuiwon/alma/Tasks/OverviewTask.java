@@ -1,6 +1,7 @@
 package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.hwuiwon.alma.Overviews.Overview;
 
@@ -28,7 +29,7 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
         String date;
 
         try {
-            Document document = Jsoup.connect(url+"home")
+            Document document = Jsoup.connect(url+"home").timeout(0)
                     .header("Cookie", cookie).get();
 
             Element scriptElement = document.select("script").last();
