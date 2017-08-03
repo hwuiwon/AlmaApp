@@ -1,7 +1,6 @@
 package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.hwuiwon.alma.Overviews.Overview;
 
