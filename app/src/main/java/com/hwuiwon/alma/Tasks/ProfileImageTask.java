@@ -9,6 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.net.URLConnection;
 
 public class ProfileImageTask extends AsyncTask<String, Void, Bitmap> {
 
@@ -22,10 +23,15 @@ public class ProfileImageTask extends AsyncTask<String, Void, Bitmap> {
         try {
             Document document = Jsoup.connect(url + "home").timeout(0).header("Cookie", cookie).get();
             String imageUrl = document.select("ul > " +
-                    "li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover.user > a > img").attr("data-src");
+                    "li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover.user > a > img").attr("abs:data-src");
             Log.d("ImageUrl", imageUrl);
+            Log.d("ImageUrlCookie", cookie);
 
-            temp = BitmapFactory.decodeStream(new java.net.URL(url + imageUrl).openStream());
+            URLConnection connection = new java.net.URL(imageUrl).openConnection();
+            connection.setRequestProperty("Cookie", cookie);
+            connection.connect();
+
+            temp = BitmapFactory.decodeStream(connection.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
