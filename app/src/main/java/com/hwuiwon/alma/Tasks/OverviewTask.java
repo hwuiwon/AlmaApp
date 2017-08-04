@@ -1,7 +1,6 @@
 package com.hwuiwon.alma.Tasks;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.hwuiwon.alma.Overviews.Overview;
 
@@ -12,12 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,12 +80,12 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
         String str = string;
         Pattern p = Pattern.compile("\\\\u(\\w{4})");
         Matcher m = p.matcher(str);
-        int i=0;
+        int i = 0;
         while(m.find()){
             int ch = Integer.valueOf(m.group(1), 16);
-            str = str.substring(0, m.start()-5*i)
+            str = str.substring(0, m.start() - 5 * i)
                     + String.valueOf((char) ch)
-                    + str.substring(m.end()-5*i,str.length());
+                    + str.substring(m.end() - 5 * i,str.length());
             i++;
         }
         str = str.replaceAll("\\\\n", "\n").replaceAll("\\\\/", "/");

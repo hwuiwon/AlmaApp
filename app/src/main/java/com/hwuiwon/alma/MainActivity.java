@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         try {
             overviews = new OverviewTask().execute(cookie).get();
             classIDs = new ClassIdTask().execute(cookie).get();
-            profilePic = new ProfileImageTask().execute(cookie).get();
+            // profilePic = new ProfileImageTask().execute(cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
