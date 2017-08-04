@@ -28,7 +28,7 @@ public class ProfileImageTask extends AsyncTask<String, Void, Bitmap> {
             Log.d("ImageUrlCookie", cookie);
 
             URLConnection connection = new java.net.URL(imageUrl).openConnection();
-            connection.setRequestProperty("Cookie", cookie);
+            connection.addRequestProperty("Cookie", cookie);
             connection.connect();
 
             temp = BitmapFactory.decodeStream(connection.getInputStream());
