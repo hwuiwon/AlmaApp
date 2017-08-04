@@ -41,7 +41,7 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
                     .header("Cookie", cookie).get();
 
             Element scriptElement = document.select("script").last();
-            Pattern p = Pattern.compile("user:\\s\\{\\s+id:\\s\\\"(.+?)\\\"");
+            Pattern p = Pattern.compile("user:\\s\\{\\s+id:\\s\"(.+?)\"");
             Matcher m = p.matcher(scriptElement.html());
 
             m.find();
