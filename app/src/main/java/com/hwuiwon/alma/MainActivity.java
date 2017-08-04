@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
     private ListView overviewLV = null;
     private View progressView = null;
 
-    private Bitmap profilePic = null;
+//    private String profilePic = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity
 //            showProgress(true);
             overviews = new OverviewTask().execute(cookie).get();
             classIDs = new ClassIdTask().execute(cookie).get();
+//            profilePic = new ProfileImageTask().execute(cookie, this).get();
 //            showProgress(false);
-//            profilePic = new ProfileImageTask().execute(cookie).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity
         CircleImageView profile_image = headerView.findViewById(R.id.profile_image);
         headerTV1.setText(classIDs.get("name"));
         headerTV2.setText(classIDs.get("role"));
-        profile_image.setImageBitmap(profilePic);
+        //TODO implement later
+//        profile_image.setImageBitmap(null);
 
         for (Overview ov : overviews) {
             adapter.addOverview(ov);
