@@ -70,7 +70,7 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
 
                 responseString = escapeUnicode(response.body().split("\"html\":\"")[1].split("\"\\}")[0]);
                 Log.d("Debug", responseString);
-                date = Jsoup.parse(responseString).select(".date-picker > a").get(1).attr("data-date");
+                date = Jsoup.parse(responseString).select(".date-picker > a").get(navigateMode).attr("data-date");
             }
 
 
@@ -85,7 +85,7 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
                                 .header("Cookie", cookie).ignoreContentType(true)
                                 .method(Connection.Method.GET).execute();
                 responseString2 = escapeUnicode(response.body().split("\"html\":\"")[1].split("\"\\}")[0]);
-                date = Jsoup.parse(responseString2).select(".date-picker > a").get(1).attr("data-date");
+                date = Jsoup.parse(responseString2).select(".date-picker > a").get(navigateMode).attr("data-date");
             }
 
             setOverviews(Jsoup.parse(responseString2).select("tbody").get(0).select("tr"));
