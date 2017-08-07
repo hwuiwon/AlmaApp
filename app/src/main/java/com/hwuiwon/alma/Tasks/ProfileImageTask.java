@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.hwuiwon.alma.ImageIO;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,16 +20,22 @@ import java.net.URLConnection;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class ProfileImageTask extends AsyncTask<Object, Void, String> {
+public class ProfileImageTask extends AsyncTask<String, Void, String> {
+
+    private Context context;
+
+    public ProfileImageTask (Context context){
+        this.context = context;
+    }
 
     @Override
-    protected String doInBackground(Object... objects) {
+    protected String doInBackground(String... strings) {
 
-        String cookie = (String) objects[0];
-        Context context = (Context) objects[1];
+        String cookie = strings[0];
         String url = "https://spps.getalma.com/";
-        Bitmap temp = null;
-        String filename = "";
+        Bitmap temp;
+        String filename;
+        String filepath = "student_profile";
 
         try {
             Document document = Jsoup.connect(url + "home").timeout(0).header("Cookie", cookie).get();
@@ -35,21 +43,12 @@ public class ProfileImageTask extends AsyncTask<Object, Void, String> {
                     "li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover.user > a > img").attr("data-src");
             Log.d("ImageUrl", imageUrl);
 
-            byte[] r = Jsoup.connect(url.substring(0,url.length()-1)+imageUrl).header("Cookie",cookie).execute().bodyAsBytes();
+            byte[] r = Jsoup.connect(url.substring(0,url.length()-1)+imageUrl).ignoreContentType(true).header("Cookie",cookie).execute().bodyAsBytes();
             temp = BitmapFactory.decodeByteArray(r,0,r.length);
-            ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
-            // path to /data/data/yourapp/app_data/imageDir
-            File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-            // Create imageDir
-            filename = imageUrl.split("id=")[1];
-            File path = new File(directory, filename);
 
-            FileOutputStream fos = null;
-            fos = new FileOutputStream(path);
-                // Use the compress method on the BitMap object to write image to the OutputStream
-            temp.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            fos.close();
-            return directory.getAbsolutePath()+":"+filename;
+            filename = imageUrl.split("id=")[1];
+            new ImageIO(context).setFilepath(filepath).setFileName(filename).save(temp);
+            return filepath+":"+filename;
         } catch (IOException e) {
             e.printStackTrace();
         }
