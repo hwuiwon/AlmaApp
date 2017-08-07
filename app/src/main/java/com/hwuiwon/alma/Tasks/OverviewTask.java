@@ -58,6 +58,14 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
             Date dateMin = sdf.parse(strDateMin);
             Date dateMax = sdf.parse(strDateMax);
             Date currentDate = sdf.parse(strCurrentDate);
+            long mid = dateMin.getTime()+Math.abs(dateMin.getTime()-dateMax.getTime())/2;
+            Date dateMid = new Date(mid);
+            if (dateMid.after(currentDate)) {
+                dateMax = dateMid;
+            } else {
+                dateMin = dateMid;
+            }
+
             int navigateMode =
                     Math.abs(dateMin.getTime()-currentDate.getTime())>Math.abs(dateMax.getTime()-currentDate.getTime())?
                             NAVIGATE_FRONT:NAVIGATE_BACK;
