@@ -41,7 +41,7 @@ public class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
                         e.get(i*2).child(0).ownText().trim(),
                         e.get(i*2).child(1).text().trim(),
                         e.get(i*2).child(2).text().trim(),
-                        e.get(i*2+1).select("p").get(0).html().replaceAll("<br\\s*>\\s*","\n").trim()/*,
+                        e.get(i*2+1).select("p").get(0).html().replaceAll("<br\\s*>\\s*","\n").replaceAll("\\&amp;", "&").trim()/*,
                         e.get(i).child(3).text().trim(),
                         files*/
                 );
