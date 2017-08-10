@@ -27,6 +27,9 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="64dp"
+        android:background="@color/almaPrimary"
         android:visibility="gone" />
 
 </android.support.design.widget.CoordinatorLayout>

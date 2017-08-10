@@ -20,7 +20,7 @@ import java.net.URLConnection;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class ProfileImageTask extends AsyncTask<String, Void, String> {
+public class ProfileImageTask {
 
     private Context context;
 
@@ -28,8 +28,7 @@ public class ProfileImageTask extends AsyncTask<String, Void, String> {
         this.context = context;
     }
 
-    @Override
-    protected String doInBackground(String... strings) {
+    public String execute(String... strings) {
 
         String cookie = strings[0];
         String url = "https://spps.getalma.com/";

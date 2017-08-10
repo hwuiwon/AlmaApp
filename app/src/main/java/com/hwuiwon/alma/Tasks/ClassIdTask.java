@@ -1,7 +1,5 @@
 package com.hwuiwon.alma.Tasks;
 
-import android.os.AsyncTask;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,10 +10,9 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>> {
+public class ClassIdTask {
 
-    @Override
-    protected HashMap<String, String> doInBackground(String... strings) {
+    public HashMap<String, String> execute(String... strings) {
 
         HashMap<String, String> temp = new HashMap<>();
         String cookie = strings[0];

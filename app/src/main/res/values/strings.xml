@@ -11,8 +11,8 @@
     <string name="save_username">Save Username</string>
     <string name="auto_login">Auto Login</string>
     <string name="alma_logo_content_description">Alma logo image</string>
-    <string name="name">Hwuiwon (Huey) Kim</string>
-    <string name="role">Student</string>
+    <string name="name">Person Name</string>
+    <string name="role">Person Role</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

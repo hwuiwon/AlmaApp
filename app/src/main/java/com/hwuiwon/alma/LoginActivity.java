@@ -6,12 +6,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
-
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -110,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
+        loginPrefsEditor.apply();
     }
 
     private void attemptLogin() {
@@ -166,12 +165,22 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if(mAuthTask != null){
+            mAuthTask.cancel(true);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String username;
         private final String password;
         private String cookie = "";
         private int status;
+//        private ArrayList<String> schoolYears = new ArrayList<>();
 
         UserLoginTask(String id, String pass) {
             username = id;
@@ -187,6 +196,15 @@ public class LoginActivity extends AppCompatActivity {
                         .method(Connection.Method.POST).execute();
                 status = response.statusCode();
                 cookie = response.cookies().keySet().toArray()[0] + "=" + response.cookies().values().toArray()[0];
+//                Document document = Jsoup.connect("https://spps.getalma.com/home").header("Cookie", cookie).get();
+//                Log.d("tag", document.select(".subnav > ul").get(0).html());
+//                Elements elements = document.select(".subnav > ul > li");
+//                for(Element e : elements) {
+//                    schoolYears.add(e.select("a").get(0).attr("href"));
+//                }
+//                for(String s : schoolYears){
+//                    Log.d("Tag", s);
+//                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -207,6 +225,7 @@ public class LoginActivity extends AppCompatActivity {
                 loginPrefsEditor.putBoolean("autoLogin", autoLoginCB.isChecked());
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.putExtra("cookie", cookie);
+//                intent.putStringArrayListExtra("schoolYears", schoolYears);
                 startActivity(intent);
             } else if (status == 405) {
                 Toast.makeText(LoginActivity.this, "Alma is currently undergoing maintenance", Toast.LENGTH_LONG).show();

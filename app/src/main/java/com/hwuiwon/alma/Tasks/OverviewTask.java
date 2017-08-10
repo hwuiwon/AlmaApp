@@ -1,8 +1,5 @@
 package com.hwuiwon.alma.Tasks;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
 import com.hwuiwon.alma.Overviews.Overview;
 
 import org.jsoup.Connection;
@@ -14,22 +11,17 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
+public class OverviewTask {
 
     private int tmp = 0;
     private Overview[] overviews = null;
-    public int NAVIGATE_FRONT = 0;
-    public int NAVIGATE_BACK = 1;
 
-    @Override
-    protected Overview[] doInBackground(String... strings) {
+    public Overview[] execute(String... strings) {
 
         String cookie = strings[0];
         String url = "https://spps.getalma.com/";
@@ -43,11 +35,10 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
                     .header("Cookie", cookie).get();
 
             Element scriptElement = document.select("script").last();
-            Pattern p = Pattern.compile("user:\\s\\{\\s+id:\\s\\\"(.+?)\\\"");
+            Pattern p = Pattern.compile("user:\\s\\{\\s+id:\\s\"(.+?)\"");
             Matcher m = p.matcher(scriptElement.html());
-            //noinspection ResultOfMethodCallIgnored
-            m.find();
-            String studentID = m.group(1);
+            String studentID = null;
+            if(m.find()) studentID = m.group(1);
 
             date = document.select(".date-picker > a").get(0).attr("data-date");
 
@@ -66,9 +57,11 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
                 dateMin = dateMid;
             }
 
+            int NAVIGATE_FRONT = 0;
+            int NAVIGATE_BACK = 1;
             int navigateMode =
                     Math.abs(dateMin.getTime()-currentDate.getTime())>Math.abs(dateMax.getTime()-currentDate.getTime())?
-                            NAVIGATE_FRONT:NAVIGATE_BACK;
+                            NAVIGATE_FRONT : NAVIGATE_BACK;
 
             while (responseString.contains("Student is not enrolled in any classes")||responseString.contains("No classes scheduled today.")) {
                 response =
@@ -77,7 +70,6 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
                                 .method(Connection.Method.GET).execute();
 
                 responseString = escapeUnicode(response.body().split("\"html\":\"")[1].split("\"\\}")[0]);
-                Log.d("Debug", responseString);
                 date = Jsoup.parse(responseString).select(".date-picker > a").get(navigateMode).attr("data-date");
             }
 

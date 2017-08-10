@@ -3,8 +3,10 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,9 +19,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hwuiwon.alma.Overviews.Overview;
 import com.hwuiwon.alma.Overviews.OverviewAdapter;
@@ -27,6 +31,12 @@ import com.hwuiwon.alma.Tasks.ClassIdTask;
 import com.hwuiwon.alma.Tasks.OverviewTask;
 import com.hwuiwon.alma.Tasks.ProfileImageTask;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,8 +51,16 @@ public class MainActivity extends AppCompatActivity
     private Overview[] overviews = null;
     private ListView overviewLV = null;
     private View progressView = null;
+    private TextView headerTV1;
+    private TextView headerTV2;
+    private CircleImageView profile_image;
+    private OverviewAdapter adapter;
+
+//    private ArrayList<String> schoolYears;
 
     private String profilePic = null;
+
+    private LoadingTask mLoadingTask = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,54 +70,36 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         cookie = getIntent().getStringExtra("cookie");
+//        schoolYears = getIntent().getStringArrayListExtra("schoolYears");
 
         overviewLV = (ListView) findViewById(R.id.overviewLV);
         progressView = findViewById(R.id.main_progress);
-        final OverviewAdapter adapter = new OverviewAdapter(this);
+        adapter = new OverviewAdapter(this);
 
-        try {
-//            showProgress(true);
-            overviews = new OverviewTask().execute(cookie).get();
-            classIDs = new ClassIdTask().execute(cookie).get();
-            profilePic = new ProfileImageTask(this).execute(cookie).get();
-//            showProgress(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        View headerView = getLayoutInflater().inflate(R.layout.nav_header_main, null);
-        TextView headerTV1 = headerView.findViewById(R.id.headerTV1);
-        TextView headerTV2 = headerView.findViewById(R.id.headerTV2);
-        CircleImageView profile_image = headerView.findViewById(R.id.profile_image);
-        headerTV1.setText(classIDs.get("name"));
-        headerTV2.setText(classIDs.get("role"));
-        profile_image.setImageBitmap(new ImageIO(this).setFilepath(profilePic.split(":")[0]).setFileName(profilePic.split(":")[1]).load());
 
-        for (Overview ov : overviews) {
-            adapter.addOverview(ov);
-        }
-
-        overviewLV.setAdapter(adapter);
-        overviewLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), MoreOverviewActivity.class);
-                Overview overview = overviews[i];
-                intent.putExtra("classID", classIDs.get(overview.getOriginalClassName()));
-                intent.putExtra("overview", overview);
-                intent.putExtra("cookie", cookie);
-                startActivity(intent);
-            }
-        });
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        headerView = getLayoutInflater().inflate(R.layout.nav_header_main, null);
+        View headerView = navigationView.getHeaderView(0);
+        headerTV1 = headerView.findViewById(R.id.headerTV1);
+        headerTV2 = headerView.findViewById(R.id.headerTV2);
+        profile_image = headerView.findViewById(R.id.profile_image);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        try {
+            showProgress(true);
+            mLoadingTask = new LoadingTask(cookie);
+            mLoadingTask.execute((Void) null);
+//            showProgress(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -167,5 +167,65 @@ public class MainActivity extends AppCompatActivity
                 progressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+    }
+
+    private class LoadingTask extends AsyncTask<Void, Void, Void> {
+
+        private String cookie = "";
+
+        LoadingTask(String cookie) {
+            this.cookie = cookie;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+//            try {
+//                Document document = Jsoup.connect("https://spps.getalma.com"+schoolYears.get(1)).header("Cookie", cookie).get();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
+            overviews = new OverviewTask().execute(cookie);
+            classIDs = new ClassIdTask().execute(cookie);
+            profilePic = new ProfileImageTask(MainActivity.this).execute(cookie);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            mLoadingTask = null;
+            showProgress(false);
+
+            headerTV1.setText(classIDs.get("name"));
+            headerTV2.setText(classIDs.get("role"));
+            Bitmap b = new ImageIO(MainActivity.this).setFilepath(profilePic.split(":")[0]).setFileName(profilePic.split(":")[1]).load();
+
+            profile_image.setImageBitmap(b);
+
+            for (Overview ov : overviews) {
+                adapter.addOverview(ov);
+            }
+
+            overviewLV.setAdapter(adapter);
+            overviewLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(getApplicationContext(), MoreOverviewActivity.class);
+                    Overview overview = overviews[i];
+                    intent.putExtra("classID", classIDs.get(overview.getOriginalClassName()));
+                    intent.putExtra("overview", overview);
+                    intent.putExtra("cookie", cookie);
+                    startActivity(intent);
+                }
+            });
+        }
+
+        @Override
+        protected void onCancelled() {
+            mLoadingTask = null;
+            showProgress(false);
+        }
     }
 }
