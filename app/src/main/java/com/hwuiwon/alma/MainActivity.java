@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,10 @@ import com.hwuiwon.alma.Tasks.ClassIdTask;
 import com.hwuiwon.alma.Tasks.OverviewTask;
 import com.hwuiwon.alma.Tasks.ProfileImageTask;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,13 +41,14 @@ public class MainActivity extends AppCompatActivity
 
     private String barTitle = "Overview";
     private String cookie;
+    private String profileImgUrl;
 
     private HashMap<String, String> classIDs = null;
     private Overview[] overviews = null;
     private ListView overviewLV = null;
     private View progressView = null;
 
-    private String profilePic = null;
+    private Bitmap profilePic = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,23 +63,39 @@ public class MainActivity extends AppCompatActivity
         progressView = findViewById(R.id.main_progress);
         final OverviewAdapter adapter = new OverviewAdapter(this);
 
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    Document document = Jsoup.connect("https://spps.getalma.com/home").timeout(0).header("Cookie", cookie).get();
+                    profileImgUrl = document.select("ul > " +
+                            "li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover.user > a > img").attr("data-src");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
         try {
 //            showProgress(true);
             overviews = new OverviewTask().execute(cookie).get();
             classIDs = new ClassIdTask().execute(cookie).get();
-            profilePic = new ProfileImageTask(this).execute(cookie).get();
+            Log.d("Tag", profileImgUrl);
+            profilePic = new ProfileImageTask(this).execute(cookie, profileImgUrl, "student");
 //            showProgress(false);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        View headerView = getLayoutInflater().inflate(R.layout.nav_header_main, null);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
         TextView headerTV1 = headerView.findViewById(R.id.headerTV1);
         TextView headerTV2 = headerView.findViewById(R.id.headerTV2);
         CircleImageView profile_image = headerView.findViewById(R.id.profile_image);
         headerTV1.setText(classIDs.get("name"));
         headerTV2.setText(classIDs.get("role"));
-        profile_image.setImageBitmap(new ImageIO(this).setFilepath(profilePic.split(":")[0]).setFileName(profilePic.split(":")[1]).load());
+        profile_image.setImageBitmap(profilePic);
 
         for (Overview ov : overviews) {
             adapter.addOverview(ov);
@@ -97,9 +119,6 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override

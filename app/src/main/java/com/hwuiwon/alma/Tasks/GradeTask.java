@@ -17,10 +17,10 @@ public class GradeTask extends AsyncTask<String, Void, Grade[]> {
         Grade[] grades = null;
         String classID = strings[0];
         String cookie = strings[1];
-        String url = "https://spps.getalma.com/";
+        String url = "https://spps.getalma.com";
 
         try{
-            Document document = Jsoup.connect(url+"home/grades?classId="+classID)
+            Document document = Jsoup.connect(url+"/home/grades?classId="+classID)
                     .timeout(0).header("Cookie", cookie).post();
 
             Elements elements = document.select("tbody > tr");

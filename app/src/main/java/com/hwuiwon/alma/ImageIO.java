@@ -36,25 +36,28 @@ public class ImageIO {
             fos = new FileOutputStream(createFile());
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
-            Log.d("debug", "image saved : "+filepath+"/"+filename);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private File createFile() {
-        File directory = context.getDir(filepath, Context.MODE_PRIVATE);
+        File directory = context.getCacheDir();
         return new File(directory, filename);
     }
 
     public Bitmap load() {
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(createFile());
-            Log.d("debug", "image loaded : "+filepath+"/"+filename);
-            return BitmapFactory.decodeStream(fis);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(!filepath.isEmpty()&&!filename.isEmpty()) {
+            FileInputStream fis;
+            try {
+                File file = createFile();
+                if(file.exists()) {
+                    fis = new FileInputStream(file);
+                    return BitmapFactory.decodeStream(fis);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }

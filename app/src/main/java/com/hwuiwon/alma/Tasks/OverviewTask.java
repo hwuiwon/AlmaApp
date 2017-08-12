@@ -14,9 +14,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,21 +23,19 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
 
     private int tmp = 0;
     private Overview[] overviews = null;
-    public int NAVIGATE_FRONT = 0;
-    public int NAVIGATE_BACK = 1;
 
     @Override
     protected Overview[] doInBackground(String... strings) {
 
         String cookie = strings[0];
-        String url = "https://spps.getalma.com/";
+        String url = "https://spps.getalma.com";
 
         String date;
         String responseString = "Student is not enrolled in any classes";
         Connection.Response response;
 
         try {
-            Document document = Jsoup.connect(url+"home").timeout(0)
+            Document document = Jsoup.connect(url+"/home").timeout(0)
                     .header("Cookie", cookie).get();
 
             Element scriptElement = document.select("script").last();
@@ -66,18 +62,19 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
                 dateMin = dateMid;
             }
 
+            int NAVIGATE_FRONT = 0;
+            int NAVIGATE_BACK = 1;
             int navigateMode =
                     Math.abs(dateMin.getTime()-currentDate.getTime())>Math.abs(dateMax.getTime()-currentDate.getTime())?
-                            NAVIGATE_FRONT:NAVIGATE_BACK;
+                            NAVIGATE_FRONT : NAVIGATE_BACK;
 
             while (responseString.contains("Student is not enrolled in any classes")||responseString.contains("No classes scheduled today.")) {
                 response =
-                        Jsoup.connect(url+"home/get-student-schedule?studentId="+studentID+"&date="+date)
+                        Jsoup.connect(url+"/home/get-student-schedule?studentId="+studentID+"&date="+date)
                                 .header("Cookie", cookie).ignoreContentType(true)
                                 .method(Connection.Method.GET).execute();
 
                 responseString = escapeUnicode(response.body().split("\"html\":\"")[1].split("\"\\}")[0]);
-                Log.d("Debug", responseString);
                 date = Jsoup.parse(responseString).select(".date-picker > a").get(navigateMode).attr("data-date");
             }
 
@@ -89,7 +86,7 @@ public class OverviewTask extends AsyncTask<String, Void, Overview[]> {
             String responseString2 = responseString;
             while(responseString.equals(responseString2)||responseString.contains("No classes scheduled today.")) {
                 response =
-                        Jsoup.connect(url + "home/get-student-schedule?studentId=" + studentID + "&date=" + date)
+                        Jsoup.connect(url + "/home/get-student-schedule?studentId=" + studentID + "&date=" + date)
                                 .header("Cookie", cookie).ignoreContentType(true)
                                 .method(Connection.Method.GET).execute();
                 responseString2 = escapeUnicode(response.body().split("\"html\":\"")[1].split("\"\\}")[0]);

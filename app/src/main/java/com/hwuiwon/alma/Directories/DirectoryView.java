@@ -2,11 +2,13 @@ package com.hwuiwon.alma.Directories;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hwuiwon.alma.ImageIO;
 import com.hwuiwon.alma.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;

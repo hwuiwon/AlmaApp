@@ -21,10 +21,10 @@ public class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
         Assignment[] assignments = new Assignment[0];
         String classID = strings[0];
         String cookie = strings[1];
-        String url = "https://spps.getalma.com/";
+        String url = "https://spps.getalma.com";
 
         try {
-            Document document = Jsoup.connect(url + "home/assignments?classId=" + classID)
+            Document document = Jsoup.connect(url + "/home/assignments?classId=" + classID)
                     .timeout(0).header("Cookie", cookie).get();
 
             Elements e = document.select("tbody > tr");

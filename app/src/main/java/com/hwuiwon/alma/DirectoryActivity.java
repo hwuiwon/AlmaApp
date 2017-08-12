@@ -3,14 +3,16 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.os.Build;
-import android.content.Intent;
-import android.net.Uri;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -20,7 +22,17 @@ import android.widget.ListView;
 
 import com.hwuiwon.alma.Directories.Directory;
 import com.hwuiwon.alma.Directories.DirectoryAdapter;
-import com.hwuiwon.alma.Tasks.DirectoryTask;
+import com.hwuiwon.alma.Tasks.ProfileImageTask;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 public class DirectoryActivity extends AppCompatActivity {
 
@@ -30,6 +42,10 @@ public class DirectoryActivity extends AppCompatActivity {
     private String cookie;
     private Directory[] directories;
     private View progressView;
+
+    private HashMap<String, Directory> cumulativeDirectory;
+
+    private ArrayList<String[]> arr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +58,8 @@ public class DirectoryActivity extends AppCompatActivity {
         directoryLV = (ListView) findViewById(R.id.directoryLV);
 
         progressView = findViewById(R.id.directory_progress);
+
+        cumulativeDirectory = new HashMap<>();
 
         directoryBT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +96,7 @@ public class DirectoryActivity extends AppCompatActivity {
         }
 
         for (Directory directory : directories) {
+            cumulativeDirectory.put(directory.getName(), directory);
             adapter.addDirectory(directory);
         }
 
@@ -104,5 +123,95 @@ public class DirectoryActivity extends AppCompatActivity {
                 progressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            trimCache(this);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public static void trimCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            if (dir != null && dir.isDirectory()) {
+                deleteDir(dir);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+
+        // The directory is now empty so delete it
+        return dir.delete();
+    }
+
+    private class DirectoryTask extends AsyncTask<String, Void, Directory[]> {
+
+        @Override
+        protected Directory[] doInBackground(String... strings) {
+
+            Directory[] directories = null;
+            String keyword = strings[0];
+            final String cookie = strings[1];
+            final String url = "https://spps.getalma.com";
+
+            char[] chars = keyword.toCharArray();
+
+            keyword="";
+            for(char c:chars){
+                keyword+="%"+Integer.toHexString((int)c);
+            }
+
+            final String searchQuery = keyword;
+
+            try {
+                Document document = Jsoup.connect(url + "/directory/search?u=0&q=" + searchQuery)
+                        .timeout(0).header("Cookie", cookie).post();
+
+                final Elements e = document.select("div.directory-results > ul > li");
+                final int size = e.size();
+                Log.d("Tag", size+"");
+                directories = new Directory[size];
+
+                for (int i=0; i<size; i++) {
+                    String name = e.get(i).select(".fn").text().trim();
+//                    if (cumulativeDirectory.get(name)==null) {
+                        Log.d("Tag", name + " was not in cumulativeDirectory");
+                        String email = e.get(i).select("a").text().trim();
+                        String str = e.get(i).select(".profile-pic").attr("data-src");
+                        if (TextUtils.isEmpty(str))
+                            str = e.get(i).select(".profile-pic").attr("src");
+                        Bitmap arr = new ProfileImageTask(DirectoryActivity.this).execute(cookie, str, e.get(i).select(".category").text().toLowerCase());
+
+                    Log.d("Tag", "\n"+name+"\n"+email+"\n"+str);
+                        directories[i] = new Directory(name, email, arr);
+//                    } else {
+//                        directories[i] = cumulativeDirectory.get(name);
+//                    }
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return directories;
+        }
     }
 }

@@ -19,10 +19,10 @@ public class ClassIdTask extends AsyncTask<String, Void, HashMap<String, String>
 
         HashMap<String, String> temp = new HashMap<>();
         String cookie = strings[0];
-        String url = "https://spps.getalma.com/";
+        String url = "https://spps.getalma.com";
 
         try {
-            Document document = Jsoup.connect(url + "home/grades")
+            Document document = Jsoup.connect(url + "/home/grades")
                     .timeout(0).header("Cookie", cookie).get();
 
             Elements options = document.getElementsByAttributeValue("name", "classId").get(0).children();

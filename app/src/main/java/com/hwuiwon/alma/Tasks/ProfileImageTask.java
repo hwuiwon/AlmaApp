@@ -20,39 +20,49 @@ import java.net.URLConnection;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class ProfileImageTask extends AsyncTask<String, Void, String> {
+public class ProfileImageTask{
 
     private Context context;
+    private Bitmap temp;
 
     public ProfileImageTask (Context context){
         this.context = context;
     }
 
-    @Override
-    protected String doInBackground(String... strings) {
 
-        String cookie = strings[0];
-        String url = "https://spps.getalma.com/";
-        Bitmap temp;
-        String filename;
-        String filepath = "student_profile";
+    public Bitmap execute(String... strings) {
 
-        try {
-            Document document = Jsoup.connect(url + "home").timeout(0).header("Cookie", cookie).get();
-            String imageUrl = document.select("ul > " +
-                    "li.pure-menu-item.pure-menu-has-children.pure-menu-allow-hover.user > a > img").attr("data-src");
-            Log.d("ImageUrl", imageUrl);
-
-            byte[] r = Jsoup.connect(url.substring(0,url.length()-1)+imageUrl).ignoreContentType(true).header("Cookie",cookie).execute().bodyAsBytes();
-            temp = BitmapFactory.decodeByteArray(r,0,r.length);
-
+        final String cookie = strings[0];
+        final String url = "https://spps.getalma.com";
+        final String imageUrl = url + strings[1];
+        final String filepath = strings[2];
+        final String filename;
+        if (strings[1].contains("id=")) {
             filename = imageUrl.split("id=")[1];
-            new ImageIO(context).setFilepath(filepath).setFileName(filename).save(temp);
-            return filepath+":"+filename;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            filename = imageUrl.split("images/")[1];
         }
 
-        return "";
+//        Bitmap b = new ImageIO(context).setFilepath(filepath).setFileName(filename).load();
+
+//        if(b==null) {
+
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        Log.d("Tag", imageUrl);
+                        byte[] r = Jsoup.connect(imageUrl).ignoreContentType(true).header("Cookie", cookie).execute().bodyAsBytes();
+                        temp = BitmapFactory.decodeByteArray(r, 0, r.length);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    new ImageIO(context).setFilepath(filepath).setFileName(filename).save(temp);
+                }
+            }.start();
+//        }
+        temp = new ImageIO(context).setFileName(filename).setFilepath(filepath).load();
+        return temp;
     }
 }
