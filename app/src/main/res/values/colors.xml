@@ -6,7 +6,7 @@
 
     <!-- Primary #EB6842 _dark #D35D3A -->
 
-    <color name="almaPrimary">#E07637</color>
+    <color name="almaPrimary">#e07637</color>
     <color name="almaPrimary_dark">#CD6131</color>
     <color name="almaPrimary_light">#F2C7AE</color>
     <color name="alma_accent">#FFFFFF</color>

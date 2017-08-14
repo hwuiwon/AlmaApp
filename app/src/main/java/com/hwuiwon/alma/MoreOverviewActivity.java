@@ -3,6 +3,7 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,20 +39,26 @@ public class MoreOverviewActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            showProgress(true);
             switch (item.getItemId()) {
                 case R.id.nav_grades:
                     currentMenuTV.setText(getString(R.string.title_home));
-                    moreOverviewLV.setAdapter(makeGradeAdapter());
+                    new AssignmentGradeTask().execute(SET_GRADES);
+//                    moreOverviewLV.setAdapter(makeGradeAdapter());
                     return true;
                 case R.id.nav_assignments:
                     currentMenuTV.setText(getString(R.string.title_assignments));
-                    moreOverviewLV.setAdapter(makeAssignmentAdapter());
+                    new AssignmentGradeTask().execute(SET_ASSGINMENTS);
+//                    moreOverviewLV.setAdapter(makeAssignmentAdapter());
                     return true;
             }
             return false;
         }
     };
     private View progressView;
+    private Integer SET_GRADES = 0;
+    private Integer SET_ASSGINMENTS = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,47 +81,48 @@ public class MoreOverviewActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // Set List view to default
-        moreOverviewLV.setAdapter(makeGradeAdapter());
+        new AssignmentGradeTask().execute(SET_GRADES);
+//        moreOverviewLV.setAdapter(makeGradeAdapter());
     }
 
-    public GradeAdapter makeGradeAdapter() {
-        final GradeAdapter adapter = new GradeAdapter(this);
-        if(grades==null) {
-            try {
-//                showProgress(true);
-                grades = new GradeTask().execute(classID, cookie).get();
-//                showProgress(false);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        for (Grade grade : grades) {
-            adapter.addGrade(grade);
-        }
-
-        return adapter;
-    }
-
-    public AssignmentAdapter makeAssignmentAdapter() {
-        final AssignmentAdapter adapter = new AssignmentAdapter(this);
-
-        if (assignments == null) {
-            try {
-//                showProgress(true);
-                assignments = new AssignmentTask().execute(classID, cookie).get();
-//                showProgress(false);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        for (Assignment assignment : assignments) {
-            adapter.addAssignment(assignment);
-        }
-
-        return adapter;
-    }
+//    public GradeAdapter makeGradeAdapter() {
+//        final GradeAdapter adapter = new GradeAdapter(this);
+//        if(grades==null) {
+//            try {
+////                showProgress(true);
+//                grades = new GradeTask().execute(classID, cookie).get();
+////                showProgress(false);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        for (Grade grade : grades) {
+//            adapter.addGrade(grade);
+//        }
+//
+//        return adapter;
+//    }
+//
+//    public AssignmentAdapter makeAssignmentAdapter() {
+//        final AssignmentAdapter adapter = new AssignmentAdapter(this);
+//
+//        if (assignments == null) {
+//            try {
+////                showProgress(true);
+//                assignments = new AssignmentTask().execute(classID, cookie).get();
+////                showProgress(false);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        for (Assignment assignment : assignments) {
+//            adapter.addAssignment(assignment);
+//        }
+//
+//        return adapter;
+//    }
 
     @Override
     public void onBackPressed() {
@@ -140,5 +149,51 @@ public class MoreOverviewActivity extends AppCompatActivity {
                 progressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+    }
+
+    private class AssignmentGradeTask extends AsyncTask<Integer, Void, ListAdapter> {
+
+        @Override
+        protected ListAdapter doInBackground(Integer... integers) {
+            if(integers[0].equals(SET_GRADES)){
+                final GradeAdapter adapter = new GradeAdapter(MoreOverviewActivity.this);
+                if(grades==null) {
+                    try {
+                        grades = new GradeTask().execute(classID, cookie);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                for (Grade grade : grades) {
+                    adapter.addGrade(grade);
+                }
+                return adapter;
+            } else if(integers[0].equals(SET_ASSGINMENTS)) {
+                final AssignmentAdapter adapter = new AssignmentAdapter(MoreOverviewActivity.this);
+
+                if (assignments == null) {
+                    try {
+//                showProgress(true);
+                        assignments = new AssignmentTask().execute(classID, cookie);
+//                showProgress(false);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                for (Assignment assignment : assignments) {
+                    adapter.addAssignment(assignment);
+                }
+                return adapter;
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ListAdapter adapter) {
+            showProgress(false);
+            moreOverviewLV.setAdapter(adapter);
+        }
     }
 }

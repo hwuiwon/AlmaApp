@@ -5,16 +5,19 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hwuiwon.alma.MoreOverviewActivity"
-    android:background="@color/almaPrimary">
+    tools:context="com.hwuiwon.alma.MoreOverviewActivity">
 
     <ProgressBar
         android:id="@+id/more_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginBottom="8dp"
-        android:visibility="gone"/>
+        android:indeterminate="false"
+        android:progressDrawable="@color/almaPrimary"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/classNameTV"
@@ -34,14 +37,14 @@
         android:id="@+id/currentMenuTV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/classNameTV"
+        android:background="@color/almaPrimary"
+        android:paddingBottom="@dimen/activity_margin"
+        android:paddingEnd="@dimen/activity_margin"
+        android:paddingStart="@dimen/activity_margin"
         android:text="@string/moview_grades"
         android:textColor="@color/white"
-        android:textSize="15sp"
-        android:paddingStart="@dimen/activity_margin"
-        android:paddingEnd="@dimen/activity_margin"
-        android:paddingBottom="@dimen/activity_margin"
-        android:layout_below="@id/classNameTV"
-        android:background="@color/almaPrimary"/>
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/gradeTV"
@@ -61,22 +64,21 @@
         android:id="@+id/moreOverviewLV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/currentMenuTV"
         android:layout_above="@+id/navigation"
+        android:layout_below="@id/currentMenuTV"
         android:background="@color/color_testing"
         android:divider="@color/almaPrimary"
-        android:dividerHeight="1dp">
-    </ListView>
+        android:dividerHeight="1dp"></ListView>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@id/navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.Alma.Navigation"
         android:layout_alignParentBottom="true"
-        app:menu="@menu/navigation"
+        android:theme="@style/AppTheme.Alma.Navigation"
+        app:itemBackground="@drawable/menu_background_color_inverse"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/menu_text_color_inverse"
-        app:itemBackground="@drawable/menu_background_color_inverse" />
+        app:menu="@menu/navigation" />
 
 </RelativeLayout>

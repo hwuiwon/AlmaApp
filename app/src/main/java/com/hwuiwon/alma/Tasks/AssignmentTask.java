@@ -13,10 +13,9 @@ import java.io.IOException;
 //import java.util.ArrayList;
 //import java.util.List;
 
-public class AssignmentTask extends AsyncTask<String, Void, Assignment[]> {
+public class AssignmentTask {
 
-    @Override
-    protected Assignment[] doInBackground(String... strings) {
+    public Assignment[] execute(String... strings) {
 
         Assignment[] assignments = new Assignment[0];
         String classID = strings[0];

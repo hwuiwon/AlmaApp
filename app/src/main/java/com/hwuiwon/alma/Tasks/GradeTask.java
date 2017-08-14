@@ -10,10 +10,9 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-public class GradeTask extends AsyncTask<String, Void, Grade[]> {
+public class GradeTask {
 
-    @Override
-    protected Grade[] doInBackground(String... strings) {
+    public Grade[] execute(String... strings) {
         Grade[] grades = null;
         String classID = strings[0];
         String cookie = strings[1];
