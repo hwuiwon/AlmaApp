@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
     private String cookie;
 
     private HashMap<String, String> classIDs = null;
-    private Overview[] overviews = null;
+    private ArrayList<Overview> overviews = null;
     private ListView overviewLV = null;
     private View progressView = null;
     private TextView headerTV1;
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Intent intent = new Intent(getApplicationContext(), MoreOverviewActivity.class);
-                    Overview overview = overviews[i];
+                    Overview overview = overviews.get(i);
                     intent.putExtra("classID", classIDs.get(overview.getOriginalClassName()));
                     intent.putExtra("overview", overview);
                     intent.putExtra("cookie", cookie);

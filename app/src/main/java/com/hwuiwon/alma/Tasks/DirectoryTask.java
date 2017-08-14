@@ -11,10 +11,9 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-public class DirectoryTask extends AsyncTask<String, Void, Directory[]> {
+public class DirectoryTask {
 
-    @Override
-    protected Directory[] doInBackground(String... strings) {
+    public Directory[] execute(String... strings) {
 
         Directory[] directories = null;
         String keyword = strings[0];

@@ -3,6 +3,7 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.content.Intent;
 import android.net.Uri;
@@ -46,7 +47,7 @@ public class DirectoryActivity extends AppCompatActivity {
         directoryBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                directoryLV.setAdapter(makeDirectoryAdapter());
+                setDirectoryAdapter();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getApplicationWindowToken(),0);
             }
@@ -66,22 +67,15 @@ public class DirectoryActivity extends AppCompatActivity {
         });
     }
 
-    public DirectoryAdapter makeDirectoryAdapter() {
-        final DirectoryAdapter adapter = new DirectoryAdapter(this);
+    public void setDirectoryAdapter() {
         try {
             String keyword = String.valueOf(directoryET.getText());
-//            showProgress(true);
-            directories = new DirectoryTask().execute(keyword, cookie).get();
-//            showProgress(false);
+            showProgress(true);
+            new SearchingTask().execute(keyword);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        for (Directory directory : directories) {
-            adapter.addDirectory(directory);
-        }
-
-        return adapter;
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -104,5 +98,25 @@ public class DirectoryActivity extends AppCompatActivity {
                 progressView.setVisibility(show ? View.VISIBLE : View.GONE);
             }
         });
+    }
+
+    private class SearchingTask extends AsyncTask<String, Void, DirectoryAdapter> {
+        @Override
+        protected DirectoryAdapter doInBackground(String... strings) {
+            String keyword = strings[0];
+            directories = new DirectoryTask().execute(keyword, cookie);
+            DirectoryAdapter adapter = new DirectoryAdapter(DirectoryActivity.this);
+            for (Directory directory : directories) {
+                adapter.addDirectory(directory);
+            }
+
+            return adapter;
+        }
+
+        @Override
+        protected void onPostExecute(DirectoryAdapter adapter) {
+            showProgress(false);
+            directoryLV.setAdapter(adapter);
+        }
     }
 }

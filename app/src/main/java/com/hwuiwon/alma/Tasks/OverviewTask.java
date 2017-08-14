@@ -1,5 +1,7 @@
 package com.hwuiwon.alma.Tasks;
 
+import android.util.Log;
+
 import com.hwuiwon.alma.Overviews.Overview;
 
 import org.jsoup.Connection;
@@ -11,6 +13,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -18,10 +21,9 @@ import java.util.regex.Pattern;
 
 public class OverviewTask {
 
-    private int tmp = 0;
-    private Overview[] overviews = null;
+    private ArrayList<Overview> overviews = new ArrayList<>();
 
-    public Overview[] execute(String... strings) {
+    public ArrayList<Overview> execute(String... strings) {
 
         String cookie = strings[0];
         String url = "https://spps.getalma.com/";
@@ -39,8 +41,6 @@ public class OverviewTask {
             Matcher m = p.matcher(scriptElement.html());
             String studentID = null;
             if(m.find()) studentID = m.group(1);
-
-            date = document.select(".date-picker > a").get(0).attr("data-date");
 
             String strDateMin = document.select(".date-picker > input").get(0).attr("min");
             String strDateMax = document.select(".date-picker > input").get(0).attr("max");
@@ -63,6 +63,8 @@ public class OverviewTask {
                     Math.abs(dateMin.getTime()-currentDate.getTime())>Math.abs(dateMax.getTime()-currentDate.getTime())?
                             NAVIGATE_FRONT : NAVIGATE_BACK;
 
+            date = sdf.format(currentDate);
+
             while (responseString.contains("Student is not enrolled in any classes")||responseString.contains("No classes scheduled today.")) {
                 response =
                         Jsoup.connect(url+"home/get-student-schedule?studentId="+studentID+"&date="+date)
@@ -72,9 +74,6 @@ public class OverviewTask {
                 responseString = escapeUnicode(response.body().split("\"html\":\"")[1].split("\"\\}")[0]);
                 date = Jsoup.parse(responseString).select(".date-picker > a").get(navigateMode).attr("data-date");
             }
-
-
-            overviews = new Overview[Jsoup.parse(responseString).select("tr").size()];
 
             setOverviews(Jsoup.parse(responseString).select("tbody").get(0).select("tr"));
 
@@ -115,15 +114,17 @@ public class OverviewTask {
 
     private void setOverviews(Elements elements) {
         for(Element e : elements){
-            overviews[tmp] = new Overview(
+            String s = e.select("td.period").text().trim();
+            if(!s.equals("P0")) {
+                overviews.add(new Overview(
 //                        e.select("td.time").text().trim(),
-                    e.select("td.period").text().trim(),
-                    e.select("td.class").text().trim(),
-                    e.select("td.grade").text(),
-                    e.select("td.location").text().trim()/*,
+                        s,
+                        e.select("td.class").text().trim(),
+                        e.select("td.grade").text(),
+                        e.select("td.location").text().trim()/*,
                         e.select("td.teacher").text().trim()*/
-            );
-            tmp++;
+                ));
+            }
         }
     }
 }
