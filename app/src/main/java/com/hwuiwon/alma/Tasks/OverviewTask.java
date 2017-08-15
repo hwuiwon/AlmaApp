@@ -73,6 +73,7 @@ public class OverviewTask {
 
                 responseString = escapeUnicode(response.body().split("\"html\":\"")[1].split("\"\\}")[0]);
                 date = Jsoup.parse(responseString).select(".date-picker > a").get(navigateMode).attr("data-date");
+                responseString = Jsoup.parse(responseString).select("table").get(0).toString();
             }
 
             setOverviews(Jsoup.parse(responseString).select("tbody").get(0).select("tr"));
@@ -85,6 +86,7 @@ public class OverviewTask {
                                 .method(Connection.Method.GET).execute();
                 responseString2 = escapeUnicode(response.body().split("\"html\":\"")[1].split("\"\\}")[0]);
                 date = Jsoup.parse(responseString2).select(".date-picker > a").get(navigateMode).attr("data-date");
+                responseString2 = Jsoup.parse(responseString2).select("table").get(0).toString();
             }
 
             setOverviews(Jsoup.parse(responseString2).select("tbody").get(0).select("tr"));
