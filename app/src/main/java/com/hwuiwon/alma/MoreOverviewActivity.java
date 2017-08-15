@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hwuiwon.alma.Assignments.Assignment;
@@ -55,7 +56,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
             return false;
         }
     };
-    private View progressView;
+    private ProgressBar progressView;
     private Integer SET_GRADES = 0;
     private Integer SET_ASSGINMENTS = 1;
 
@@ -73,7 +74,7 @@ public class MoreOverviewActivity extends AppCompatActivity {
         TextView gradeTV = (TextView) findViewById(R.id.gradeTV);
         currentMenuTV = (TextView) findViewById(R.id.currentMenuTV);
         moreOverviewLV = (ListView) findViewById(R.id.moreOverviewLV);
-        progressView = findViewById(R.id.more_progress);
+        progressView = (ProgressBar) findViewById(R.id.more_progress);
 
         classNameTV.setText(overview.getClassName());
         gradeTV.setText(overview.getAlphabetGrade());

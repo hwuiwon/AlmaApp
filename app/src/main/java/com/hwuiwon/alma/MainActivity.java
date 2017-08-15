@@ -3,7 +3,6 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -19,11 +18,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hwuiwon.alma.Overviews.Overview;
 import com.hwuiwon.alma.Overviews.OverviewAdapter;
@@ -31,11 +28,6 @@ import com.hwuiwon.alma.Tasks.ClassIdTask;
 import com.hwuiwon.alma.Tasks.OverviewTask;
 import com.hwuiwon.alma.Tasks.ProfileImageTask;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
