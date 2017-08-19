@@ -29,7 +29,9 @@ public class OverviewTask {
         String url = "https://spps.getalma.com/";
 
         String date;
-        String responseString = "Student is not enrolled in any classes";
+        String responseString;
+        String noSchedule = "No classes scheduled today".toLowerCase();
+        String notEnrolled = "Student is not enrolled in any classes".toLowerCase();
         Connection.Response response;
 
         try {
@@ -63,9 +65,9 @@ public class OverviewTask {
                     Math.abs(dateMin.getTime()-currentDate.getTime())>Math.abs(dateMax.getTime()-currentDate.getTime())?
                             NAVIGATE_FRONT : NAVIGATE_BACK;
 
-            date = sdf.format(currentDate);
+            date = strCurrentDate;
 
-            while (responseString.contains("Student is not enrolled in any classes")||responseString.contains("No classes scheduled today.")) {
+             do {
                 response =
                         Jsoup.connect(url+"home/get-student-schedule?studentId="+studentID+"&date="+date)
                                 .header("Cookie", cookie).ignoreContentType(true)
@@ -73,9 +75,9 @@ public class OverviewTask {
 
                 responseString = escapeUnicode(response.body().split("\"html\":\"")[1].split("\"\\}")[0]);
                 date = Jsoup.parse(responseString).select(".date-picker > a").get(navigateMode).attr("data-date");
-                responseString = Jsoup.parse(responseString).select("table").get(0).toString();
-            }
+             } while (responseString.toLowerCase().contains(notEnrolled)||responseString.toLowerCase().contains(noSchedule));
 
+            responseString = Jsoup.parse(responseString).select("table").get(0).toString();
             setOverviews(Jsoup.parse(responseString).select("tbody").get(0).select("tr"));
 
             String responseString2 = responseString;
@@ -119,12 +121,12 @@ public class OverviewTask {
             String s = e.select("td.period").text().trim();
             if(!s.equals("P0")) {
                 overviews.add(new Overview(
-//                        e.select("td.time").text().trim(),
+//                        e.select("td.time").get(0).text().trim(),
                         s,
-                        e.select("td.class").text().trim(),
-                        e.select("td.grade").text(),
+                        e.select("td.class").get(0).text().trim(),
+                        e.select("td.grade").get(0).ownText().trim(),
                         e.select("td.location").text().trim()/*,
-                        e.select("td.teacher").text().trim()*/
+                        e.select("td.teacher").get(0).text().trim()*/
                 ));
             }
         }

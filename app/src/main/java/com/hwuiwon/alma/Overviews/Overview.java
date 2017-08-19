@@ -14,7 +14,7 @@ public class Overview implements Parcelable {
     public Overview(/*String time, */String period, String className, String alphabetGrade, String roomNum/*, String teacher*/) {
 //        this.time = time;
         originalClassName = className;
-        String[] notNeeded = {"S1", "S2", "Ⓐ", "Ⓑ", "&", "§1", "§2", "^\\s+"};
+        String[] notNeeded = {"S1", "S2", "Ⓐ", "Ⓑ", /*"&",*/ "§1", "§2", "^\\s+"};
         for (String words : notNeeded) {
             className = className.replaceAll(words, "");
         }
