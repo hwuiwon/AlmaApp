@@ -45,4 +45,8 @@ public class OverviewAdapter extends BaseAdapter {
         }
         return overviewView;
     }
+
+    public void clear() {
+        data.clear();
+    }
 }

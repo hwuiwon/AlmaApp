@@ -30,6 +30,8 @@ public class DirectoryActivity extends AppCompatActivity {
     private Directory[] directories;
     private View progressView;
 
+    private SearchingTask task = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +71,8 @@ public class DirectoryActivity extends AppCompatActivity {
         try {
             String keyword = String.valueOf(directoryET.getText());
             showProgress(true);
-            new SearchingTask().execute(keyword);
+            task = new SearchingTask();
+            task.execute(keyword);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,8 +116,15 @@ public class DirectoryActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(DirectoryAdapter adapter) {
+            task = null;
             showProgress(false);
             directoryLV.setAdapter(adapter);
+        }
+
+        @Override
+        protected void onCancelled() {
+            task = null;
+            showProgress(false);
         }
     }
 }

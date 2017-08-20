@@ -19,19 +19,29 @@ public class Assignment {
 //        this.file = file;
     }
 
-    public String getDueDate() {
+    public Assignment (String objectString) {
+        String[] arr = objectString.split("\n");
+        this.dueDate = arr[0];
+        this.assignmentName = arr[1];
+        this.type = arr[2];
+        this.assignmentDetail = arr[3];
+//        this.status = arr[4];
+//        this.file = arr[5];
+    }
+
+    String getDueDate() {
         return dueDate;
     }
 
-    public String getAssignmentName() {
+    String getAssignmentName() {
         return assignmentName;
     }
 
-    public String getType() {
+    String getType() {
         return type;
     }
 
-    public String getAssignmentDetail() {
+    String getAssignmentDetail() {
         return assignmentDetail;
     }
 
@@ -42,4 +52,9 @@ public class Assignment {
     public List<String> getFile() {
         return file;
     }*/
+
+    @Override
+    public String toString() {
+        return dueDate+"\n"+assignmentName+"\n"+type+"\n"+assignmentDetail+"\n";
+    }
 }

@@ -60,15 +60,23 @@
         android:textSize="26sp"
         android:textStyle="bold" />
 
-    <ListView
-        android:id="@+id/moreOverviewLV"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/more_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/navigation"
         android:layout_below="@id/currentMenuTV"
-        android:background="@color/color_testing"
-        android:divider="@color/almaPrimary"
-        android:dividerHeight="1dp"></ListView>
+        android:background="@color/color_testing" >
+
+        <ListView
+            android:id="@+id/moreOverviewLV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/almaPrimary"
+            android:dividerHeight="1dp" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <android.support.design.widget.BottomNavigationView
         android:id="@id/navigation"

@@ -1,5 +1,7 @@
 package com.hwuiwon.alma.Grades;
 
+import android.util.Log;
+
 public class Grade {
     private String assignmentName;
     private String weighted;
@@ -15,6 +17,16 @@ public class Grade {
         this.percentageGrade = percentageGrade;
         this.updatedDate = updatedDate;
 //        this.feedback = feedback;
+    }
+
+    public Grade(String objectString) {
+        Log.d("Tag", "object string : "+objectString);
+        String[] arr = objectString.split("\n");
+        this.assignmentName = arr[0];
+        this.weighted = arr[1];
+        this.alphabetGrade = arr[2];
+        this.percentageGrade = arr[3];
+        this.updatedDate = arr[4];
     }
 
     String getAssignmentName() {
@@ -42,4 +54,9 @@ public class Grade {
         return feedback;
     }
 */
+
+    @Override
+    public String toString() {
+        return assignmentName+"\n"+weighted+"\n"+alphabetGrade+"\n"+percentageGrade+"\n"+updatedDate+"\n";
+    }
 }

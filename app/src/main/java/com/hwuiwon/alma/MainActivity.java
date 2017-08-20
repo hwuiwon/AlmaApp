@@ -3,6 +3,7 @@ package com.hwuiwon.alma;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -12,9 +13,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +31,7 @@ import com.hwuiwon.alma.Tasks.ClassIdTask;
 import com.hwuiwon.alma.Tasks.OverviewTask;
 import com.hwuiwon.alma.Tasks.ProfileImageTask;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity
     private CircleImageView profile_image;
     private OverviewAdapter adapter;
 
+    private SwipeRefreshLayout mSwipeRefresh;
+
 //    private ArrayList<String> schoolYears;
 
     private String profilePic = null;
@@ -64,11 +70,27 @@ public class MainActivity extends AppCompatActivity
         cookie = getIntent().getStringExtra("cookie");
 //        schoolYears = getIntent().getStringArrayListExtra("schoolYears");
 
+        mSwipeRefresh = (SwipeRefreshLayout) findViewById(R.id.main_swipe_refresh);
         overviewLV = (ListView) findViewById(R.id.overviewLV);
         progressView = findViewById(R.id.main_progress);
         adapter = new OverviewAdapter(this);
 
 
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                File file = MainActivity.this.getCacheDir();
+                File delFile = new File(file, "overview");
+
+                if(!delFile.delete()) {
+                    Log.e("MainActivity", "File delete fail : overview");
+                }
+
+                showProgress(true);
+                mLoadingTask = new LoadingTask(cookie);
+                mLoadingTask.execute((Void) null);
+            }
+        });
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 //        headerView = getLayoutInflater().inflate(R.layout.nav_header_main, null);
@@ -84,14 +106,9 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        try {
-            showProgress(true);
-            mLoadingTask = new LoadingTask(cookie);
-            mLoadingTask.execute((Void) null);
-//            showProgress(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        showProgress(true);
+        mLoadingTask = new LoadingTask(cookie);
+        mLoadingTask.execute((Void) null);
     }
 
     @Override
@@ -161,6 +178,43 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            trimCache(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void trimCache(Context context) {
+        try {
+            File dir = context.getCacheDir();
+            if (dir != null && dir.isDirectory()) {
+                deleteDir(dir);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (String child : children) {
+                boolean success = deleteDir(new File(dir, child));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+
+        // The directory is now empty so delete it
+        assert dir != null;
+        return dir.delete();
+    }
+
     private class LoadingTask extends AsyncTask<Void, Void, Void> {
 
         private String cookie = "";
@@ -178,8 +232,35 @@ public class MainActivity extends AppCompatActivity
 //                e.printStackTrace();
 //            }
 
-            overviews = new OverviewTask().execute(cookie);
-            classIDs = new ClassIdTask().execute(cookie);
+            DataIO dataIO = new DataIO(MainActivity.this);
+            File file = MainActivity.this.getCacheDir();
+
+            if(new File(file, "overview").exists()){
+                overviews = new ArrayList<>();
+                String[] arr = dataIO.readFile("overview").split("\n#\n");
+                for(String s : arr) {
+                    Log.d("MainActivity", s);
+                    if(s.split("\n").length>3) overviews.add(new Overview(s));
+                }
+            } else {
+                overviews = new OverviewTask().execute(cookie);
+                String str = "";
+                for(Overview o : overviews) {
+                    str += o.toString()+"\n#\n";
+                }
+                dataIO.writeFile("overview", str);
+            }
+
+            if(new File(file, "classIDs").exists()) {
+                classIDs = new HashMap<>();
+                String[] arr = dataIO.readFile("classIDs").replaceAll("[{}]", "").split(", ");
+                for(String s : arr) {
+                    classIDs.put(s.split("=")[0], s.split("=")[1]);
+                }
+            } else {
+                classIDs = new ClassIdTask().execute(cookie);
+                dataIO.writeFile("classIDs", classIDs.toString());
+            }
             profilePic = new ProfileImageTask(MainActivity.this).execute(cookie);
 
             return null;
@@ -189,6 +270,7 @@ public class MainActivity extends AppCompatActivity
         protected void onPostExecute(Void param) {
             mLoadingTask = null;
             showProgress(false);
+            mSwipeRefresh.setRefreshing(false);
 
             headerTV1.setText(classIDs.get("name"));
             headerTV2.setText(classIDs.get("role"));
@@ -196,6 +278,8 @@ public class MainActivity extends AppCompatActivity
 
             profile_image.setImageBitmap(b);
 
+            adapter = new OverviewAdapter(MainActivity.this);
+            adapter.clear();
             for (Overview ov : overviews) {
                 adapter.addOverview(ov);
             }
@@ -218,6 +302,7 @@ public class MainActivity extends AppCompatActivity
         protected void onCancelled() {
             mLoadingTask = null;
             showProgress(false);
+            mSwipeRefresh.setRefreshing(false);
         }
     }
 }

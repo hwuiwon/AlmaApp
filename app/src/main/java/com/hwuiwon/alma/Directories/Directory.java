@@ -13,6 +13,13 @@ public class Directory {
         this.profilePic = profilePic;
     }
 
+    public Directory(String objectString) {
+        String[] arr = objectString.split("\n");
+        this.name = arr[0];
+        this.email = arr[1];
+        this.profilePic = null;
+    }
+
     public String getName() {
         return name;
     }
@@ -21,7 +28,12 @@ public class Directory {
         return email;
     }
 
-    public Bitmap getProfilePic() {
+    Bitmap getProfilePic() {
         return profilePic;
+    }
+
+    @Override
+    public String toString() {
+        return name+"\n"+email+"\n";
     }
 }
